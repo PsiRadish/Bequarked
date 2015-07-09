@@ -1,0 +1,12 @@
+GEMS
+Left
+Right
+Up
+Down
+Inward Horizontal
+Inward Vertical
+Explodey?
+
+
+INWARD
+(conflicts resolved by the move that makes the match
