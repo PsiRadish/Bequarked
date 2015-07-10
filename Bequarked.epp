@@ -1,11 +1,11 @@
 ﻿[File0]
-DataLen=8273
-TopLine=163
-SelStart=1585
-SelStop=1585
+DataLen=7799
+TopLine=3
+SelStart=770
+SelStop=770
 RectSel=0
-CaretPos=1585
-CaretVisible=0
+CaretPos=770
+CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
 SelStopAlt=0
@@ -29,17 +29,17 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=index.html
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\index.html
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\index.html
 FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=3271
-TopLine=63
-SelStart=1920
-SelStop=1920
+DataLen=3819
+TopLine=12
+SelStart=614
+SelStop=614
 RectSel=0
-CaretPos=1920
+CaretPos=614
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -64,17 +64,17 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=css\style.css
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\css\style.css
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\css\style.css
 FTPFilename=
 ForcedReadOnly=0
 
 [File2]
 DataLen=749
 TopLine=0
-SelStart=597
-SelStop=597
+SelStart=398
+SelStop=368
 RectSel=0
-CaretPos=597
+CaretPos=368
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -99,17 +99,17 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=js\script.js
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\script.js
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\script.js
 FTPFilename=
 ForcedReadOnly=0
 
 [File3]
-DataLen=5525
-TopLine=167
-SelStart=5140
-SelStop=5140
+DataLen=5169
+TopLine=15
+SelStart=829
+SelStop=829
 RectSel=0
-CaretPos=5140
+CaretPos=829
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -134,7 +134,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=js\grid.js
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\grid.js
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\grid.js
 FTPFilename=
 ForcedReadOnly=0
 
@@ -169,15 +169,15 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=README.md
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\README.md
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\README.md
 FTPFilename=
 ForcedReadOnly=0
 
 [EditPad Project]
 Managed=1
 BookmarksProjectWide=0
-ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\HTML.atc
-TabIndex=0
+ClipCollection=C:\Users\Radish\AppData\Roaming\JGsoft\Clip Collections\Play.atc
+TabIndex=1
 FirstFileTab=0
 FileCount=5
 RemovedCount=1

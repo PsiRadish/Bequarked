@@ -10,8 +10,8 @@ const Direction =
     horizontal: 'directionHorizontal'
 };
 
-//// Gem types
-const Gem =
+//// Quark types
+const Quark =
 {
     RedLeft:
     {
@@ -46,6 +46,8 @@ const Gem =
         gravDir: Direction.down
     }
 };
+
+
 
 var Grid = 
 {
@@ -140,14 +142,14 @@ function Square(x, y)
     
     Object.defineProperty(this, 'quark', { value: null, writable: true, enumerable: true });
 }
-// Object.defineProperty(Square.prototype, 'gem',
+// Object.defineProperty(Square.prototype, 'quark',
 //     {   get: function()
 //         {
 //             return this._gem;
 //         },
-//         set: function(newGem)
+//         set: function(newQuark)
 //         {
-//             this._gem = newGem;
+//             this._gem = newQuark;
 //         },
 //         enumerable: true
 //     });

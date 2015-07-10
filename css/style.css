@@ -1,19 +1,35 @@
-html, body
+html, body, .container-fluid, .row
 {
     color: white;
-    background-color: black;
+    /*background-color: black;*/
     height: 100%;
 }
 body
 {
     margin: 0.5vh;
+    /*background: black url(http://i.imgur.com/cGpKK.jpg) no-repeat center center fixed;*/
+    background: black no-repeat center center fixed;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(http://i.imgur.com/cGpKK.jpg);
 }
+
+/*background: linear-gradient( rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(image.jpg);*/
 
 h1
 {
     text-align: center;
     font-size: 8vh;
     margin: 0.5vh 0 0 0;
+}
+h3
+{
+    font-size: 2vw;
+}
+
+#player1 { float: left; }
+#player2 { float: right; }
+#player1, #player2
+{
+    /*padding: 0;*/
 }
 
 #board
@@ -27,6 +43,7 @@ h1
     
     z-index: 1;
 }
+.row { margin: 0 auto; }
 
 .quark-container
 {
