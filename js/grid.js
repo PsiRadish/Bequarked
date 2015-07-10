@@ -204,5 +204,9 @@ if (typeof process != 'undefined')
     console.log(squareTroll.x, squareTroll.y, squareTroll.gem);
     console.log(squareTest.x, squareTest.y, squareTest.gem);
     
+<<<<<<< HEAD
     console.log(Object.keys(squareTest));    
+=======
+    console.log(Object.keys(squareTest));
+>>>>>>> origin/master
 }
