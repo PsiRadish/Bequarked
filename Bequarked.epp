@@ -1,11 +1,11 @@
 ﻿[File0]
-DataLen=4772
-TopLine=6
-SelStart=700
-SelStop=700
+DataLen=8273
+TopLine=163
+SelStart=1585
+SelStop=1585
 RectSel=0
-CaretPos=700
-CaretVisible=1
+CaretPos=1585
+CaretVisible=0
 TopLineAlt=0
 SelStartAlt=0
 SelStopAlt=0
@@ -29,17 +29,17 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=index.html
-Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\index.html
+Filename=M:\Radish\Dev\GA_WDI\Bequarked\index.html
 FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=2360
-TopLine=82
-SelStart=2140
-SelStop=2140
+DataLen=3271
+TopLine=63
+SelStart=1920
+SelStop=1920
 RectSel=0
-CaretPos=2140
+CaretPos=1920
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -64,7 +64,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=css\style.css
-Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\css\style.css
+Filename=M:\Radish\Dev\GA_WDI\Bequarked\css\style.css
 FTPFilename=
 ForcedReadOnly=0
 
@@ -99,17 +99,17 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=js\script.js
-Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\script.js
+Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\script.js
 FTPFilename=
 ForcedReadOnly=0
 
 [File3]
-DataLen=5159
-TopLine=142
-SelStart=3886
-SelStop=3886
+DataLen=5525
+TopLine=167
+SelStart=5140
+SelStop=5140
 RectSel=0
-CaretPos=3886
+CaretPos=5140
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -134,7 +134,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=js\grid.js
-Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\grid.js
+Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\grid.js
 FTPFilename=
 ForcedReadOnly=0
 
@@ -169,15 +169,15 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=README.md
-Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\README.md
+Filename=M:\Radish\Dev\GA_WDI\Bequarked\README.md
 FTPFilename=
 ForcedReadOnly=0
 
 [EditPad Project]
 Managed=1
 BookmarksProjectWide=0
-ClipCollection=C:\Users\Radish\AppData\Roaming\JGsoft\Clip Collections\Registry.atc
-TabIndex=1
+ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\HTML.atc
+TabIndex=0
 FirstFileTab=0
 FileCount=5
 RemovedCount=1

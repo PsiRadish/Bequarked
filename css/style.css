@@ -25,8 +25,7 @@ h1
     height: 88.2%;
     max-height: 800px;
     
-    /*background-image: url("http://i.imgur.com/HD4PgAp.png");
-    background-size: 100%;*/
+    z-index: 1;
 }
 
 .quark-container
@@ -35,7 +34,7 @@ h1
     height: 12.5%;
     position: absolute;
     
-    z-index: 10;
+    z-index: 5;
     /*background-image: url('../img/ring_blue.png');
     background-position: center;
     background-size: 100%;*/
@@ -57,62 +56,102 @@ h1
 .y6 { top: 75%; }
 .y7 { top: 87.5%; }
 
-.quark-container.arrow-left
-{
-    background-image: url('../img/arrow-left.png');
-    background-position: center center;
-    background-size: 64%;
-    background-repeat: no-repeat;
-}
-
 @keyframes rotate-ring-red
 {
-  from
-  {
-    transform: rotate(360deg);
-  }
-  to
-  { 
-    transform: rotate(0deg);
-  }
+    from { transform: rotate(360deg); }
+    to   { transform: rotate(  0deg); }
 }
 @keyframes rotate-ring-blue
 {
-  from
-  {
-    transform: rotate(0deg);
-  }
-  to
-  { 
-    transform: rotate(360deg);
-  }
+    from { transform: rotate(  0deg); }
+    to   { transform: rotate(360deg); }
 }
-.quark-container:before
+/* hack using `before` pseudoclass to animate a background image */
+.quark-container:before, .arrow-container:before
 {
     content: "";
     position: absolute;
     width: 100%;
     height: 100%;
     left: 0;
-    z-index: 11;
-    animation-duration:         1s; 
+    background-position: center center;
+    background-repeat: no-repeat;
     animation-iteration-count:  infinite;
     animation-timing-function:  linear;
 }
-/* hack using `before` pseudoclass to animate a background image */
-.quark-container.blue-ring:before
+.quark-container:before
+{
+    background-size: 96%;
+    animation-duration: 1s;
+}
+
+.quark-container.ring-blue:before
 {
     background-image: url('../img/ring_blue.png');
-    background-position: center center;
-    background-size: 96%;
     animation-name: rotate-ring-blue;
 }
-.quark-container.red-ring:before
+.quark-container.ring-red:before
 {
     background-image: url('../img/ring_red.png');
-    background-position: center center;
-    background-size: 96%;
     animation-name: rotate-ring-red;
+}
+
+.arrow-container
+{
+    width: 64%;
+    height: 64%;
+    position: absolute;
+    top: 18%;
+    left: 18%;
+    z-index: 10;
+    background-position: center center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.arrow-left .arrow-container
+{
+    background-image: url('../img/arrow-left.png');
+}
+.arrow-right .arrow-container
+{
+    background-image: url('../img/arrow-right.png');
+}
+.arrow-down .arrow-container
+{
+    background-image: url('../img/arrow-down.png');
+}
+.arrow-up .arrow-container
+{
+    background-image: url('../img/arrow-up.png');
+}
+
+@keyframes arrow-glow
+{
+    0%   { opacity: 1; }
+    50%  { opacity: 0.35; }
+    100% { opacity: 1; }
+}
+.arrow-container:before
+{
+    background-size: 100%;
+    animation-name:     arrow-glow;
+    animation-duration: 0.5s;
+}
+.arrow-left .arrow-container:before
+{
+    background-image: url('../img/arrow-left.png');
+}
+.arrow-right .arrow-container:before
+{
+    background-image: url('../img/arrow-right.png');
+}
+.arrow-down .arrow-container:before
+{
+    background-image: url('../img/arrow-down.png');
+}
+.arrow-up .arrow-container:before
+{
+    background-image: url('../img/arrow-up.png');
 }
 
 @media (max-height: 363px){
