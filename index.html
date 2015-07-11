@@ -7,20 +7,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script-->
   <link rel="stylesheet" href="css/style.css">
   <script src="js/grid.js"></script>
   <script src="js/script.js"></script>
 </head>
 <body>
-<div class="container-fluid"><div class="row">
-  <div id="player1" class="player-panel my-turn-yes col-xs-1 col-sm-2">
-      <h3>Player 1</h3>
+<div id="game">
+  <div id="player1" class="player my-turn-yes">
+      <h2 class="player-name">Player 1</h2>
       <h3 class="score">9000</h3>
-      <h3 class="score-chain"></h3>
+      <h3 class="score-chain">200 ×2</h3>
   </div>
-  <div id="player2" class="player-panel my-turn-no col-xs-1 col-sm-2">
-      <h3>Player 2</h3>
+  <div id="player2" class="player my-turn-no">
+      <h2 class="player-name">Player 2</h2>
+      <h3 class="score">9000</h3>
+      <h3 class="score-chain">200 ×2</h3>
   </div>
   <div id="board">
     <div class="quark-container x0 y0 ring-blue arrow-left"> <div class="arrow-container"></div></div>
@@ -88,7 +90,7 @@
     <div class="quark-container x6 y7 ring-red  arrow-down"> <div class="arrow-container"></div></div>
     <div class="quark-container x7 y7 ring-blue arrow-left"> <div class="arrow-container"></div></div>
   </div>
-  <h1>Bequarked</h1>
-</div></div>
+   <div id="title-container"><h1>Bequarked</h1></div>
+</div>
 </body>
 </html>
