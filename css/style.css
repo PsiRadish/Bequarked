@@ -13,10 +13,12 @@ body
     background-image: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(http://i.imgur.com/cGpKK.jpg);*/
 }
 
-h1
+#title-container h1
 {
     text-align: center;
     font-size: 8vh;
+    font-family: monospace;
+    font-variant: small-caps;
     margin: 0.5vh 0 0 0;
 }
 
@@ -41,11 +43,11 @@ h1
     padding: 0 1.3761468%;
 }
 
-#player1
+#player-1
 {
     float: left;
 }
-#player2
+#player-2
 {
     float: right;
 }
@@ -53,6 +55,7 @@ h1
 .player h2
 {
     text-align: center;
+    width: 100%;
 }
 .player h3
 {
@@ -63,22 +66,43 @@ h1
 {
     margin-top: 43.478261%;
 }
-
 .score-chain
 {
     margin-top: 104.347826%
 }
+.score-chain-multiplier
+{
+    /* I'll think of something */
+}
 
-.player.my-turn-yes
+@keyframes energy-background
+{
+    0%   { background-position:     0%   0%; }
+    25%  { background-position:   120% 240%; }
+    50%  { background-position:     0% 480%; }
+    75%  { background-position:   -60% 240%; }
+    100% { background-position:     0%   0%; }
+}
+.player.my-turn
 {
     background-image: url('../img/turn-bk.jpg');
     background-position: top left;
     background-size: auto 180%;
     box-shadow: inset 0 0 22px 22px black;
+    animation: energy-background 1s linear infinite;
 }
-.player.my-turn-yes .player-name
+.player.my-turn .player-name
 {
     text-decoration: underline;
+}
+
+#player-1.my-turn
+{
+    color: LightSkyBlue;
+}
+#player-2.my-turn
+{
+    color: LightPink;
 }
 
 #board
@@ -96,47 +120,36 @@ h1
     z-index: 1;
 }
 
-.quark-container
+/* Positioning and sizing for all elements that will directly align to the game grid */
+.grid-element
 {
     width: 12.5%;
     height: 12.5%;
     position: absolute;
-    
-    z-index: 5;
-    /*background-image: url('../img/ring_blue.png');
-    background-position: center;
-    background-size: 100%;*/
 }
-.x0 { left: 0; }
-.x1 { left: 12.5%; }
-.x2 { left: 25%; }
-.x3 { left: 37.5%; }
-.x4 { left: 50%; }
-.x5 { left: 62.5%; }
-.x6 { left: 75%; }
-.x7 { left: 87.5%; }
-.y0 { top:  0; }
-.y1 { top: 12.5%; }
-.y2 { top: 25%; }
-.y3 { top: 37.5%; }
-.y4 { top: 50%; }
-.y5 { top: 62.5%; }
-.y6 { top: 75%; }
-.y7 { top: 87.5%; }
+.grid-element.x0 { left: 0; }
+.grid-element.x1 { left: 12.5%; }
+.grid-element.x2 { left: 25%; }
+.grid-element.x3 { left: 37.5%; }
+.grid-element.x4 { left: 50%; }
+.grid-element.x5 { left: 62.5%; }
+.grid-element.x6 { left: 75%; }
+.grid-element.x7 { left: 87.5%; }
+.grid-element.y0 { top:  0; }
+.grid-element.y1 { top: 12.5%; }
+.grid-element.y2 { top: 25%; }
+.grid-element.y3 { top: 37.5%; }
+.grid-element.y4 { top: 50%; }
+.grid-element.y5 { top: 62.5%; }
+.grid-element.y6 { top: 75%; }
+.grid-element.y7 { top: 87.5%; }
 
-@keyframes rotate-ring-red
+.quark-container /* grid-level element */
 {
-    from { transform: rotate(360deg); }
-    to   { transform: rotate(  0deg); }
+    z-index: 5;
 }
-@keyframes rotate-ring-blue
-{
-    from { transform: rotate(  0deg); }
-    to   { transform: rotate(360deg); }
-}
-/* hack using `before` pseudoclass to animate a background image */
-.quark-container:before, .arrow-container:before
-{
+.quark-container::before, .arrow-container::before
+{   /* use `before` pseudoelement to rotate background image without rotating div itself */
     content: "";
     position: absolute;
     width: 100%;
@@ -147,21 +160,63 @@ h1
     animation-iteration-count:  infinite;
     animation-timing-function:  linear;
 }
-.quark-container:before
+.quark-container::before
 {
     background-size: 96%;
     animation-duration: 1s;
 }
-
-.quark-container.ring-blue:before
+@keyframes rotate-ring-blue
+{
+    from { transform: rotate(  0deg); }
+    to   { transform: rotate(360deg); }
+}
+.quark-container.ring-blue::before
 {
     background-image: url('../img/ring_blue.png');
     animation-name: rotate-ring-blue;
 }
-.quark-container.ring-red:before
+@keyframes rotate-ring-red
+{
+    from { transform: rotate(360deg); }
+    to   { transform: rotate(  0deg); }
+}
+.quark-container.ring-red::before
 {
     background-image: url('../img/ring_red.png');
     animation-name: rotate-ring-red;
+}
+
+#board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
+{
+    border: 3px solid;
+    border-radius: 10%;
+    width:  calc(12.5% + 6px);
+    height: calc(12.5% + 6px);
+    margin-left: -3px;
+    margin-top: -3px;
+}
+#board.player-1-turn.taking-input .quark-container:hover
+{
+    border-color:     rgba(0, 0, 255, 0.3);
+    background-color: rgba(0, 0, 255, 0.3);
+}
+#board.player-1-turn.taking-input .quark-container.selected
+{
+    border-color: blue;
+}
+#board.player-2-turn.taking-input .quark-container:hover
+{
+    border-color:     rgba(255, 0, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0.25);
+}
+#board.player-2-turn.taking-input .quark-container.selected
+{
+    border-color: red;
+}
+
+.grav-container /* grid-level element */
+{
+    
 }
 
 .arrow-container
@@ -171,10 +226,17 @@ h1
     position: absolute;
     top: 18%;
     left: 18%;
-    z-index: 10;
     background-position: center center;
     background-size: 100%;
     background-repeat: no-repeat;
+}
+.quark-container .arrow-container
+{
+    z-index: 10;
+}
+.grav-container .arrow-container
+{
+    z-index: 15;
 }
 .arrow-left .arrow-container
 {
@@ -192,49 +254,50 @@ h1
 {
     background-image: url('../img/arrow-up.png');
 }
-
-@keyframes arrow-glow
+@keyframes quark-arrow-flicker
 {
     0%   { opacity: 1; }
-    50%  { opacity: 0.35; }
+    50%  { opacity: 0.25; }
     100% { opacity: 1; }
 }
-.arrow-container:before
-{
-    background-size: 100%;
-    animation-name:     arrow-glow;
+.quark-container .arrow-container::before, /* use `before` pseudoelement to layer a flickering copy of the arrow graphic for an animated glowing effect  */
+.grav-container .arrow-container
+{   
+    background-size:    100%;
     animation-duration: 0.5s;
 }
-.arrow-left .arrow-container:before
+.quark-container .arrow-container::before
+{
+    animation-name:     quark-arrow-flicker;
+}
+.arrow-left .arrow-container::before
 {
     background-image: url('../img/arrow-left.png');
 }
-.arrow-right .arrow-container:before
+.arrow-right .arrow-container::before
 {
     background-image: url('../img/arrow-right.png');
 }
-.arrow-down .arrow-container:before
+.arrow-down .arrow-container::before
 {
     background-image: url('../img/arrow-down.png');
 }
-.arrow-up .arrow-container:before
+.arrow-up .arrow-container::before
 {
     background-image: url('../img/arrow-up.png');
 }
-
-@keyframes animatedBackground
+@keyframes grav-arrow-flicker
 {
-    from { background-position: 0%   0%; }
-    to   { background-position: 112.5% 112.5%; }
-    /*to   { background-position: 225% 225%; }*/
+    0%   { opacity: 0.5; }
+    50%  { opacity: 0.1; }
+    100% { opacity: 0.5; }
+}
+.grav-container .arrow-container
+{
+    animation-name:     grav-arrow-flicker;
 }
 
-.player.my-turn-yes
-{
-    animation: animatedBackground 1.5s linear infinite;
-}
-
-@media (max-height: 363px){
+/*@media (max-height: 363px){
 
     body
     {
@@ -248,5 +311,4 @@ h1
     {
         height: 100%;
     }
-}
-
+}*/

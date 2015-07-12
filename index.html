@@ -9,86 +9,88 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" rel="stylesheet">
   <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script-->
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/grid.js"></script>
+  <script src="js/jquery.fittext.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/css.js"></script>
   <script src="js/script.js"></script>
 </head>
 <body>
 <div id="game">
-  <div id="player1" class="player my-turn-yes">
+  <div id="player-1" class="player my-turn">
       <h2 class="player-name">Player 1</h2>
       <h3 class="score">9000</h3>
       <h3 class="score-chain">200 ×2</h3>
   </div>
-  <div id="player2" class="player my-turn-no">
+  <div id="player-2" class="player">
       <h2 class="player-name">Player 2</h2>
       <h3 class="score">9000</h3>
       <h3 class="score-chain">200 ×2</h3>
   </div>
-  <div id="board">
-    <div class="quark-container x0 y0 ring-blue arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y0 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x2 y0 ring-red  arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x3 y0 ring-red  arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x4 y0 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x5 y0 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y0 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x7 y0 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x0 y1 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y1 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x2 y1 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x3 y1 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x4 y1 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x5 y1 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y1 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x7 y1 ring-blue arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x0 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x2 y2 ring-blue arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x3 y2 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x4 y2 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x5 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x7 y2 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x0 y3 ring-blue arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y3 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x2 y3 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x3 y3 ring-red  arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x4 y3 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x5 y3 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y3 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x7 y3 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x0 y4 ring-blue arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y4 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x2 y4 ring-blue arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x3 y4 ring-blue arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x4 y4 ring-red  arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x5 y4 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y4 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x7 y4 ring-red  arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x0 y5 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y5 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x2 y5 ring-blue arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x3 y5 ring-red  arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x4 y5 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x5 y5 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y5 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x7 y5 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x0 y6 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x2 y6 ring-blue arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x3 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x4 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x5 y6 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
-    <div class="quark-container x7 y6 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x0 y7 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x1 y7 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x2 y7 ring-blue arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x3 y7 ring-red  arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x4 y7 ring-blue arrow-left"> <div class="arrow-container"></div></div>
-    <div class="quark-container x5 y7 ring-blue arrow-up">   <div class="arrow-container"></div></div>
-    <div class="quark-container x6 y7 ring-red  arrow-down"> <div class="arrow-container"></div></div>
-    <div class="quark-container x7 y7 ring-blue arrow-left"> <div class="arrow-container"></div></div>
+  <div id="board" class="player-1-turn taking-input">
+    <div class="grid-element quark-container x0 y0 ring-blue arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y0 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y0 ring-red  arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y0 ring-red  arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y0 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y0 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y0 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y0 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x0 y1 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y1 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y1 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y1 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y1 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y1 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y1 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y1 ring-blue arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x0 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y2 ring-blue arrow-left selected"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y2 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y2 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y2 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y2 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x0 y3 ring-blue arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y3 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y3 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y3 ring-red  arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y3 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y3 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y3 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y3 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x0 y4 ring-blue arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y4 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y4 ring-blue arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y4 ring-blue arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y4 ring-red  arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y4 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y4 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y4 ring-red  arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x0 y5 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y5 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y5 ring-blue arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y5 ring-red  arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y5 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y5 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y5 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y5 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x0 y6 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y6 ring-blue arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y6 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y6 ring-red  arrow-right"><div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y6 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x0 y7 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x1 y7 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x2 y7 ring-blue arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x3 y7 ring-red  arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x4 y7 ring-blue arrow-left"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x5 y7 ring-blue arrow-up">   <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x6 y7 ring-red  arrow-down"> <div class="arrow-container"></div></div>
+    <div class="grid-element quark-container x7 y7 ring-blue arrow-left"> <div class="arrow-container"></div></div>
   </div>
    <div id="title-container"><h1>Bequarked</h1></div>
 </div>
