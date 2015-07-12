@@ -105,19 +105,29 @@ body
     color: LightPink;
 }
 
-#board
+#board, #winner-display
 {
-    position: relative;
     text-align: center;
     margin: 0 auto;
     
-    /*height: 88.2%;*/
     width: 73.394495%;
     max-width: 800px;
     height: 100%;
     max-height: 800px;
-    
+}
+#board
+{
+    position: relative;
     z-index: 1;
+}
+#winner-display
+{
+    position: absolute;
+    top: 34%;
+    left: 20%;
+    z-index: 50;
+    display: none;
+    font-size: 10vh;
 }
 
 /* Positioning and sizing for all elements that will directly align to the game grid */
@@ -126,6 +136,7 @@ body
     width: 12.5%;
     height: 12.5%;
     position: absolute;
+    /*overflow: visible !important;*/
 }
 .grid-element.x0 { left: 0; }
 .grid-element.x1 { left: 12.5%; }
@@ -143,6 +154,10 @@ body
 .grid-element.y5 { top: 62.5%; }
 .grid-element.y6 { top: 75%; }
 .grid-element.y7 { top: 87.5%; }
+/*.grid-element *
+{
+    overflow: visible !important;
+}*/
 
 .quark-container /* grid-level element */
 {
@@ -162,7 +177,7 @@ body
 }
 .quark-container::before
 {
-    background-size: 96%;
+    background-size: 96% 96%;
     animation-duration: 1s;
 }
 @keyframes rotate-ring-blue
@@ -185,6 +200,167 @@ body
     background-image: url('../img/ring_red.png');
     animation-name: rotate-ring-red;
 }
+.quark-container.distorting::before /* quit spinning when I'm doing some fancy jQuery animation */
+{
+    animation-name: none;
+}
+
+@keyframes left-swap-anim
+{
+    25%
+    {
+        height: 3.125%;         /*6.25%;*/
+        margin-top: 4.6875%;    /*3.125%;*/
+        width: 18.75%;          /*15.625%;*/
+        margin-left: -3.125%;   /*-1.5625%;*/
+        transform: translateX(-50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateX(-100%);
+    }
+    100%
+    {
+        transform: translateX(-100%);
+    }
+}
+@keyframes left-swap-fail-anim
+{
+    50%
+    {
+        height:         6.25%;
+        margin-top:     3.125%;
+        width:          15.625%;
+        margin-left:    -1.5625%;
+        transform: translateX(-25%);
+    }
+}
+@keyframes right-swap-anim
+{
+    25%
+    {
+        height: 3.125%;         /*6.25%;*/
+        margin-top: 4.6875%;    /*3.125%;*/
+        width: 18.75%;          /*15.625%;*/
+        margin-left: -3.125%;   /*-1.5625%;*/
+        transform: translateX(50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateX(100%);
+    }
+    100%
+    {
+        transform: translateX(100%);
+    }
+}
+@keyframes right-swap-fail-anim
+{
+    50%
+    {
+        height:         6.25%;
+        margin-top:     3.125%;
+        width:          15.625%;
+        margin-left:    -1.5625%;
+        transform: translateX(25%);
+    }
+}
+@keyframes up-swap-anim
+{
+    25%
+    {
+        height: 18.75%;
+        margin-top: -3.125%;
+        width: 3.125%;
+        margin-left: 4.6875%;
+        transform: translateY(-50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateY(-100%);
+    }
+    100%
+    {
+        transform: translateY(-100%);
+    }
+}
+@keyframes up-swap-fail-anim
+{
+    50%
+    {
+        height:         15.625%;
+        margin-top:     -1.5625%;
+        width:          6.25%;
+        margin-left:    3.125%;
+        transform: translateY(-25%);
+    }
+}
+@keyframes down-swap-anim
+{
+    25%
+    {
+        height: 18.75%;
+        margin-top: -3.125%;
+        width: 3.125%;
+        margin-left: 4.6875%;
+        transform: translateY(50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateY(100%);
+    }
+    100%
+    {
+        transform: translateY(100%);
+    }
+}
+@keyframes down-swap-fail-anim
+{
+    50%
+    {
+        height:         15.625%;
+        margin-top:     -1.5625%;
+        width:          6.25%;
+        margin-left:    3.125%;
+        transform: translateY(25%);
+    }
+}
+.quark-container.swapping
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         0.6s;
+}
+.quark-container.swap-fail
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         0.21s;
+}
+.quark-container.swapping.left-swap { animation-name: left-swap-anim; }
+.quark-container.swap-fail.left-swap-fail { animation-name: left-swap-fail-anim; }
+.quark-container.swapping.right-swap { animation-name: right-swap-anim; }
+.quark-container.swap-fail.right-swap-fail { animation-name: right-swap-fail-anim; }
+.quark-container.swapping.up-swap { animation-name: up-swap-anim; }
+.quark-container.swap-fail.up-swap-fail { animation-name: up-swap-fail-anim; }
+.quark-container.swapping.down-swap { animation-name: down-swap-anim; }
+.quark-container.swap-fail.down-swap-fail { animation-name: down-swap-fail-anim; }
 
 #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
 {
@@ -227,7 +403,7 @@ body
     top: 18%;
     left: 18%;
     background-position: center center;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
 }
 .quark-container .arrow-container
@@ -263,11 +439,12 @@ body
 .quark-container .arrow-container::before, /* use `before` pseudoelement to layer a flickering copy of the arrow graphic for an animated glowing effect  */
 .grav-container .arrow-container
 {   
-    background-size:    100%;
+    background-size:    100% 100%;
     animation-duration: 0.5s;
 }
 .quark-container .arrow-container::before
 {
+    content:            '';
     animation-name:     quark-arrow-flicker;
 }
 .arrow-left .arrow-container::before
@@ -294,21 +471,47 @@ body
 }
 .grav-container .arrow-container
 {
+    content:            '';
     animation-name:     grav-arrow-flicker;
 }
 
-/*@media (max-height: 363px){
+#game.tie #board          { background-color: purple; }
+#game.player-1-win #board { background-color: DarkBlue }
+#game.player-2-win #board { background-color: DarkRed }
+#game.tie #winner-display, #game.player-1-win #winner-display, #game.player-2-win #winner-display
+{
+    display: initial;
+}
+#game.tie #winner-display::after, #game.player-1-win #winner-display::after, #game.player-2-win #winner-display::after
+{
+    font-size: 10vh;
+    text-align: center;
+    z-index: 50;
+}
+#game.tie #winner-display::after          { content: "TIE"; }
+#game.player-1-win #winner-display::after { content: "PLAYER 1 WINS"; }
+#game.player-2-win #winner-display::after { content: "PLAYER 2 WINS"; }
 
-    body
+/* Because apparently you can't put a % in border-width */
+@media (max-height: 664px) and (min-height: 401px), (max-width: 905px) and (min-width: 546px) {
+
+    #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
     {
-        margin: 0;
+        border: 2px solid;
+        width:  calc(12.5% + 4px);
+        height: calc(12.5% + 4px);
+        margin-left: -2px;
+        margin-top: -2px;
     }
-    h1
+}
+@media (max-height: 400px), (max-width: 545px) {
+
+    #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
     {
-        display: none;
+        border: 1px solid;
+        width:  calc(12.5% + 2px);
+        height: calc(12.5% + 2px);
+        margin-left: -1px;
+        margin-top: -1px;
     }
-    #board
-    {
-        height: 100%;
-    }
-}*/
+}
