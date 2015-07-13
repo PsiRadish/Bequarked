@@ -307,7 +307,7 @@ var Game =
                             window.clearInterval(timer);
                             
                             Game.eventTarget.trigger('board:stable', eventData);
-                            if (Game.movesMade > Game.maxMoves)
+                            if (Game.movesMade >= Game.maxMoves)
                             {
                                 Game.Over();
                             }
@@ -317,7 +317,7 @@ var Game =
                 else
                 {
                     Game.eventTarget.trigger('board:stable', eventData);
-                    if (Game.movesMade > Game.maxMoves)
+                    if (Game.movesMade >= Game.maxMoves)
                     {
                         Game.Over();
                     }

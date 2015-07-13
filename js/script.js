@@ -165,6 +165,8 @@ function main()
             
             unpauseInput();
             Game.animating = false;
+            
+
         }, 300);
     }
     
@@ -216,8 +218,13 @@ function main()
             $quarkA.removeClass(animClassesA);
             $quarkB.removeClass(animClassesB);
             
+
+
+            
             unpauseInput();
             Game.animating = false;
+            
+
         }, 210);
     }
     
@@ -316,23 +323,51 @@ function main()
         pauseInput();
         Game.animating = true;
         
-        var animDur = 300;
+        var animDur = 600;
+        
+        // .quark-container.matching.h-match  { animation-name: h-match-anim; }
+        // .quark-container.matching.v-match  { animation-name: v-match-anim; }
+        // .quark-container.matching.hv-match { animation-name: hv-match-anim; }
+        
+        var doomedQuarks = []; // need to go over quarks again after delay, so I'll keep a collection
         
         for (var gridKey in matchData)
         {   var currDatum = matchData[gridKey];
             var currSquare = currDatum.square;
             
             var doomedQuark = $('.quark-container.x' + currSquare.x + '.y' + currSquare.y);
+            doomedQuarks.push(doomedQuark);
             
-            // !!!!! Temporary fade out animation
-            doomedQuark.fadeOut(animDur, removeElement);
+            var animClass = 'distorting matching';
+            switch (currDatum.orientation)
+            {
+                case Direction.horizontal:
+                    animClass += ' h-match';
+                    break;
+                case Direction.vertical:
+                    animClass += ' v-match';
+                    break
+                case Direction.horizontal | Direction.vertical:
+                    animClass += ' hv-match';
+                    break;
+            }
+            
+            // adding these classes will initiate CSS animations
+            doomedQuark.addClass(animClass);
         }
         
         // wait for animations to finish
         window.setTimeout(function()
         {
+            doomedQuarks.forEach(function(doomedQuark)
+            {   // empty it out hard
+                doomedQuark.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
+                doomedQuark.removeClass("distorting matching h-match v-match hv-match");
+            });
+            
             unpauseInput();
             Game.animating = false;
+            
         }, animDur);
     });
     
@@ -341,28 +376,43 @@ function main()
         pauseInput();
         Game.animating = true;
         
-        var animDur = 500;
+        var animDur = 600;
+        
+        var newQuarks = []; // need to go over quarks again after delay, so I'll keep a collection
         
         newSquares.forEach(function(newSquare)
         {
-            var newQuark = quarkElementFromGameSquare(newSquare);
+            //var newQuark = quarkElementFromGameSquare(newSquare);
             
-            newQuark.appendTo(board);
+            //newQuark.appendTo(board);
+            var quarkBox = $('.quark-container.x' + newSquare.x + '.y' + newSquare.y);
+            newQuarks.push(quarkBox);
             
-            // !!!!!!!! TEMPORARY FADE ANIM
-            newQuark.fadeIn(animDur);
+            // I'll just blissfully assume the quarkBox isn't already showing a quark
+            quarkBox.addClass(newSquare.quark.css + " spawning"); // "spawning" class applies spawning animation
+            
         });
         
         // wait for animations to finish
         window.setTimeout(function()
         {
+            newQuarks.forEach(function(newQuark)
+            {
+                newQuark.removeClass("spawning"); // remove animation class
+            });
+            
             unpauseInput();
             Game.animating = false;
+            
+
         }, animDur);
     });
     
     gameView.on('board:stable', function(e, oldTurn, newTurn, newScore)
     {
+        pauseInput();
+        Game.animating = true;
+        
         $('.my-turn .score').html(newScore);
         $('.my-turn .score-chain').html('');
         
@@ -371,6 +421,11 @@ function main()
         
         $('#player-' + newTurn).addClass("my-turn");
         board.addClass("player-" + newTurn + "-turn");
+        
+        unpauseInput();
+        Game.animating = false;
+        
+        
     });
     
     gameView.on('gameOver', function(e, winner)

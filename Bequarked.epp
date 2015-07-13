@@ -1,5 +1,5 @@
 ﻿[File0]
-DataLen=8789
+DataLen=8812
 TopLine=0
 SelStart=881
 SelStop=881
@@ -34,12 +34,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=11450
-TopLine=75
-SelStart=2054
-SelStop=2054
+DataLen=13659
+TopLine=404
+SelStart=8991
+SelStop=8991
 RectSel=0
-CaretPos=2054
+CaretPos=8991
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -69,12 +69,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File2]
-DataLen=12983
-TopLine=322
-SelStart=11775
-SelStop=11775
+DataLen=15239
+TopLine=389
+SelStart=14819
+SelStop=14819
 RectSel=0
-CaretPos=11775
+CaretPos=14819
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -104,12 +104,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File3]
-DataLen=21749
-TopLine=39
-SelStart=1911
-SelStop=1911
+DataLen=21751
+TopLine=290
+SelStart=10823
+SelStop=10823
 RectSel=0
-CaretPos=1911
+CaretPos=10823
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -212,7 +212,7 @@ ForcedReadOnly=0
 Managed=1
 BookmarksProjectWide=0
 ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\CSS.atc
-TabIndex=1
+TabIndex=3
 FirstFileTab=0
 FileCount=6
 RemovedCount=1
