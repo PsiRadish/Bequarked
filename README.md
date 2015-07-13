@@ -5,10 +5,11 @@ Alternatively, a quirkly-looking Bejeweled clone that's clearly not as good (...
 
 ## How to Play
 
-1. Mostly like [Bejeweled](https://en.wikipedia.org/wiki/Bejeweled "I am not here to tell you how to play Bejeweled").
-2. Albeit with 2 players taking turns making moves on the same board (project requirement).
-3. New quarks appear right where matched quarks disappear, because gravity is hard to implement in five days.
-4. The winner is whoever has the highest score after both players make 3 moves (if it isn't fun yet, it can at least be short).
+1. Go to [http://psiradish.github.io/Bequarked/](http://psiradish.github.io/Bequarked/).
+2. Pretend you're playing [Bejeweled](https://en.wikipedia.org/wiki/Bejeweled "I am not here to tell you how to play Bejeweled").
+3. Albeit with 2 players taking turns making moves on the same board (project requirement).
+4. New quarks appear right where matched quarks disappear, because gravity is hard to implement in five days.
+5. The winner is whoever has the highest score after both players make 3 moves (if it isn't fun yet, it can at least be short).
 
 ## Design
 
