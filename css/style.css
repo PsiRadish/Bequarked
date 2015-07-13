@@ -1,99 +1,508 @@
-html, body
+html, body, #game
 {
     color: white;
-    background-color: black;
+    /*background-color: black;*/
     height: 100%;
 }
 body
 {
     margin: 0.5vh;
+    background-color: black;
+    
+    /*background: black no-repeat center center fixed;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(http://i.imgur.com/cGpKK.jpg);*/
 }
 
-h1
+#title-container h1
 {
     text-align: center;
     font-size: 8vh;
+    font-family: monospace;
+    font-variant: small-caps;
     margin: 0.5vh 0 0 0;
 }
 
-#board
+#game
 {
-    position: relative;
+    width: 100%;
+    max-width: 1090px;
+    max-height: 800px;
+    margin: 0 auto;
+}
+
+.player-name
+{
+    margin-top: 26.086956%;
+}
+.player
+{
+    width: 13.302752%;
+    max-width: 145px;
+    height: 50%;
+    max-height: 400px;
+    padding: 0 1.3761468%;
+}
+
+#player-1
+{
+    float: left;
+}
+#player-2
+{
+    float: right;
+}
+
+.player h2
+{
+    text-align: center;
+    width: 100%;
+}
+.player h3
+{
+    margin-left: 3.478261%;
+}
+
+.score
+{
+    margin-top: 43.478261%;
+}
+.score-chain
+{
+    margin-top: 104.347826%
+}
+.score-chain-multiplier
+{
+    /* I'll think of something */
+}
+
+@keyframes energy-background
+{
+    0%   { background-position:     0%   0%; }
+    25%  { background-position:   120% 240%; }
+    50%  { background-position:     0% 480%; }
+    75%  { background-position:   -60% 240%; }
+    100% { background-position:     0%   0%; }
+}
+.player.my-turn
+{
+    background-image: url('../img/turn-bk.jpg');
+    background-position: top left;
+    background-size: auto 180%;
+    box-shadow: inset 0 0 22px 22px black;
+    animation: energy-background 1s linear infinite;
+}
+.player.my-turn .player-name
+{
+    text-decoration: underline;
+}
+
+#player-1.my-turn
+{
+    color: LightSkyBlue;
+}
+#player-2.my-turn
+{
+    color: LightPink;
+}
+
+#board, #winner-display
+{
     text-align: center;
     margin: 0 auto;
     
-    height: 88.2%;
+    width: 73.394495%;
+    max-width: 800px;
+    height: 100%;
     max-height: 800px;
-    
+}
+#board
+{
+    position: relative;
     z-index: 1;
 }
+#winner-display
+{
+    position: absolute;
+    top: 34%;
+    left: 20%;
+    z-index: 50;
+    display: none;
+    font-size: 10vh;
+}
 
-.quark-container
+/* Positioning and sizing for all elements that will directly align to the game grid */
+.grid-element
 {
     width: 12.5%;
     height: 12.5%;
     position: absolute;
-    
-    z-index: 5;
-    /*background-image: url('../img/ring_blue.png');
-    background-position: center;
-    background-size: 100%;*/
+    /*overflow: visible !important;*/
 }
-.x0 { left: 0; }
-.x1 { left: 12.5%; }
-.x2 { left: 25%; }
-.x3 { left: 37.5%; }
-.x4 { left: 50%; }
-.x5 { left: 62.5%; }
-.x6 { left: 75%; }
-.x7 { left: 87.5%; }
-.y0 { top:  0; }
-.y1 { top: 12.5%; }
-.y2 { top: 25%; }
-.y3 { top: 37.5%; }
-.y4 { top: 50%; }
-.y5 { top: 62.5%; }
-.y6 { top: 75%; }
-.y7 { top: 87.5%; }
+.grid-element.x0 { left: 0; }
+.grid-element.x1 { left: 12.5%; }
+.grid-element.x2 { left: 25%; }
+.grid-element.x3 { left: 37.5%; }
+.grid-element.x4 { left: 50%; }
+.grid-element.x5 { left: 62.5%; }
+.grid-element.x6 { left: 75%; }
+.grid-element.x7 { left: 87.5%; }
+.grid-element.y0 { top:  0; }
+.grid-element.y1 { top: 12.5%; }
+.grid-element.y2 { top: 25%; }
+.grid-element.y3 { top: 37.5%; }
+.grid-element.y4 { top: 50%; }
+.grid-element.y5 { top: 62.5%; }
+.grid-element.y6 { top: 75%; }
+.grid-element.y7 { top: 87.5%; }
+/*.grid-element *
+{
+    overflow: visible !important;
+}*/
 
-@keyframes rotate-ring-red
+.quark-container /* grid-level element */
 {
-    from { transform: rotate(360deg); }
-    to   { transform: rotate(  0deg); }
+    z-index: 5;
 }
-@keyframes rotate-ring-blue
-{
-    from { transform: rotate(  0deg); }
-    to   { transform: rotate(360deg); }
-}
-/* hack using `before` pseudoclass to animate a background image */
-.quark-container:before, .arrow-container:before
-{
+.quark-container::before, .arrow-container::before
+{   /* use `before` pseudoelement to rotate background image without rotating div itself */
     content: "";
     position: absolute;
     width: 100%;
     height: 100%;
     left: 0;
     background-position: center center;
-    background-repeat: no-repeat;
+    background-repeat:   no-repeat;
     animation-iteration-count:  infinite;
     animation-timing-function:  linear;
 }
-.quark-container:before
+.quark-container::before
 {
-    background-size: 96%;
+    background-size: 96% 96%;
     animation-duration: 1s;
 }
-
-.quark-container.ring-blue:before
+@keyframes rotate-ring-blue
+{
+    from { transform: rotate(  0deg); }
+    to   { transform: rotate(360deg); }
+}
+.quark-container.ring-blue::before
 {
     background-image: url('../img/ring_blue.png');
     animation-name: rotate-ring-blue;
 }
-.quark-container.ring-red:before
+@keyframes rotate-ring-red
+{
+    from { transform: rotate(360deg); }
+    to   { transform: rotate(  0deg); }
+}
+.quark-container.ring-red::before
 {
     background-image: url('../img/ring_red.png');
     animation-name: rotate-ring-red;
+}
+.quark-container.distorting::before /* quit spinning when I'm doing some fancy jQuery animation */
+{
+    animation-name: none;
+}
+
+@keyframes left-swap-anim
+{
+    25%
+    {
+        height: 3.125%;         /*6.25%;*/
+        margin-top: 4.6875%;    /*3.125%;*/
+        width: 18.75%;          /*15.625%;*/
+        margin-left: -3.125%;   /*-1.5625%;*/
+        transform: translateX(-50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateX(-100%);
+    }
+    100%
+    {
+        transform: translateX(-100%);
+    }
+}
+@keyframes left-swap-fail-anim
+{
+    50%
+    {
+        height:         6.25%;
+        margin-top:     3.125%;
+        width:          15.625%;
+        margin-left:    -1.5625%;
+        transform: translateX(-25%);
+    }
+}
+@keyframes right-swap-anim
+{
+    25%
+    {
+        height: 3.125%;         /*6.25%;*/
+        margin-top: 4.6875%;    /*3.125%;*/
+        width: 18.75%;          /*15.625%;*/
+        margin-left: -3.125%;   /*-1.5625%;*/
+        transform: translateX(50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateX(100%);
+    }
+    100%
+    {
+        transform: translateX(100%);
+    }
+}
+@keyframes right-swap-fail-anim
+{
+    50%
+    {
+        height:         6.25%;
+        margin-top:     3.125%;
+        width:          15.625%;
+        margin-left:    -1.5625%;
+        transform: translateX(25%);
+    }
+}
+@keyframes up-swap-anim
+{
+    25%
+    {
+        height: 18.75%;
+        margin-top: -3.125%;
+        width: 3.125%;
+        margin-left: 4.6875%;
+        transform: translateY(-50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateY(-100%);
+    }
+    100%
+    {
+        transform: translateY(-100%);
+    }
+}
+@keyframes up-swap-fail-anim
+{
+    50%
+    {
+        height:         15.625%;
+        margin-top:     -1.5625%;
+        width:          6.25%;
+        margin-left:    3.125%;
+        transform: translateY(-25%);
+    }
+}
+@keyframes down-swap-anim
+{
+    25%
+    {
+        height: 18.75%;
+        margin-top: -3.125%;
+        width: 3.125%;
+        margin-left: 4.6875%;
+        transform: translateY(50%);
+    }
+    50%
+    {
+        height: 12.5%;
+        margin-top: 0;
+        width:  12.5%;
+        margin-left: 0;
+        transform: translateY(100%);
+    }
+    100%
+    {
+        transform: translateY(100%);
+    }
+}
+@keyframes down-swap-fail-anim
+{
+    50%
+    {
+        height:         15.625%;
+        margin-top:     -1.5625%;
+        width:          6.25%;
+        margin-left:    3.125%;
+        transform: translateY(25%);
+    }
+}
+.quark-container.swapping
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         0.6s;
+}
+.quark-container.swap-fail
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         0.21s;
+}
+.quark-container.swapping.left-swap { animation-name: left-swap-anim; }
+.quark-container.swap-fail.left-swap-fail { animation-name: left-swap-fail-anim; }
+.quark-container.swapping.right-swap { animation-name: right-swap-anim; }
+.quark-container.swap-fail.right-swap-fail { animation-name: right-swap-fail-anim; }
+.quark-container.swapping.up-swap { animation-name: up-swap-anim; }
+.quark-container.swap-fail.up-swap-fail { animation-name: up-swap-fail-anim; }
+.quark-container.swapping.down-swap { animation-name: down-swap-anim; }
+.quark-container.swap-fail.down-swap-fail { animation-name: down-swap-fail-anim; }
+
+@keyframes h-match-anim
+{
+    50%
+    {
+        height: 0%;
+        margin-top: 6.25%;
+        width: 25%;
+        margin-left: -6.25%;
+    }
+    100%
+    {
+        height: 0%;
+        margin-top: 6.25%;
+        width: 25%;
+        margin-left: -6.25%;
+    }
+}
+@keyframes v-match-anim
+{
+    50%
+    {
+        height: 25%;
+        margin-top: -6.25%;
+        width: 0%;
+        margin-left: 6.25%;
+    }
+    100%
+    {
+        height: 25%;
+        margin-top: -6.25%;
+        width: 0%;
+        margin-left: 6.25%;
+    }
+}
+@keyframes hv-match-anim
+{
+    12%
+    {
+        height:         6.25%;
+        margin-top:     3.125%;
+        width:          15.625%;
+        margin-left:    -1.5625%;
+    }
+    28%
+    {
+        height:         12.5%;
+        margin-top:     0;
+        width:          3.125%;
+        margin-left:    4.6875%;
+    }
+    50%
+    {
+        height:         0%;
+        margin-top:     6.25%;
+        width:          0%;
+        margin-left:    6.25%;
+    }
+    100%
+    {
+        height:         0%;
+        margin-top:     6.25%;
+        width:          0%;
+        margin-left:    6.25%;
+    }
+}
+.quark-container.matching
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         1.2s;
+}
+.quark-container.matching.h-match  { animation-name: h-match-anim; }
+.quark-container.matching.v-match  { animation-name: v-match-anim; }
+.quark-container.matching.hv-match { animation-name: hv-match-anim; }
+
+@keyframes spawn-anim
+{
+    0%
+    {
+        height:         12.5%;
+        margin-top:     0;
+        width:          3.125%;
+        margin-left:    4.6875%;
+        opacity:        0;
+    }
+    25%
+    {
+        height:         6.25%;
+        margin-top:     3.125%;
+        width:          15.625%;
+        margin-left:    -1.5625%;
+        opacity:        0.65;
+    }
+    50%
+    {
+        height:         12.5%;
+        margin-top:     0;
+        width:          12.5%;
+        margin-left:    0;
+        opacity:        1;
+    }
+}
+.quark-container.spawning
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         1.2s;
+}
+.quark-container.spawning { animation-name: spawn-anim; }
+
+#board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
+{
+    border: 3px solid;
+    border-radius: 10%;
+    width:  calc(12.5% + 6px);
+    height: calc(12.5% + 6px);
+    margin-left: -3px;
+    margin-top: -3px;
+}
+#board.player-1-turn.taking-input .quark-container:hover
+{
+    border-color:     rgba(0, 0, 255, 0.3);
+    background-color: rgba(0, 0, 255, 0.3);
+}
+#board.player-1-turn.taking-input .quark-container.selected
+{
+    border-color: blue;
+}
+#board.player-2-turn.taking-input .quark-container:hover
+{
+    border-color:     rgba(255, 0, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0.25);
+}
+#board.player-2-turn.taking-input .quark-container.selected
+{
+    border-color: red;
+}
+
+.grav-container /* grid-level element */
+{
+    
 }
 
 .arrow-container
@@ -103,10 +512,17 @@ h1
     position: absolute;
     top: 18%;
     left: 18%;
-    z-index: 10;
     background-position: center center;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+.quark-container .arrow-container
+{
+    z-index: 10;
+}
+.grav-container .arrow-container
+{
+    z-index: 15;
 }
 .arrow-left .arrow-container
 {
@@ -124,48 +540,88 @@ h1
 {
     background-image: url('../img/arrow-up.png');
 }
-
-@keyframes arrow-glow
+@keyframes quark-arrow-flicker
 {
     0%   { opacity: 1; }
-    50%  { opacity: 0.35; }
+    50%  { opacity: 0.25; }
     100% { opacity: 1; }
 }
-.arrow-container:before
-{
-    background-size: 100%;
-    animation-name:     arrow-glow;
+.quark-container .arrow-container::before, /* use `before` pseudoelement to layer a flickering copy of the arrow graphic for an animated glowing effect  */
+.grav-container .arrow-container
+{   
+    background-size:    100% 100%;
     animation-duration: 0.5s;
 }
-.arrow-left .arrow-container:before
+.quark-container .arrow-container::before
+{
+    content:            '';
+    animation-name:     quark-arrow-flicker;
+}
+.arrow-left .arrow-container::before
 {
     background-image: url('../img/arrow-left.png');
 }
-.arrow-right .arrow-container:before
+.arrow-right .arrow-container::before
 {
     background-image: url('../img/arrow-right.png');
 }
-.arrow-down .arrow-container:before
+.arrow-down .arrow-container::before
 {
     background-image: url('../img/arrow-down.png');
 }
-.arrow-up .arrow-container:before
+.arrow-up .arrow-container::before
 {
     background-image: url('../img/arrow-up.png');
 }
+@keyframes grav-arrow-flicker
+{
+    0%   { opacity: 0.5; }
+    50%  { opacity: 0.1; }
+    100% { opacity: 0.5; }
+}
+.grav-container .arrow-container
+{
+    content:            '';
+    animation-name:     grav-arrow-flicker;
+}
 
-@media (max-height: 363px){
+#game.tie #board          { background-color: purple; }
+#game.player-1-win #board { background-color: DarkBlue }
+#game.player-2-win #board { background-color: DarkRed }
+#game.tie #winner-display, #game.player-1-win #winner-display, #game.player-2-win #winner-display
+{
+    display: initial;
+}
+#game.tie #winner-display::after, #game.player-1-win #winner-display::after, #game.player-2-win #winner-display::after
+{
+    font-size: 10vh;
+    text-align: center;
+    z-index: 50;
+}
+#game.tie #winner-display::after          { content: "TIE"; }
+#game.player-1-win #winner-display::after { content: "PLAYER 1 WINS"; }
+#game.player-2-win #winner-display::after { content: "PLAYER 2 WINS"; }
 
-    body
+/* Because apparently you can't put a % in border-width */
+@media (max-height: 664px) and (min-height: 401px), (max-width: 905px) and (min-width: 546px) {
+
+    #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
     {
-        margin: 0;
+        border: 2px solid;
+        width:  calc(12.5% + 4px);
+        height: calc(12.5% + 4px);
+        margin-left: -2px;
+        margin-top: -2px;
     }
-    h1
+}
+@media (max-height: 400px), (max-width: 545px) {
+
+    #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
     {
-        display: none;
-    }
-    #board
-    {
-        height: 100%;
+        border: 1px solid;
+        width:  calc(12.5% + 2px);
+        height: calc(12.5% + 2px);
+        margin-left: -1px;
+        margin-top: -1px;
     }
 }
