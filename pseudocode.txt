@@ -1,0 +1,18 @@
+
+MATCHING WITH GRAVITY
+GAME CODE
+...
+Find each instance of matching squares.
+For each such instance...
+{
+  Form array of matching squares.
+  Determine alignment (horizontal/vertical) of match.
+  Bitwise-OR the alignment into matchAlignment property of each match square.
+  Make new Game.MatchArray from array + Alignment constant.
+  Push MatchArray into Game.UnsequencedMatches
+}
+  
+  If gravity direction of match is perpendicular to alignment...
+    Set gravStrength to 1 for each square in match.
+  Else
+    Store length of match

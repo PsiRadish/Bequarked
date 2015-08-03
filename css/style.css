@@ -50,6 +50,7 @@ body
 #player-2
 {
     float: right;
+    display: none;
 }
 
 .player h2
@@ -96,6 +97,7 @@ body
     text-decoration: underline;
 }
 
+/*
 #player-1.my-turn
 {
     color: LightSkyBlue;
@@ -104,6 +106,7 @@ body
 {
     color: LightPink;
 }
+*/
 
 #board, #winner-display
 {
@@ -200,7 +203,7 @@ body
     background-image: url('../img/ring_red.png');
     animation-name: rotate-ring-red;
 }
-.quark-container.distorting::before /* quit spinning when I'm doing some fancy jQuery animation */
+.quark-container.distorting::before /* quit spinning when I'm doing some fancy other animation */
 {
     animation-name: none;
 }
@@ -353,18 +356,18 @@ body
     animation-timing-function:  ease;
     animation-duration:         0.21s;
 }
-.quark-container.swapping.left-swap { animation-name: left-swap-anim; }
-.quark-container.swap-fail.left-swap-fail { animation-name: left-swap-fail-anim; }
-.quark-container.swapping.right-swap { animation-name: right-swap-anim; }
-.quark-container.swap-fail.right-swap-fail { animation-name: right-swap-fail-anim; }
-.quark-container.swapping.up-swap { animation-name: up-swap-anim; }
-.quark-container.swap-fail.up-swap-fail { animation-name: up-swap-fail-anim; }
-.quark-container.swapping.down-swap { animation-name: down-swap-anim; }
-.quark-container.swap-fail.down-swap-fail { animation-name: down-swap-fail-anim; }
+.quark-container.swapping.left-swap         { animation-name: left-swap-anim; }
+.quark-container.swap-fail.left-swap-fail   { animation-name: left-swap-fail-anim; }
+.quark-container.swapping.right-swap        { animation-name: right-swap-anim; }
+.quark-container.swap-fail.right-swap-fail  { animation-name: right-swap-fail-anim; }
+.quark-container.swapping.up-swap           { animation-name: up-swap-anim; }
+.quark-container.swap-fail.up-swap-fail     { animation-name: up-swap-fail-anim; }
+.quark-container.swapping.down-swap         { animation-name: down-swap-anim; }
+.quark-container.swap-fail.down-swap-fail   { animation-name: down-swap-fail-anim; }
 
 @keyframes h-match-anim
 {
-    50%
+    50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
     {
         height: 0%;
         margin-top: 6.25%;
@@ -381,7 +384,7 @@ body
 }
 @keyframes v-match-anim
 {
-    50%
+    50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
     {
         height: 25%;
         margin-top: -6.25%;
@@ -412,7 +415,7 @@ body
         width:          3.125%;
         margin-left:    4.6875%;
     }
-    50%
+    50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
     {
         height:         0%;
         margin-top:     6.25%;
@@ -481,6 +484,16 @@ body
     margin-left: -3px;
     margin-top: -3px;
 }
+#board.taking-input .quark-container:hover
+{
+    border-color:     rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+#board.taking-input .quark-container.selected
+{
+    border-color: white;
+}
+/*
 #board.player-1-turn.taking-input .quark-container:hover
 {
     border-color:     rgba(0, 0, 255, 0.3);
@@ -499,6 +512,7 @@ body
 {
     border-color: red;
 }
+*/
 
 .grav-container /* grid-level element */
 {
@@ -602,9 +616,10 @@ body
 #game.player-1-win #winner-display::after { content: "PLAYER 1 WINS"; }
 #game.player-2-win #winner-display::after { content: "PLAYER 2 WINS"; }
 
-/* Because apparently you can't put a % in border-width */
-@media (max-height: 664px) and (min-height: 401px), (max-width: 905px) and (min-width: 546px) {
-
+/* Media queries to scale down border width at lower resolution.
+   (Because apparently you can't put a % in border-width)       */
+@media (max-height: 664px) and (min-height: 401px), (max-width: 905px) and (min-width: 546px)
+{
     #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
     {
         border: 2px solid;
@@ -614,8 +629,8 @@ body
         margin-top: -2px;
     }
 }
-@media (max-height: 400px), (max-width: 545px) {
-
+@media (max-height: 400px), (max-width: 545px)
+{
     #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
     {
         border: 1px solid;

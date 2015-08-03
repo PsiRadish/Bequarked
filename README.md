@@ -1,4 +1,6 @@
-﻿# Bequarked
+﻿__*This readme is now out of date.  So there.*__  
+
+# Bequarked
 A vaguely physics-themed puzzle game entirely in frontend Javascript and HTML.
 
 Alternatively, a quirkly-looking Bejeweled clone that's clearly not as good (...yet?).

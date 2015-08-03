@@ -218,6 +218,16 @@
 				"buffer_size": 1075,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nBracketHighlighter:\n------------------\n\n  # BracketHighlighter 2.8.0\n  \n  ## New\n  - ure.py has been removed in favor of backrefs which adds support for numerous backrefs in regex expressions.\n  - Regex back references for upper case and lower case classes in search via `\\c` and `\\l` and the inverse can be done with `\\L` and `\\C`.\n  - Quoting/escaping can be done with `\\Q...\\E`.\n  - Unicode properties can now use verbose names such as `\\p{Uppercase_Letter}`.\n  - Inverse Unicode property support via `\\P{Lu}` or `\\P{Uppercase_Letter}`.\n  - Unicode properties are now more compact and included directly in backrefs.  The unicode cache in the User folder is no longer needed and can be removed.\n  - Better ruby do block support.\n  - Bh_plugin settings for tag highlighting have been moved to `bh_tag.sublime-settings`.\n  - Tag settings have been exposed for defining single tags and self closing tags via `self_closing_tags` and `single_tags`.\n  - Better bracket support for AAAPackageDev's `yaml-tmlanguage` syntax format.\n  \n  ## Notes\n  You can safely delete `bh_unicode_properties.cache` from your `Packages/User` folder.\n  \n  Check out documentation for more information on the new extended back reference support.\n  \n  \n\nTerminal:\n--------\n\n  Sublime Terminal 1.8.0 Changelog:\n  - Added support for opening a new tab in iTerm via @vitorhsb in #72\n      - https://github.com/wbond/sublime_terminal/pull/72\n      - If you are using the `iTerm.sh` as your terminal, this can be configured via:\n          {\n            \"terminal\": \"iTerm.sh\",\n            \"parameters\": [\"--open-in-tab\"]\n          }\n  \n",
+			"settings":
+			{
+				"buffer_size": 1657,
+				"line_ending": "Windows",
+				"name": "Package Control Messages",
+				"scratch": true
+			}
 		}
 	],
 	"build_system": "",
@@ -624,10 +634,10 @@
 							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1665.0,
+						"translation.y": 1470.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -716,7 +726,7 @@
 						"translation.y": 6155.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -751,11 +761,11 @@
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -766,21 +776,21 @@
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -805,7 +815,7 @@
 						"translation.y": 5024.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -840,11 +850,11 @@
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -855,21 +865,21 @@
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -983,7 +993,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
@@ -1078,7 +1088,7 @@
 						"translation.y": 180.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
@@ -1167,7 +1177,7 @@
 						"translation.y": 4320.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -1256,7 +1266,7 @@
 						"translation.y": 1935.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -1272,8 +1282,8 @@
 						"selection":
 						[
 							[
-								1089,
-								1089
+								706,
+								706
 							]
 						],
 						"settings":
@@ -1291,11 +1301,11 @@
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -1306,21 +1316,21 @@
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -1344,6 +1354,36 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1657,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1657,
+								1657
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_indent": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]

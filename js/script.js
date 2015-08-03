@@ -341,13 +341,13 @@ function main()
             var animClass = 'distorting matching';
             switch (currDatum.orientation)
             {
-                case Direction.horizontal:
+                case Alignment.horizontal:
                     animClass += ' h-match';
                     break;
-                case Direction.vertical:
+                case Alignment.vertical:
                     animClass += ' v-match';
                     break
-                case Direction.horizontal | Direction.vertical:
+                case Alignment.horizontal | Alignment.vertical:
                     animClass += ' hv-match';
                     break;
             }
@@ -413,14 +413,15 @@ function main()
         pauseInput();
         Game.animating = true;
         
+        // TODO: animate score chain moving up into total score before changing these values
         $('.my-turn .score').html(newScore);
         $('.my-turn .score-chain').html('');
         
-        playerPanes.removeClass("my-turn");
-        board.removeClass("player-" + oldTurn + "-turn");
+        // playerPanes.removeClass("my-turn");
+        // board.removeClass("player-" + oldTurn + "-turn");
         
-        $('#player-' + newTurn).addClass("my-turn");
-        board.addClass("player-" + newTurn + "-turn");
+        //$('#player-' + newTurn).addClass("my-turn");
+        //board.addClass("player-" + newTurn + "-turn");
         
         unpauseInput();
         Game.animating = false;

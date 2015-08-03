@@ -2,13 +2,18 @@
 // BEQUARKED
 
 //// Direction enum
-const Direction = 
+var Direction = 
 {
     none:       0,
     left:       1,
     right:      2,
     up:         3,
-    down:       4,
+    down:       4
+}
+//// Alignment enum
+var Alignment =
+{
+    none:        0,
     vertical:   16, // Vertical and horizontal are combineable flags, for when a single
     horizontal: 32  // quark is part of a vertical and horizontal match at the same time.
 };
@@ -62,77 +67,77 @@ var Game =
     {
         squares:
         {   // Cleverness or whimsy? You decide!
-            0x00: new Square(0, 0),
-            0x10: new Square(1, 0),
-            0x20: new Square(2, 0),
-            0x30: new Square(3, 0),
-            0x40: new Square(4, 0),
-            0x50: new Square(5, 0),
-            0x60: new Square(6, 0),
-            0x70: new Square(7, 0),
+            0x00: new Square(0, 0,  0x00),
+            0x10: new Square(1, 0,  0x10),
+            0x20: new Square(2, 0,  0x20),
+            0x30: new Square(3, 0,  0x30),
+            0x40: new Square(4, 0,  0x40),
+            0x50: new Square(5, 0,  0x50),
+            0x60: new Square(6, 0,  0x60),
+            0x70: new Square(7, 0,  0x70),
             
-            0x01: new Square(0, 1),
-            0x11: new Square(1, 1),
-            0x21: new Square(2, 1),
-            0x31: new Square(3, 1),
-            0x41: new Square(4, 1),
-            0x51: new Square(5, 1),
-            0x61: new Square(6, 1),
-            0x71: new Square(7, 1),
+            0x01: new Square(0, 1,  0x01),
+            0x11: new Square(1, 1,  0x11),
+            0x21: new Square(2, 1,  0x21),
+            0x31: new Square(3, 1,  0x31),
+            0x41: new Square(4, 1,  0x41),
+            0x51: new Square(5, 1,  0x51),
+            0x61: new Square(6, 1,  0x61),
+            0x71: new Square(7, 1,  0x71),
             
-            0x02: new Square(0, 2),
-            0x12: new Square(1, 2),
-            0x22: new Square(2, 2),
-            0x32: new Square(3, 2),
-            0x42: new Square(4, 2),
-            0x52: new Square(5, 2),
-            0x62: new Square(6, 2),
-            0x72: new Square(7, 2),
+            0x02: new Square(0, 2,  0x02),
+            0x12: new Square(1, 2,  0x12),
+            0x22: new Square(2, 2,  0x22),
+            0x32: new Square(3, 2,  0x32),
+            0x42: new Square(4, 2,  0x42),
+            0x52: new Square(5, 2,  0x52),
+            0x62: new Square(6, 2,  0x62),
+            0x72: new Square(7, 2,  0x72),
             
-            0x03: new Square(0, 3),
-            0x13: new Square(1, 3),
-            0x23: new Square(2, 3),
-            0x33: new Square(3, 3),
-            0x43: new Square(4, 3),
-            0x53: new Square(5, 3),
-            0x63: new Square(6, 3),
-            0x73: new Square(7, 3),
+            0x03: new Square(0, 3,  0x03),
+            0x13: new Square(1, 3,  0x13),
+            0x23: new Square(2, 3,  0x23),
+            0x33: new Square(3, 3,  0x33),
+            0x43: new Square(4, 3,  0x43),
+            0x53: new Square(5, 3,  0x53),
+            0x63: new Square(6, 3,  0x63),
+            0x73: new Square(7, 3,  0x73),
             
-            0x04: new Square(0, 4),
-            0x14: new Square(1, 4),
-            0x24: new Square(2, 4),
-            0x34: new Square(3, 4),
-            0x44: new Square(4, 4),
-            0x54: new Square(5, 4),
-            0x64: new Square(6, 4),
-            0x74: new Square(7, 4),
+            0x04: new Square(0, 4,  0x04),
+            0x14: new Square(1, 4,  0x14),
+            0x24: new Square(2, 4,  0x24),
+            0x34: new Square(3, 4,  0x34),
+            0x44: new Square(4, 4,  0x44),
+            0x54: new Square(5, 4,  0x54),
+            0x64: new Square(6, 4,  0x64),
+            0x74: new Square(7, 4,  0x74),
             
-            0x05: new Square(0, 5),
-            0x15: new Square(1, 5),
-            0x25: new Square(2, 5),
-            0x35: new Square(3, 5),
-            0x45: new Square(4, 5),
-            0x55: new Square(5, 5),
-            0x65: new Square(6, 5),
-            0x75: new Square(7, 5),
+            0x05: new Square(0, 5,  0x05),
+            0x15: new Square(1, 5,  0x15),
+            0x25: new Square(2, 5,  0x25),
+            0x35: new Square(3, 5,  0x35),
+            0x45: new Square(4, 5,  0x45),
+            0x55: new Square(5, 5,  0x55),
+            0x65: new Square(6, 5,  0x65),
+            0x75: new Square(7, 5,  0x75),
             
-            0x06: new Square(0, 6),
-            0x16: new Square(1, 6),
-            0x26: new Square(2, 6),
-            0x36: new Square(3, 6),
-            0x46: new Square(4, 6),
-            0x56: new Square(5, 6),
-            0x66: new Square(6, 6),
-            0x76: new Square(7, 6),
+            0x06: new Square(0, 6,  0x06),
+            0x16: new Square(1, 6,  0x16),
+            0x26: new Square(2, 6,  0x26),
+            0x36: new Square(3, 6,  0x36),
+            0x46: new Square(4, 6,  0x46),
+            0x56: new Square(5, 6,  0x56),
+            0x66: new Square(6, 6,  0x66),
+            0x76: new Square(7, 6,  0x76),
             
-            0x07: new Square(0, 7),
-            0x17: new Square(1, 7),
-            0x27: new Square(2, 7),
-            0x37: new Square(3, 7),
-            0x47: new Square(4, 7),
-            0x57: new Square(5, 7),
-            0x67: new Square(6, 7),
-            0x77: new Square(7, 7)
+            0x07: new Square(0, 7,  0x07),
+            0x17: new Square(1, 7,  0x17),
+            0x27: new Square(2, 7,  0x27),
+            0x37: new Square(3, 7,  0x37),
+            0x47: new Square(4, 7,  0x47),
+            0x57: new Square(5, 7,  0x57),
+            0x67: new Square(6, 7,  0x67),
+            0x77: new Square(7, 7,  0x77)
         },
         
         // Encode x and y coordinates into fancy(/whimsical) hex byte key
@@ -239,7 +244,7 @@ var Game =
             {   var currSquare = matchData[gridKey].square;
                 
                 // no time to implement gravity, alas
-                //currSquare.gravDir = currSquare.quark.gravDir;
+                currSquare.gravDir = currSquare.quark.gravDir;
                 
                 // for now new quarks will just appear where the old ones were
                 currSquare.quark = Quark.getRandomQuark();
@@ -279,7 +284,7 @@ var Game =
                 switch (Game.turn)
                 {
                     case 1:
-                        Game.turn = 2;
+                        //Game.turn = 2;
                         Game.player1Score += Game.player1ChainScore * Game.player1ChainMult;
                         Game.player1ChainScore = 0;
                         Game.player1ChainMult = 0;
@@ -288,7 +293,7 @@ var Game =
                         eventData.push(Game.player1Score);
                         break;
                     case 2:
-                        Game.turn = 1;
+                        //Game.turn = 1;
                         Game.player2Score += Game.player2ChainScore * Game.player2ChainMult;
                         Game.player2ChainScore = 0;
                         Game.player2ChainMult = 0;
@@ -375,35 +380,24 @@ var Game =
                     colMatches.push(colMatch);
                     vMatchSquares = vMatchSquares.concat(colMatch);
                 }
-                
-                //if (1 + matchesLeftB + matchesRightB >= 3)
-                //{
-                //    horizontalMatchSquares.concat(this.getNumSquaresFrom(matchesLeftB, squareB, Direction.left));
-                //    horizontalMatchSquares.concat(this.getNumSquaresFrom(matchesRightB, squareB, Direction.right));
-                //}
-                //if (1 + matchesUpB + matchesDownB >= 3)
-                //{
-                //    verticalMatchSquares.concat(this.getNumSquaresFrom(matchesUpB, squareB, Direction.up));
-                //    verticalMatchSquares.concat(this.getNumSquaresFrom(matchesDownB, squareB, Direction.down));
-                //}
             });
             
             var matchData = {};
             
             hMatchSquares.forEach(function(currSquare)
             {
-                matchData[currSquare.gridKey] = new Game.MatchDatum(currSquare, Direction.horizontal);
+                matchData[currSquare.gridKey] = new Game.MatchDatum(currSquare, Alignment.horizontal);
             });
             
             vMatchSquares.forEach(function(currSquare)
             {
                 if (currSquare.gridKey in matchData)
                 {
-                    matchData[currSquare.gridKey].orientation = Direction.horizontal | Direction.vertical;
+                    matchData[currSquare.gridKey].orientation = Alignment.horizontal | Alignment.vertical;
                 }
                 else
                 {
-                    matchData[currSquare.gridKey] = new Game.MatchDatum(currSquare, Direction.vertical);
+                    matchData[currSquare.gridKey] = new Game.MatchDatum(currSquare, Alignment.vertical);
                 }
             });
             
@@ -473,6 +467,13 @@ var Game =
     {
         Object.defineProperty(this, 'square', { value: square, writeable: true, enumerable: true });
         Object.defineProperty(this, 'orientation', { value: orientation, writeable: true, enumerable: true });
+    },
+    
+    //// MatchArray object constructor
+    MatchArray: function(squares, orientation)
+    {
+        Object.defineProperty(this, 'squares', { value: square, writeable: true, enumerable: true });
+        Object.defineProperty(this, 'alignment', { value: orientation, writeable: true, enumerable: true });
     }
 }
 
@@ -542,15 +543,21 @@ const Quark =
 };
 
 //// Square object constructor
-function Square(x, y)
+function Square(x, y, gridKey)
 {
     Object.defineProperty(this, 'x', { value: x, enumerable: true });
     Object.defineProperty(this, 'y', { value: y, enumerable: true });
+    Object.defineProperty(this, 'gridKey', { value: gridKey, enumerable: true });
     
     Object.defineProperty(this, 'quark', { value: null, writable: true, enumerable: true });
     
     Object.defineProperty(this, 'gravDir', { value: null, writable: true, enumerable: true });
     Object.defineProperty(this, 'gravStrength', { value: null, writable: true, enumerable: true });
+    
+    Object.defineProperty(this, 'matchAlignment', { value: Alignment.none, writable: true, enumerable: true });
+    
+    // volatile – A "dirty" flag indicating that this square's quark has changed but has not yet been checked for matches
+    Object.defineProperty(this, 'volatile', { value: false, writable: true, enumerable: true });
     
     this.neighboorInDir = function(direction)
     {
@@ -605,14 +612,14 @@ Object.defineProperty(Square.prototype, 'squareRight',
     },
     enumerable: true
 });
-Object.defineProperty(Square.prototype, 'gridKey',
-{
-    get: function()
-    {
-        return Game.Grid.makeGridKey(this.x, this.y);
-    },
-    enumerable: true
-});
+//Object.defineProperty(Square.prototype, 'gridKey',
+//{
+//    get: function()
+//    {
+//        return Game.Grid.makeGridKey(this.x, this.y);
+//    },
+//    enumerable: true
+//});
 
 
 //// command-line only stuff for testing purposes

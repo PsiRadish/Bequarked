@@ -1,10 +1,10 @@
 ﻿[File0]
-DataLen=8812
+DataLen=8906
 TopLine=0
-SelStart=881
-SelStop=881
+SelStart=59
+SelStop=59
 RectSel=0
-CaretPos=881
+CaretPos=59
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -34,12 +34,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=13659
-TopLine=404
-SelStart=8991
-SelStop=8991
+DataLen=14398
+TopLine=15
+SelStart=823
+SelStop=823
 RectSel=0
-CaretPos=8991
+CaretPos=823
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -69,12 +69,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File2]
-DataLen=15239
-TopLine=389
-SelStart=14819
-SelStop=14819
+DataLen=15343
+TopLine=397
+SelStart=14923
+SelStop=14923
 RectSel=0
-CaretPos=14819
+CaretPos=14923
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -104,12 +104,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File3]
-DataLen=21751
-TopLine=290
-SelStart=11117
-SelStop=11117
+DataLen=22356
+TopLine=260
+SelStart=10553
+SelStop=10553
 RectSel=0
-CaretPos=11117
+CaretPos=10553
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -141,10 +141,10 @@ ForcedReadOnly=0
 [File4]
 DataLen=1075
 TopLine=0
-SelStart=518
-SelStop=518
+SelStart=291
+SelStop=291
 RectSel=0
-CaretPos=518
+CaretPos=291
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -167,19 +167,54 @@ WrapPos=-2
 RecordSize=-2
 HexEditor=0
 HexSections=-2
-ProjectStatus=0
+ProjectStatus=1
 RelativeFilename=js\jquery.fittext.js
 Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\jquery.fittext.js
 FTPFilename=
 ForcedReadOnly=0
 
 [File5]
-DataLen=2433
+DataLen=557
 TopLine=0
-SelStart=1144
-SelStop=1144
+SelStart=397
+SelStop=397
 RectSel=0
-CaretPos=1144
+CaretPos=397
+CaretVisible=1
+TopLineAlt=0
+SelStartAlt=0
+SelStopAlt=0
+RectSelAlt=0
+CaretPosAlt=0
+CaretVisibleAlt=0
+BookmarkCount=1
+Folding=
+FileType=1523059028
+DataFormat=utf8
+AutoIndent=0
+NumberLines=0
+WordWrapIndent=0
+NumberColumns=0
+ShowSpaces=0
+ShowLineBreaks=0
+LiveSpell=0
+WrapPos=-2
+RecordSize=-2
+HexEditor=0
+HexSections=-2
+ProjectStatus=0
+RelativeFilename=pseudocode.txt
+Filename=M:\Radish\Dev\GA_WDI\Bequarked\pseudocode.txt
+FTPFilename=
+ForcedReadOnly=0
+
+[File6]
+DataLen=2585
+TopLine=0
+SelStart=614
+SelStop=614
+RectSel=0
+CaretPos=614
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -211,10 +246,10 @@ ForcedReadOnly=0
 [EditPad Project]
 Managed=1
 BookmarksProjectWide=0
-ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\HTML.atc
+ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\CSS.atc
 TabIndex=5
 FirstFileTab=0
-FileCount=6
+FileCount=7
 RemovedCount=1
 
 [Removed0]
