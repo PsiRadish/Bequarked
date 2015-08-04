@@ -1,18 +1,73 @@
 
 MATCHING WITH GRAVITY
-GAME CODE
-...
-Find each instance of matching squares.
-For each such instance...
-{
-  Form array of matching squares.
-  Determine alignment (horizontal/vertical) of match.
-  Bitwise-OR the alignment into matchAlignment property of each match square.
-  Make new Game.MatchArray from array + Alignment constant.
-  Push MatchArray into Game.UnsequencedMatches
-}
+View / Game
+• Former(?) "removequarks" event(s?) will receive a `Step` object.
+  Define variable momentLength, initialized to 0.
+  For each event in moment...
+    Parse the event, initiating the correct animations.
+    Determine the duration of the event.
+    If duration > current momentLength, set momentLength to duration.
+  Unset animating flag after a timeout of momentLength.
+
+Game
+• Game.EventType
+  • GameStart           "game:start"
+  • GameOver            "game:over"
+  • BoardSwapSuccess    "board:swapSuccess"
+  • BoardSwapFail       "board:swapFail"
+  • BoardRemoveMatches  "board:removeMatches"
+  • BoardNewQuarks      "board:newQuarks"
+  • BoardGravity        "board:gravity"
+  • BoardStable         "board:stable"
+• Game.Step class
+  chainScore
+  chainMult
+  events[]  // to hold `StepEvent`s
+• Game.StepEvent class
+  type (holds Game.EventType)
+  data[]
+    squares[]
+    ...
+  • BoardGravity
+    `squares` contains a set of Square objects that can all safely obey their gravity without interfering with each other
   
-  If gravity direction of match is perpendicular to alignment...
-    Set gravStrength to 1 for each square in match.
-  Else
-    Store length of match
+• Upon quarks settling into new positions...
+  For each square with resettled quark...
+  {
+    Reset matchAlignment, <more?>
+    Search for lines of matching quarks containing square
+    For each such line...
+    {
+      matchGravDir = gravity direction of match
+      
+      matchGravStrength =  ?..
+      If matchGravDir is perpendicular to match alignment...
+        matchGravStrength = 1
+      Else
+        matchGravStrength = length of match
+      
+      Game.gravCumulation[matchGravDir] += matchGravStrength
+      
+      For each square in match...
+        square.matchAlignment |= alignment of match
+        square.gravDir = matchGravDir
+        square.gravStrength = Math.max(square.gravStrength, matchGravStrength)
+        
+        check adjacent square in opposite direction of gravDir...
+          If oppSquare has opposite GravDir..
+            Game.gravBombs[square.gridKey] = oppSquare.gridKey
+            Game.gravBombs[oppSquare.gridKey] = square.gridKey
+          Else
+            phew!
+        
+        add to matchSquares for return
+    }
+    return matchSquares
+  }
+  
+• Upon a list of matchSquares being obtained
+  For each square...
+    Set square.quark to null
+    Game.gravHolesAll[square.gridKey] = square
+    Game.gravHolesDir[square.gravDir][square.gridKey] = square
+  Notify view to remove squares

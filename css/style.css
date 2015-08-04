@@ -514,11 +514,6 @@ body
 }
 */
 
-.grav-container /* grid-level element */
-{
-    
-}
-
 .arrow-container
 {
     width: 64%;
@@ -533,10 +528,6 @@ body
 .quark-container .arrow-container
 {
     z-index: 10;
-}
-.grav-container .arrow-container
-{
-    z-index: 15;
 }
 .arrow-left .arrow-container
 {
@@ -560,44 +551,195 @@ body
     50%  { opacity: 0.25; }
     100% { opacity: 1; }
 }
-.quark-container .arrow-container::before, /* use `before` pseudoelement to layer a flickering copy of the arrow graphic for an animated glowing effect  */
-.grav-container .arrow-container
-{   
-    background-size:    100% 100%;
-    animation-duration: 0.5s;
-}
-.quark-container .arrow-container::before
+.quark-container .arrow-container::before /* use `before` pseudoelement to layer a flickering copy of the arrow graphic for an animated glowing effect  */
 {
     content:            '';
+    background-size:    100% 100%;
+    animation-duration: 0.5s;
     animation-name:     quark-arrow-flicker;
 }
-.arrow-left .arrow-container::before
+.quark-container.arrow-left .arrow-container::before
 {
     background-image: url('../img/arrow-left.png');
 }
-.arrow-right .arrow-container::before
+.quark-container.arrow-right .arrow-container::before
 {
     background-image: url('../img/arrow-right.png');
 }
-.arrow-down .arrow-container::before
+.quark-container.arrow-down .arrow-container::before
 {
     background-image: url('../img/arrow-down.png');
 }
-.arrow-up .arrow-container::before
+.quark-container.arrow-up .arrow-container::before
 {
     background-image: url('../img/arrow-up.png');
 }
+
+.grav-container /* grid-level element */
+{
+    
+}
 @keyframes grav-arrow-flicker
 {
+    0%   { opacity: 0.25; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 0.25; }
+}
+@keyframes grav-explosive-arrow-flicker
+{
     0%   { opacity: 0.5; }
-    50%  { opacity: 0.1; }
+    50%  { opacity: 1.0; }
     100% { opacity: 0.5; }
 }
 .grav-container .arrow-container
 {
-    content:            '';
-    animation-name:     grav-arrow-flicker;
+    z-index: 15;
+    animation-name:             grav-arrow-flicker;
+    animation-duration:         1s;
+    animation-iteration-count:  infinite;
+    animation-timing-function:  ease;
 }
+.grav-container.explosive .arrow-container
+{
+    animation-name:     grav-explosive-arrow-flicker;
+    animation-duration: 0.4s;
+}
+
+@keyframes grav-container-fold-up
+{
+    100%
+    {
+        height: 0%;
+    }
+}
+@keyframes grav-container-fold-left
+{
+    100%
+    {
+        width: 0%;
+    }
+}
+@keyframes grav-container-fold-down
+{
+    100%
+    {
+        height: 0%;
+        margin-top: 12.5%;
+    }
+}
+@keyframes grav-container-fold-right
+{
+    100%
+    {
+        width: 0%;
+        margin-left: 12.5%;
+    }
+}
+.grav-container.fold
+{
+    animation-duration:         0.25s;
+    animation-iteration-count:  1;
+    animation-timing-function:  linear;
+}
+.grav-container.arrow-left.fold  { animation-name: grav-container-fold-left; }
+.grav-container.arrow-right.fold { animation-name: grav-container-fold-right; }
+.grav-container.arrow-down.fold  { animation-name: grav-container-fold-down; }
+.grav-container.arrow-up.fold    { animation-name: grav-container-fold-up; }
+
+@keyframes grav-container-explosive-up
+{
+    30%
+    {
+        height:         11%;
+        margin-top:     1.5%;
+    }
+    50%
+    {
+        height:         8.3333333333333333333333333333333%;
+        margin-top:     4.1666666666666666666666666666667%;
+    }
+    75%
+    {
+        height:         9.1666666666666666666666666666667%;
+        margin-top:     3.3333333333333333333333333333333%;
+    }
+    90%
+    {
+        height:         7.5%;
+        margin-top:     5%;
+    }
+}
+@keyframes grav-container-explosive-left
+{
+    30%
+    {
+        width:          11%;
+        margin-left:    1.5%;
+    }
+    50%
+    {
+        width:          8.3333333333333333333333333333333%;
+        margin-left:    4.1666666666666666666666666666667%;
+    }
+    75%
+    {
+        width:          9.1666666666666666666666666666667%;
+        margin-left:    3.3333333333333333333333333333333%;
+    }
+    90%
+    {
+        width:          7.5%;
+        margin-left:    5%;
+    }
+}
+@keyframes grav-container-explosive-down
+{
+    30%
+    {
+        height:         11%;
+    }
+    50%
+    {
+        height:         8.3333333333333333333333333333333%;
+    }
+    75%
+    {
+        height:         9.1666666666666666666666666666667%;
+    }
+    90%
+    {
+        height:         7.5%;
+    }
+}
+@keyframes grav-container-explosive-right
+{
+    30%
+    {
+        width:          11%;
+    }
+    50%
+    {
+        width:          8.3333333333333333333333333333333%;
+    }
+    75%
+    {
+        width:          9.1666666666666666666666666666667%;
+    }
+    90%
+    {
+        width:          7.5%;
+    }
+}
+.grav-container.explosive
+{
+    animation-duration:         0.8s;
+    animation-iteration-count:  infinite;
+    animation-timing-function:  ease;
+}
+.grav-container.explosive.arrow-up    { animation-name: grav-container-explosive-up; }
+.grav-container.explosive.arrow-left  { animation-name: grav-container-explosive-left; }
+.grav-container.explosive.arrow-down  { animation-name: grav-container-explosive-down; }
+.grav-container.explosive.arrow-right { animation-name: grav-container-explosive-right; }
 
 #game.tie #board          { background-color: purple; }
 #game.player-1-win #board { background-color: DarkBlue }
