@@ -698,25 +698,6 @@ function Square(x, y, gridKey)
     
     // dirty – A "dirty" flag indicating that this square's quark has changed but has not yet been checked for matches
     this.dirty = false;
-    
-    this.neighboorInDir = function(direction)
-    {
-        switch (direction)
-        {
-         case Direction.Up:
-            return this.squareAbove;
-            break;
-         case Direction.Down:
-            return this.squareBelow;
-            break;
-         case Direction.Left:
-            return this.squareLeft;
-            break;
-         case Direction.Right:
-            return this.squareRight;
-            break;
-        }
-    };
 };
 // enum definition
 Square.State =
@@ -760,6 +741,24 @@ Object.defineProperty(Square.prototype, 'squareRight',
     },
     enumerable: true
 });
+Square.prototype.neighboorInDir = function(direction)
+{
+    switch (direction)
+    {
+     case Direction.Up:
+        return this.squareAbove;
+        break;
+     case Direction.Down:
+        return this.squareBelow;
+        break;
+     case Direction.Left:
+        return this.squareLeft;
+        break;
+     case Direction.Right:
+        return this.squareRight;
+        break;
+    }
+};
 // Comparison function for sorting arrays of squares.
 // Square.compareFunction = function(squareA, squareB)
 // {
