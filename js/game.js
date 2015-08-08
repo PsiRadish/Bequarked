@@ -95,6 +95,8 @@ var Game =
     
     //matchSquares: null,
     
+    matchGroups: [],
+    
     gravHolesAll: {},
     gravHolesDir: [{}, {}, {}, {}],
     
@@ -409,8 +411,11 @@ var Game =
                         matchGravStrength = 1;
                     }
                     
+                    // may not use this...
                     Game.gravCumulation[matchGravDir] += matchGravStrength; // increase priority for this grav direction
                     
+                    var matchGroup = new Game.MatchGroup();
+                    var matchGroupIndex = -1;
                     // store this match alignment in the square
                     lineMatch.forEach(function(lineSquare)
                     {
@@ -424,15 +429,30 @@ var Game =
                         lineSquare.gravDir = matchGravDir;
                         lineSquare.gravStrength = Math.max(lineSquare.gravStrength, matchGravStrength);
                         
-                        // get adjacent square in direction opposite to gravDir
-                        oppSquare = lineSquare.neighboorInDir(Direction.opposite(matchGravDir));
-                        if (oppSquare != null && oppSquare.gravDir == Direction.opposite(lineSquare.gravDir))
+                        matchGroup[lineSquare.gridKey] = lineSquare;
+                                                
+                        if (lineSquare.matchGroupIndex != -1) // if this square is already in a match group
                         {
-                            Game.gravBombs[lineSquare.gridKey] = oppSquare.gridKey;
-                            Game.gravBombs[oppSquare.gridKey] = lineSquare.gridKey;
+                            if (matchGroupIndex != -1) // double assigning match group whaaat?
+                                console.log("double assigning match group whaaat?");
+                            
+                            matchGroupIndex = lineSquare.matchGroupIndex; // remember to merge with the existing match group later
                         }
                     });
                     //lineMatch.sort(Square.compareFunction);
+                    
+                    // either add matchGroup to Game.matchGroups, or merge with an existing group in Game.matchGroups
+                    if (matchGroupIndex == -1)
+                    {
+                        matchGroup.assignIndexToSquares(Game.matchGroups.length);
+                        Game.matchGroups.push(matchGroup);
+                    }
+                    else
+                    {
+                        matchGroup.assignIndexToSquares(matchGroupIndex);
+                        // merge objects
+                        $.extend(Game.matchGroups[matchGroupIndex], matchGroup);
+                    }
                     
                     // rowMatches.push(lineMatch);
                     matchSquares = matchSquares.concat(lineMatch);
@@ -524,13 +544,7 @@ var Game =
     
     //removeMatches: function(matchData)
     removeMatches: function(matchSquares)
-    {
-        // sneak out the extra data I might need some day
-        // var rowMatches = matchData.rowMatches;
-        // delete matchData.rowMatches;
-        // var colMatches = matchData.colMatches;
-        // delete matchData.colMatches;
-        
+    {        
         // var matchPoints = Object.keys(matchData).length * 100;
         var matchPoints = matchSquares.length * 100;
         
@@ -539,10 +553,22 @@ var Game =
         {
             currSquare.quark = null;
             
-            if (!(currSquare.gridKey in Game.gravBombs))    
+            // get adjacent square in direction opposite to gravDir
+            var oppSquare = currSquare.neighboorInDir(Direction.opposite(currSquare.gravDir));
+            if (oppSquare != null && oppSquare.gravDir == Direction.opposite(currSquare.gravDir))
+            {
+                Game.gravBombs[currSquare.gridKey] = currSquare;
+                Game.gravBombs[oppSquare.gridKey] = oppSquare;
+                
+                currSquare.state = Square.State.GravityBomb;
+                oppSquare.state = Square.State.GravityBomb;
+            }
+            else  
             {
                 Game.gravHolesAll[currSquare.gridKey] = currSquare;
                 Game.gravHolesDir[currSquare.gravDir][currSquare.gridKey] = currSquare;
+                
+                currSquare.state = Square.State.Gravity;
             }
             
             // if (!currSquare.dirty)
@@ -555,7 +581,7 @@ var Game =
         // var eventData = [matchData];
         var eventData = [matchSquares];
         
-        eventData.push(Object.keys(Game.gravBombs));
+        eventData.push(Game.gravBombs);
         
         Game.player1ChainScore += matchPoints;
         Game.player1ChainMult += 1;
@@ -676,7 +702,40 @@ var Game =
     //     Object.defineProperty(this, 'square', { value: square, writeable: true, enumerable: true });
     //     Object.defineProperty(this, 'orientation', { value: orientation, writeable: true, enumerable: true });
     // },
+        
+    MatchGroup: function()
+    {
+        //this.totalGravStrength = 0;
+    }
 };
+Game.MatchGroup.prototype.assignIndexToSquares = function(index)
+{
+    for (var gridKey in this)
+    {
+        if (gridKey == "totalGravStrength")
+            continue;
+        
+        this[gridKey].matchGroupIndex = index;
+    }
+};
+Object.defineProperty(Game.MatchGroup.prototype, 'totalGravStrength',
+{
+    get: function()
+    {
+        var total = 0;
+        
+        for (var gridKey in this)
+        {
+            if (gridKey == "totalGravStrength")
+                continue;
+            
+            total += this[gridKey].gravStrength;
+        }
+        
+        return total;
+    },
+    enumerable: false
+});
 
 //// Square object constructor
 function Square(x, y, gridKey)
@@ -694,7 +753,8 @@ function Square(x, y, gridKey)
     // this.gravLeft  = 0;
     // this.gravRight = 0;
     this.matchAlignment = Alignment.None;
-    this.state = 0;
+    this.matchGroupIndex = -1;
+    this.state = 0; // Square.State.Spawn
     
     // dirty – A "dirty" flag indicating that this square's quark has changed but has not yet been checked for matches
     this.dirty = false;

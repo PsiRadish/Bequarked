@@ -1,10 +1,10 @@
 ﻿[File0]
-DataLen=8943
+DataLen=9036
 TopLine=0
-SelStart=813
-SelStop=813
+SelStart=671
+SelStop=671
 RectSel=0
-CaretPos=813
+CaretPos=671
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -34,12 +34,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=18386
-TopLine=658
-SelStart=15159
-SelStop=15159
+DataLen=21490
+TopLine=376
+SelStart=8534
+SelStop=8534
 RectSel=0
-CaretPos=15159
+CaretPos=8534
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -47,8 +47,7 @@ SelStopAlt=0
 RectSelAlt=0
 CaretPosAlt=0
 CaretVisibleAlt=0
-BookmarkCount=2
-Bookmark1=13682
+BookmarkCount=1
 Folding=
 FileType=1194788050
 DataFormat=utf8
@@ -70,12 +69,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File2]
-DataLen=15924
-TopLine=303
-SelStart=11445
-SelStop=11445
+DataLen=17448
+TopLine=338
+SelStart=12936
+SelStop=12936
 RectSel=0
-CaretPos=11445
+CaretPos=12936
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -142,10 +141,10 @@ ForcedReadOnly=0
 [File4]
 DataLen=908
 TopLine=0
-SelStart=322
-SelStop=322
+SelStart=908
+SelStop=908
 RectSel=0
-CaretPos=322
+CaretPos=908
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -282,8 +281,8 @@ ForcedReadOnly=0
 [EditPad Project]
 Managed=1
 BookmarksProjectWide=0
-ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\CSS.atc
-TabIndex=4
+ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\clips2.atc
+TabIndex=2
 FirstFileTab=0
 FileCount=8
 RemovedCount=1

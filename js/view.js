@@ -333,7 +333,7 @@ function main()
         pauseInput();
         Game.animating = true;
         
-        var animDur = 600;
+        var animDur = 400;
         
         var doomedQuarks = []; // need to go over quarks again after delay, so I'll keep a collection
         
@@ -345,32 +345,71 @@ function main()
             var doomedQuark = $('.quark-container.x' + currSquare.x + '.y' + currSquare.y);
             doomedQuarks.push(doomedQuark);
             
-            var animClass = 'distorting matching';
-            // switch (currDatum.orientation)
+            // var animClass = 'distorting matching';
+            // // switch (currDatum.orientation)
+            // switch (currSquare.matchAlignment)
+            // {
+            //     case Alignment.Horizontal:
+            //         animClass += ' h-match';
+            //         break;
+            //     case Alignment.Vertical:
+            //         animClass += ' v-match';
+            //         break
+            //     case Alignment.Horizontal | Alignment.Vertical:
+            //         animClass += ' hv-match';
+            //         break;
+            // }
+            
+            var animParams =
+            {
+                ease: Power4.easeInOut,
+                onCompleteScope: doomedQuark,
+                onComplete: function()
+                {
+                    // $this = $(this);
+                    
+                    // how many fucking ways do I have to say this before you'll fucking do it?
+                    TweenLite.killTweensOf(this);
+                    TweenLite.killTweensOf(this[0]);
+                    this.removeAttr('style');
+                    
+                    // console.log("this", this);
+                }
+            };
+            
             switch (currSquare.matchAlignment)
             {
-                case Alignment.Horizontal:
-                    animClass += ' h-match';
-                    break;
-                case Alignment.Vertical:
-                    animClass += ' v-match';
-                    break
-                case Alignment.Horizontal | Alignment.Vertical:
-                    animClass += ' hv-match';
-                    break;
+             case Alignment.Horizontal:
+                animParams.scaleX = 2;
+                animParams.scaleY = 0;
+                break;
+             case Alignment.Vertical:
+                animParams.scaleX = 0;
+                animParams.scaleY = 2;
+                break
+             case Alignment.Horizontal | Alignment.Vertical:
+                ///// TEMPORARY?
+                animParams.scaleX = 0;
+                animParams.scaleY = 0;
+                break;
             }
             
+            TweenLite.to(doomedQuark, animDur/1000, animParams);
+            
             // adding these classes will initiate CSS animations
-            doomedQuark.addClass(animClass);
+            // doomedQuark.addClass(animClass);
         });
+        
+        console.log("make it out again?");
         
         // wait for animations to finish
         window.setTimeout(function()
-        {
+        {   console.log("timeout, buddy");
             doomedQuarks.forEach(function(doomedQuark)
             {   // empty it out hard
                 doomedQuark.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
-                doomedQuark.removeClass("distorting matching h-match v-match hv-match");
+                // doomedQuark.removeClass("distorting matching h-match v-match hv-match");
+                // doomedQuark.removeAttr('style');
             });
             
             unpauseInput();
@@ -381,7 +420,8 @@ function main()
     
     // BoardNewQuarks – Spawn new quarks.
     gameView.on(Game.EventType.BoardNewQuarks, function(e, newSquares)
-    {
+    {   console.log("new quarks", newSquares);
+        
         pauseInput();
         Game.animating = true;
         
