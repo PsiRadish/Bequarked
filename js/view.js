@@ -372,8 +372,6 @@ function main()
                     TweenLite.killTweensOf(this);
                     TweenLite.killTweensOf(this[0]);
                     this.removeAttr('style');
-                    
-                    // console.log("this", this);
                 }
             };
             
@@ -400,11 +398,9 @@ function main()
             // doomedQuark.addClass(animClass);
         });
         
-        console.log("make it out again?");
-        
         // wait for animations to finish
         window.setTimeout(function()
-        {   console.log("timeout, buddy");
+        {
             doomedQuarks.forEach(function(doomedQuark)
             {   // empty it out hard
                 doomedQuark.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
@@ -420,8 +416,7 @@ function main()
     
     // BoardNewQuarks – Spawn new quarks.
     gameView.on(Game.EventType.BoardNewQuarks, function(e, newSquares)
-    {   console.log("new quarks", newSquares);
-        
+    {
         pauseInput();
         Game.animating = true;
         

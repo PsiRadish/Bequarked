@@ -1,3 +1,16 @@
+/*
+  REFERENCE
+  Programmable CSS transition(/animation) through jQuery:
+    $('.quark-container.x0.y0').css(
+    {
+        'transition': 'transform 1s',
+        'transform': 'translate3d(687px, 443px, 0px)'
+    }).on('transitionend', function()
+    {
+        ...
+    });
+*/
+
 html, body, #game
 {
     color: white;
@@ -161,6 +174,20 @@ body
 {
     overflow: visible !important;
 }*/
+
+.grid-element.effect.w3 { height: 12.5%; width: 37.5%; }
+.grid-element.effect.w4 { height: 12.5%; width:   50%; }
+.grid-element.effect.w5 { height: 12.5%; width: 62.5%; }
+.grid-element.effect.w6 { height: 12.5%; width:   75%; }
+.grid-element.effect.w7 { height: 12.5%; width: 87.5%; }
+.grid-element.effect.w8 { height: 12.5%; width:  100%; }
+
+.grid-element.effect.h3 { width: 12.5%; height: 37.5%; }
+.grid-element.effect.h4 { width: 12.5%; height:   50%; }
+.grid-element.effect.h5 { width: 12.5%; height: 62.5%; }
+.grid-element.effect.h6 { width: 12.5%; height:   75%; }
+.grid-element.effect.h7 { width: 12.5%; height: 87.5%; }
+.grid-element.effect.h8 { width: 12.5%; height:  100%; }
 
 .quark-container /* grid-level element */
 {

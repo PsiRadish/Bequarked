@@ -34,12 +34,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=21490
-TopLine=376
-SelStart=8534
-SelStop=8534
+DataLen=22590
+TopLine=150
+SelStart=3662
+SelStop=3662
 RectSel=0
-CaretPos=8534
+CaretPos=3662
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -52,7 +52,7 @@ Folding=
 FileType=1194788050
 DataFormat=utf8
 AutoIndent=0
-NumberLines=2
+NumberLines=0
 WordWrapIndent=0
 NumberColumns=0
 ShowSpaces=0
@@ -69,12 +69,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File2]
-DataLen=17448
-TopLine=338
-SelStart=12936
-SelStop=12936
+DataLen=17237
+TopLine=379
+SelStart=14363
+SelStop=14363
 RectSel=0
-CaretPos=12936
+CaretPos=14363
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -104,12 +104,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File3]
-DataLen=30449
-TopLine=627
-SelStart=24332
-SelStop=24332
+DataLen=32427
+TopLine=707
+SelStart=27736
+SelStop=27736
 RectSel=0
-CaretPos=24332
+CaretPos=27736
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -281,8 +281,8 @@ ForcedReadOnly=0
 [EditPad Project]
 Managed=1
 BookmarksProjectWide=0
-ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\clips2.atc
-TabIndex=2
+ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\CSS.atc
+TabIndex=1
 FirstFileTab=0
 FileCount=8
 RemovedCount=1

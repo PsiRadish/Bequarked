@@ -708,16 +708,30 @@ var Game =
         //this.totalGravStrength = 0;
     }
 };
-Game.MatchGroup.prototype.assignIndexToSquares = function(index)
+//Game.MatchGroup.prototype.assignIndexToSquares = function(index)
+//{
+//    for (var gridKey in this)
+//    {
+//        if (gridKey == "totalGravStrength")
+//            continue;
+//        
+//        this[gridKey].matchGroupIndex = index;
+//    }
+//};
+Object.defineProperty(Game.MatchGroup.prototype, 'assignIndexToSquares',
 {
-    for (var gridKey in this)
+    value: function(index)
     {
-        if (gridKey == "totalGravStrength")
-            continue;
-        
-        this[gridKey].matchGroupIndex = index;
-    }
-};
+        for (var gridKey in this)
+        {
+            if (gridKey == "totalGravStrength")
+                continue;
+            
+            this[gridKey].matchGroupIndex = index;
+        }
+    },
+    enumerable: false
+});
 Object.defineProperty(Game.MatchGroup.prototype, 'totalGravStrength',
 {
     get: function()
