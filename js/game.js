@@ -696,12 +696,13 @@ var Game =
         Game.eventTarget.trigger(Game.EventType.GameOver, [1]);
     },
     
-    //// MatchDatum object constructor
-    // MatchDatum: function(square, orientation)
-    // {
-    //     Object.defineProperty(this, 'square', { value: square, writeable: true, enumerable: true });
-    //     Object.defineProperty(this, 'orientation', { value: orientation, writeable: true, enumerable: true });
-    // },
+    // EffectDatum object constructor
+    EffectDatum: function(startSquare, alignment, length)
+    {
+        this.startSquare = startSquare;
+        this.alignment = alignment;
+        this.length = length;
+    },
         
     MatchGroup: function()
     {
@@ -834,10 +835,10 @@ Square.prototype.neighboorInDir = function(direction)
     }
 };
 // Comparison function for sorting arrays of squares.
-// Square.compareFunction = function(squareA, squareB)
-// {
-//     return squareA.gridKey - squareB.gridKey;
-// }
+Square.compareFunction = function(squareA, squareB)
+{
+    return squareA.gridKey - squareB.gridKey;
+}
 
 //// Quark types
 var Quark =

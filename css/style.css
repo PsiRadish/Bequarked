@@ -22,8 +22,45 @@ body
     margin: 0.5vh;
     background-color: black;
     
+    font-size: 14px;
+    font-family: Segoe UI, Frutiger, DejaVu Sans, Helvetica Neue, Helvetica, Source Sans Pro, Open Sans, Arial, sans-serif;
+    
     /*background: black no-repeat center center fixed;
     background-image: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(http://i.imgur.com/cGpKK.jpg);*/
+}
+
+* { box-sizing: border-box; }
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 
+{
+  font-weight: 500;
+  line-height: 1.1;
+}
+.h1, h1 
+{
+    font-size: 36px;
+}
+.h2, h2 
+{
+    font-size: 30px;
+}
+.h3, h3
+{
+    font-size: 24px;
+}
+.h4, h4 
+{
+    font-size: 18px;
+}
+.h5, h5 
+{
+    font-size: 16px;
+    font-weight: 600;
+}
+.h6, h6
+{
+    font-size: 14px;
+    font-weight: 700;
 }
 
 #title-container h1
