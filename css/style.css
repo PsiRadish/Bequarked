@@ -276,19 +276,11 @@ body
 {
     25%
     {
-        height: 3.125%;         /*6.25%;*/
-        margin-top: 4.6875%;    /*3.125%;*/
-        width: 18.75%;          /*15.625%;*/
-        margin-left: -3.125%;   /*-1.5625%;*/
-        transform: translateX(-50%);
+        transform: translateX(-50%) scale(1.5, 0.25);
     }
     50%
     {
-        height: 12.5%;
-        margin-top: 0;
-        width:  12.5%;
-        margin-left: 0;
-        transform: translateX(-100%);
+        transform: translateX(-100%) scale(1, 1);
     }
     100%
     {
@@ -299,30 +291,18 @@ body
 {
     50%
     {
-        height:         6.25%;
-        margin-top:     3.125%;
-        width:          15.625%;
-        margin-left:    -1.5625%;
-        transform: translateX(-25%);
+        transform: translateX(-25%) scale(1.25, 0.5);
     }
 }
 @keyframes right-swap-anim
 {
     25%
     {
-        height: 3.125%;         /*6.25%;*/
-        margin-top: 4.6875%;    /*3.125%;*/
-        width: 18.75%;          /*15.625%;*/
-        margin-left: -3.125%;   /*-1.5625%;*/
-        transform: translateX(50%);
+        transform: translateX(50%) scale(1.5, 0.25);
     }
     50%
     {
-        height: 12.5%;
-        margin-top: 0;
-        width:  12.5%;
-        margin-left: 0;
-        transform: translateX(100%);
+        transform: translateX(100%) scale(1, 1);
     }
     100%
     {
@@ -333,30 +313,18 @@ body
 {
     50%
     {
-        height:         6.25%;
-        margin-top:     3.125%;
-        width:          15.625%;
-        margin-left:    -1.5625%;
-        transform: translateX(25%);
+        transform: translateX(25%) scale(1.25, 0.5);
     }
 }
 @keyframes up-swap-anim
 {
     25%
     {
-        height: 18.75%;
-        margin-top: -3.125%;
-        width: 3.125%;
-        margin-left: 4.6875%;
-        transform: translateY(-50%);
+        transform: translateY(-50%) scale(0.25, 1.5);
     }
     50%
     {
-        height: 12.5%;
-        margin-top: 0;
-        width:  12.5%;
-        margin-left: 0;
-        transform: translateY(-100%);
+        transform: translateY(-100%) scale(1, 1);
     }
     100%
     {
@@ -367,30 +335,18 @@ body
 {
     50%
     {
-        height:         15.625%;
-        margin-top:     -1.5625%;
-        width:          6.25%;
-        margin-left:    3.125%;
-        transform: translateY(-25%);
+        transform: translateY(-25%) scale(0.5, 1.25);
     }
 }
 @keyframes down-swap-anim
 {
     25%
     {
-        height: 18.75%;
-        margin-top: -3.125%;
-        width: 3.125%;
-        margin-left: 4.6875%;
-        transform: translateY(50%);
+        transform: translateY(50%) scale(0.25, 1.5);
     }
     50%
     {
-        height: 12.5%;
-        margin-top: 0;
-        width:  12.5%;
-        margin-left: 0;
-        transform: translateY(100%);
+        transform: translateY(100%) scale(1, 1);
     }
     100%
     {
@@ -401,11 +357,7 @@ body
 {
     50%
     {
-        height:         15.625%;
-        margin-top:     -1.5625%;
-        width:          6.25%;
-        margin-left:    3.125%;
-        transform: translateY(25%);
+        transform: translateY(25%) scale(0.5, 1.25);
     }
 }
 .quark-container.swapping
@@ -433,71 +385,48 @@ body
 {
     50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
     {
-        height: 0%;
-        margin-top: 6.25%;
-        width: 25%;
-        margin-left: -6.25%;
+        transform: scale(2, 0);
     }
     100%
     {
-        height: 0%;
-        margin-top: 6.25%;
-        width: 25%;
-        margin-left: -6.25%;
+        transform: scale(2, 0);
     }
 }
 @keyframes v-match-anim
 {
     50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
     {
-        height: 25%;
-        margin-top: -6.25%;
-        width: 0%;
-        margin-left: 6.25%;
+        transform: scale(0, 2);
     }
     100%
     {
-        height: 25%;
-        margin-top: -6.25%;
-        width: 0%;
-        margin-left: 6.25%;
+        transform: scale(0, 2);
     }
 }
 @keyframes hv-match-anim
 {
     12%
     {
-        height:         6.25%;
-        margin-top:     3.125%;
-        width:          15.625%;
-        margin-left:    -1.5625%;
+        transform: scale(1.25, 0.5);
     }
     28%
     {
-        height:         12.5%;
-        margin-top:     0;
-        width:          3.125%;
-        margin-left:    4.6875%;
+        transform: scale(0.25, 1);
     }
     50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
     {
-        height:         0%;
-        margin-top:     6.25%;
-        width:          0%;
-        margin-left:    6.25%;
+        transform: scale(0, 0);
     }
     100%
     {
-        height:         0%;
-        margin-top:     6.25%;
-        width:          0%;
-        margin-left:    6.25%;
+        transform: scale(0, 0);
     }
 }
 .quark-container.matching
 {
     animation-iteration-count:  1;
-    animation-timing-function:  ease;
+    /*animation-timing-function:  ease;*/
+    animation-timing-function:  cubic-bezier(1, 0, 0, 1);
     animation-duration:         0.8s;
 }
 .quark-container.matching.h-match  { animation-name: h-match-anim; }
@@ -648,41 +577,41 @@ body
 .quark-container.move-7 { transition: transform 0.875s; }
 .quark-container.move-8 { transition: transform 1s; }
 
-.quark-container.move-1.move-right { transform: translate( 12.5%, 0); }
-.quark-container.move-2.move-right { transform: translate(   25%, 0); }
-.quark-container.move-3.move-right { transform: translate( 37.5%, 0); }
-.quark-container.move-4.move-right { transform: translate(   50%, 0); }
-.quark-container.move-5.move-right { transform: translate( 62.5%, 0); }
-.quark-container.move-6.move-right { transform: translate(   75%, 0); }
-.quark-container.move-7.move-right { transform: translate( 87.5%, 0); }
-.quark-container.move-8.move-right { transform: translate(  100%, 0); }
+.quark-container.move-1.move-right { transform: translateX( 100%); }
+.quark-container.move-2.move-right { transform: translateX( 200%); }
+.quark-container.move-3.move-right { transform: translateX( 300%); }
+.quark-container.move-4.move-right { transform: translateX( 400%); }
+.quark-container.move-5.move-right { transform: translateX( 500%); }
+.quark-container.move-6.move-right { transform: translateX( 600%); }
+.quark-container.move-7.move-right { transform: translateX( 700%); }
+.quark-container.move-8.move-right { transform: translateX( 800%); }
 
-.quark-container.move-1.move-left  { transform: translate(-12.5%, 0); }
-.quark-container.move-2.move-left  { transform: translate(  -25%, 0); }
-.quark-container.move-3.move-left  { transform: translate(-37.5%, 0); }
-.quark-container.move-4.move-left  { transform: translate(  -50%, 0); }
-.quark-container.move-5.move-left  { transform: translate(-62.5%, 0); }
-.quark-container.move-6.move-left  { transform: translate(  -75%, 0); }
-.quark-container.move-7.move-left  { transform: translate(-87.5%, 0); }
-.quark-container.move-8.move-left  { transform: translate( -100%, 0); }
+.quark-container.move-1.move-left  { transform: translateX(-100%); }
+.quark-container.move-2.move-left  { transform: translateX(-200%); }
+.quark-container.move-3.move-left  { transform: translateX(-300%); }
+.quark-container.move-4.move-left  { transform: translateX(-400%); }
+.quark-container.move-5.move-left  { transform: translateX(-500%); }
+.quark-container.move-6.move-left  { transform: translateX(-600%); }
+.quark-container.move-7.move-left  { transform: translateX(-700%); }
+.quark-container.move-8.move-left  { transform: translateX(-800%); }
 
-.quark-container.move-1.move-down  { transform: translate(0,  12.5%); }
-.quark-container.move-2.move-down  { transform: translate(0,    25%); }
-.quark-container.move-3.move-down  { transform: translate(0,  37.5%); }
-.quark-container.move-4.move-down  { transform: translate(0,    50%); }
-.quark-container.move-5.move-down  { transform: translate(0,  62.5%); }
-.quark-container.move-6.move-down  { transform: translate(0,    75%); }
-.quark-container.move-7.move-down  { transform: translate(0,  87.5%); }
-.quark-container.move-8.move-down  { transform: translate(0,   100%); }
+.quark-container.move-1.move-down  { transform: translateY( 100%); }
+.quark-container.move-2.move-down  { transform: translateY( 200%); }
+.quark-container.move-3.move-down  { transform: translateY( 300%); }
+.quark-container.move-4.move-down  { transform: translateY( 400%); }
+.quark-container.move-5.move-down  { transform: translateY( 500%); }
+.quark-container.move-6.move-down  { transform: translateY( 600%); }
+.quark-container.move-7.move-down  { transform: translateY( 700%); }
+.quark-container.move-8.move-down  { transform: translateY( 800%); }
 
-.quark-container.move-1.move-up    { transform: translate(0, -12.5%); }
-.quark-container.move-2.move-up    { transform: translate(0,   -25%); }
-.quark-container.move-3.move-up    { transform: translate(0, -37.5%); }
-.quark-container.move-4.move-up    { transform: translate(0,   -50%); }
-.quark-container.move-5.move-up    { transform: translate(0, -62.5%); }
-.quark-container.move-6.move-up    { transform: translate(0,   -75%); }
-.quark-container.move-7.move-up    { transform: translate(0, -87.5%); }
-.quark-container.move-8.move-up    { transform: translate(0,  -100%); }
+.quark-container.move-1.move-up    { transform: translateY(-100%); }
+.quark-container.move-2.move-up    { transform: translateY(-200%); }
+.quark-container.move-3.move-up    { transform: translateY(-300%); }
+.quark-container.move-4.move-up    { transform: translateY(-400%); }
+.quark-container.move-5.move-up    { transform: translateY(-500%); }
+.quark-container.move-6.move-up    { transform: translateY(-600%); }
+.quark-container.move-7.move-up    { transform: translateY(-700%); }
+.quark-container.move-8.move-up    { transform: translateY(-800%); }
 
 .grav-container /* grid-level element */
 {

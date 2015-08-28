@@ -29,17 +29,17 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=index.html
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\index.html
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\index.html
 FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=22590
-TopLine=150
-SelStart=3662
-SelStop=3662
+DataLen=23966
+TopLine=665
+SelStart=16080
+SelStop=16080
 RectSel=0
-CaretPos=3662
+CaretPos=16080
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -52,7 +52,7 @@ Folding=
 FileType=1194788050
 DataFormat=utf8
 AutoIndent=0
-NumberLines=0
+NumberLines=2
 WordWrapIndent=0
 NumberColumns=0
 ShowSpaces=0
@@ -64,7 +64,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=css\style.css
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\css\style.css
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\css\style.css
 FTPFilename=
 ForcedReadOnly=0
 
@@ -99,7 +99,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=js\view.js
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\view.js
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\view.js
 FTPFilename=
 ForcedReadOnly=0
 
@@ -134,7 +134,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=js\game.js
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\game.js
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\game.js
 FTPFilename=
 ForcedReadOnly=0
 
@@ -169,7 +169,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=js\array.js
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\array.js
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\array.js
 FTPFilename=
 ForcedReadOnly=0
 
@@ -204,7 +204,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=1
 RelativeFilename=js\jquery.fittext.js
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\js\jquery.fittext.js
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\js\jquery.fittext.js
 FTPFilename=
 ForcedReadOnly=0
 
@@ -239,7 +239,7 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=pseudocode.txt
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\pseudocode.txt
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\pseudocode.txt
 FTPFilename=
 ForcedReadOnly=0
 
@@ -274,14 +274,14 @@ HexEditor=0
 HexSections=-2
 ProjectStatus=0
 RelativeFilename=README.md
-Filename=M:\Radish\Dev\GA_WDI\Bequarked\README.md
+Filename=C:\Users\Radish\Dev\GA_WDI\Bequarked\README.md
 FTPFilename=
 ForcedReadOnly=0
 
 [EditPad Project]
 Managed=1
 BookmarksProjectWide=0
-ClipCollection=M:\Radish\AppData\Roaming\JGsoft\Clip Collections\CSS.atc
+ClipCollection=C:\Users\Radish\AppData\Roaming\JGsoft\Clip Collections\CSS.atc
 TabIndex=1
 FirstFileTab=0
 FileCount=8

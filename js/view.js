@@ -345,21 +345,26 @@ function main()
             var doomedQuark = $('.quark-container.x' + currSquare.x + '.y' + currSquare.y);
             doomedQuarks.push(doomedQuark);
             
+            //// • CSS animation
             // var animClass = 'distorting matching';
-            // // switch (currDatum.orientation)
-            // switch (currSquare.matchAlignment)
-            // {
-            //     case Alignment.Horizontal:
-            //         animClass += ' h-match';
-            //         break;
-            //     case Alignment.Vertical:
-            //         animClass += ' v-match';
-            //         break
-            //     case Alignment.Horizontal | Alignment.Vertical:
-            //         animClass += ' hv-match';
-            //         break;
-            // }
+            var animClass = 'matching';
+            switch (currSquare.matchAlignment)
+            {
+                case Alignment.Horizontal:
+                    animClass += ' h-match';
+                    break;
+                case Alignment.Vertical:
+                    animClass += ' v-match';
+                    break
+                case Alignment.Horizontal | Alignment.Vertical:
+                    animClass += ' hv-match';
+                    break;
+            }
             
+            // adding these classes will initiate CSS animations
+            doomedQuark.addClass(animClass); //*/
+            
+            /*// • GreenSock animation
             var animParams =
             {
                 ease: Power4.easeInOut,
@@ -392,10 +397,7 @@ function main()
                 break;
             }
             
-            TweenLite.to(doomedQuark, animDur/1000, animParams);
-            
-            // adding these classes will initiate CSS animations
-            // doomedQuark.addClass(animClass);
+            TweenLite.to(doomedQuark, animDur/1000, animParams); //*/
         });
         
         // wait for animations to finish
@@ -404,7 +406,7 @@ function main()
             doomedQuarks.forEach(function(doomedQuark)
             {   // empty it out hard
                 doomedQuark.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
-                // doomedQuark.removeClass("distorting matching h-match v-match hv-match");
+                doomedQuark.removeClass("distorting matching h-match v-match hv-match");
                 // doomedQuark.removeAttr('style');
             });
             
