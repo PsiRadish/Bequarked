@@ -34,12 +34,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File1]
-DataLen=23966
-TopLine=665
-SelStart=16080
-SelStop=16080
+DataLen=21163
+TopLine=716
+SelStart=18381
+SelStop=18381
 RectSel=0
-CaretPos=16080
+CaretPos=18381
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0

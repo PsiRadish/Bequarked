@@ -86,9 +86,9 @@ var Game =
     player1ChainScore:  0,
     player1ChainMult:   0,
     
-    player2Score:       0,
-    player2ChainScore:  0,
-    player2ChainMult:   0,
+    // player2Score:       0,
+    // player2ChainScore:  0,
+    // player2ChainMult:   0,
     
     movesMade:  0,
     maxMoves:   6, // after `maxMoves` moves between both players the game is over
@@ -306,27 +306,27 @@ var Game =
             
             var eventData = [Game.player1Score];
             
-            // switch (Game.turn)
-            // {
-            //     case 1:
-            //         //Game.turn = 2;
-            //         Game.player1Score += Game.player1ChainScore * Game.player1ChainMult;
-            //         Game.player1ChainScore = 0;
-            //         Game.player1ChainMult = 0;
+          /*switch (Game.turn)
+            {
+                case 1:
+                    //Game.turn = 2;
+                    Game.player1Score += Game.player1ChainScore * Game.player1ChainMult;
+                    Game.player1ChainScore = 0;
+                    Game.player1ChainMult = 0;
                     
-            //         eventData.push(Game.turn);
-            //         eventData.push(Game.player1Score);
-            //         break;
-            //     case 2:
-            //         //Game.turn = 1;
-            //         Game.player2Score += Game.player2ChainScore * Game.player2ChainMult;
-            //         Game.player2ChainScore = 0;
-            //         Game.player2ChainMult = 0;
+                    eventData.push(Game.turn);
+                    eventData.push(Game.player1Score);
+                    break;
+                case 2:
+                    //Game.turn = 1;
+                    Game.player2Score += Game.player2ChainScore * Game.player2ChainMult;
+                    Game.player2ChainScore = 0;
+                    Game.player2ChainMult = 0;
                     
-            //         eventData.push(Game.turn);
-            //         eventData.push(Game.player2Score);
-            //         break;
-            // }
+                    eventData.push(Game.turn);
+                    eventData.push(Game.player2Score);
+                    break;
+            }*/
             
             if (Game.animating)
             {   // wait until finished
@@ -358,11 +358,6 @@ var Game =
     // getMatchesForSquares
     getMatchesForSquares: function(squaresToMatch)
     {
-        // var rowMatches = [];
-        // var hMatchSquares = [];
-        
-        // var colMatches = [];
-        // var vMatchSquares = [];
         var matchSquares = [];
         
         squaresToMatch.forEach(function(currSquare)
@@ -459,51 +454,6 @@ var Game =
                 }
             });
             
-            /* vertical
-            if (1 + numMatchesAbove + numMatchesBelow >= 3)
-            {
-                matches = true;
-                
-                var lineMatch = [currSquare]; // start with this square
-                lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFrom(numMatchesAbove, currSquare.squareAbove, Direction.Up));
-                lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFrom(numMatchesBelow, currSquare.squareBelow, Direction.Down));
-                
-                var matchGravDir = currSquare.quark.gravDir;
-                var matchGravStrength = 0;
-                // gravity direction parallel to match alignment
-                if (matchGravDir == Direction.Up || matchGravDir == Direction.Down)
-                    matchGravStrength = lineMatch.length;
-                else // perpendicular
-                    matchGravStrength = 1;
-                
-                Game.gravCumulation[matchGravDir] += matchGravStrength; // +priority for this grav direction
-                
-                lineMatch.forEach(function(lineSquare)
-                {
-                    lineSquare.matchAlignment |= Alignment.Vertical;
-                    if (!lineSquare.dirty)
-                    {
-                        lineSquare.dirty = true;
-                        Game.dirtySquares.push(lineSquare);
-                    }
-                    
-                    lineSquare.gravDir = matchGravDir;
-                    lineSquare.gravStrength = Math.max(lineSquare.gravStrength, matchGravStrength);
-                    
-                    // get adjacent square in direction opposite to gravDir
-                    oppSquare = lineSquare.neighboorInDir(Direction.opposite(matchGravDir));
-                    if (oppSquare != null && oppSquare.gravDir == Direction.opposite(lineSquare.gravDir)) // opposite gravity pulling on each other...
-                    {   // it's a bomb!
-                        Game.gravBombs[lineSquare.gridKey] = oppSquare.gridKey;
-                        Game.gravBombs[oppSquare.gridKey] = lineSquare.gridKey;
-                    }
-                });
-                //lineMatch.sort(Square.compareFunction);
-                
-                colMatches.push(lineMatch);
-                vMatchSquares = vMatchSquares.concat(lineMatch);
-            } */
-            
             if (!matches && currSquare.dirty)
             {
                 currSquare.dirty = false;
@@ -529,13 +479,6 @@ var Game =
         //         matchData[currSquare.gridKey] = new Game.MatchDatum(currSquare, Alignment.Vertical);
         //     }
         // });
-        
-        // we'll just tuck these in there, too
-        // maybe useful for hypothetical implementation of gravity some day
-        //if (rowMatches.length)
-        //    matchData['rowMatches'] = rowMatches;
-        //if (colMatches.length)
-        //    matchData['colMatches'] = colMatches;
         
         //return matchData;
         //return hMatchSquares.concat(vMatchSquares);
@@ -563,19 +506,13 @@ var Game =
                 currSquare.state = Square.State.GravityBomb;
                 oppSquare.state = Square.State.GravityBomb;
             }
-            else  
+            else
             {
                 Game.gravHolesAll[currSquare.gridKey] = currSquare;
                 Game.gravHolesDir[currSquare.gravDir][currSquare.gridKey] = currSquare;
                 
                 currSquare.state = Square.State.Gravity;
             }
-            
-            // if (!currSquare.dirty)
-            // {
-            //     currSquare.dirty = true;
-            //     Game.dirtySquares.push(currSquare);
-            // }
         });
         
         // var eventData = [matchData];
@@ -709,23 +646,13 @@ var Game =
         //this.totalGravStrength = 0;
     }
 };
-//Game.MatchGroup.prototype.assignIndexToSquares = function(index)
-//{
-//    for (var gridKey in this)
-//    {
-//        if (gridKey == "totalGravStrength")
-//            continue;
-//        
-//        this[gridKey].matchGroupIndex = index;
-//    }
-//};
 Object.defineProperty(Game.MatchGroup.prototype, 'assignIndexToSquares',
 {
     value: function(index)
     {
         for (var gridKey in this)
         {
-            if (gridKey == "totalGravStrength")
+            if (gridKey == "totalGravStrength") // do not want
                 continue;
             
             this[gridKey].matchGroupIndex = index;
