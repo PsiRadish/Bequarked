@@ -31,9 +31,8 @@ function main()
     // };
     
     // size the board appropriately
-    function sizeGame(e)
+    function sizeGame()
     {
-        //var playerPaneWithTurn = $(STYLE.sel.playerPane + STYLE.sel.myTurn);
         var playerPaneWithTurn = playerPanes.filter('.my-turn');
         
         // remove inline styles previously added by jQuery,
@@ -72,15 +71,15 @@ function main()
     // FitText.js calls for fully responsive text
     $('.player h2').fitText(0.38333333333333333333333333333333); // 30px font size at max game size
     $('.player h3').fitText(0.47916666666666666666666666666667); // 24px font size at max game size
-    $('#title-container h1').fitText(0.77857142857142857142857142857143);  // 140px font size at max game size
+    $('#title-container').find('h1').fitText(0.77857142857142857142857142857143);  // 140px font size at max game size
     $('#winner-display').fitText(0.90825688073394495412844036697248); // 99px font size at max game size
     
     
     // callback of doom
-    function removeElement(e)
+    /*function removeElement(e)
     {
         $(this).remove();
-    }
+    }*/
     
     var xCoordRegex = /[^\w-]x([0-7])[^\w-]/;
     var yCoordRegex = /[^\w-]y([0-7])[^\w-]/;
@@ -163,8 +162,8 @@ function main()
             $quarkA.removeClass(animClassesA);
             $quarkB.removeClass(animClassesB);
             
-            aQuarkClass = quarkClassRegex.exec($quarkA.attr('class'))[1];
-            bQuarkClass = quarkClassRegex.exec($quarkB.attr('class'))[1];
+            var aQuarkClass = quarkClassRegex.exec($quarkA.attr('class'))[1];
+            var bQuarkClass = quarkClassRegex.exec($quarkB.attr('class'))[1];
             
             // swap the CSS classes that determine which ring and arrow to show
             $quarkA.removeClass(aQuarkClass);
@@ -321,6 +320,7 @@ function main()
     
     // due for eminent replacement
     //gameView.on(Game.EventType.BoardRemoveMatches, function(e, matchData, scoreChain, scoreMult)
+    // BoardRemoveMatches – Animate removal of quarks.
     gameView.on(Game.EventType.BoardRemoveMatches, function(e, matchSquares, bombSquares, scoreChain, scoreMult)
     {
         // display the score earned for the last match
@@ -355,7 +355,7 @@ function main()
                     break;
                 case Alignment.Vertical:
                     animClass += ' v-match';
-                    break
+                    break;
                 case Alignment.Horizontal | Alignment.Vertical:
                     animClass += ' hv-match';
                     break;

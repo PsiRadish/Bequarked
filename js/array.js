@@ -31,7 +31,7 @@ if (typeof Array.prototype.remove === 'undefined')
     };
 }
 
-if (typeof Array.prototype.singleDepthCopy === 'undefined')
+/*if (typeof Array.prototype.singleDepthCopy === 'undefined')
 {
     Array.prototype.singleDepthCopy = function()  // It's useful, I swear.
     {
@@ -39,4 +39,4 @@ if (typeof Array.prototype.singleDepthCopy === 'undefined')
         
         return copy;
     }
-}
+}*/

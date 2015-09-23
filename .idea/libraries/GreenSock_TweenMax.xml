@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="GreenSock TweenMax" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/../../Web/lib/GreenSock JS 1.18.0/TweenMax.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../Web/lib/GreenSock JS 1.18.0/TweenMax.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

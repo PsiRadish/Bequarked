@@ -199,14 +199,14 @@ body
 .grid-element.x5 { left: 62.5%; }
 .grid-element.x6 { left: 75%; }
 .grid-element.x7 { left: 87.5%; }
-.grid-element.y0 { top:  0; }
-.grid-element.y1 { top: 12.5%; }
-.grid-element.y2 { top: 25%; }
-.grid-element.y3 { top: 37.5%; }
-.grid-element.y4 { top: 50%; }
-.grid-element.y5 { top: 62.5%; }
-.grid-element.y6 { top: 75%; }
-.grid-element.y7 { top: 87.5%; }
+.grid-element.y0 { top : 0; }
+.grid-element.y1 { top : 12.5%; }
+.grid-element.y2 { top : 25%; }
+.grid-element.y3 { top : 37.5%; }
+.grid-element.y4 { top : 50%; }
+.grid-element.y5 { top : 62.5%; }
+.grid-element.y6 { top : 75%; }
+.grid-element.y7 { top : 87.5%; }
 /*.grid-element *
 {
     overflow: visible !important;
@@ -237,8 +237,7 @@ body
     width: 100%;
     height: 100%;
     left: 0;
-    background-position: center center;
-    background-repeat:   no-repeat;
+    background               : no-repeat center center;
     animation-iteration-count:  infinite;
     animation-timing-function:  linear;
 }
@@ -514,9 +513,8 @@ body
     position: absolute;
     top: 18%;
     left: 18%;
-    background-position: center center;
+    background     : no-repeat center center;
     background-size: 100% 100%;
-    background-repeat: no-repeat;
 }
 .quark-container .arrow-container
 {
@@ -830,3 +828,8 @@ body
 {
     content: "No ring WTF";
 }*/
+
+.vis-hide
+{
+    visibility: hidden;
+}
