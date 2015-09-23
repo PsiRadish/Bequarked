@@ -5,12 +5,21 @@
 var Direction = 
 {
     // None:       0,
-    Left:       0,
-    Right:      1,
-    Up:         2,
-    Down:       3
+    //Left:       0,
+    //Right:      1,
+    //Up:         2,
+    //Down:       3
+    Left:   { someValue: 1 },
+    Right:  { someValue: 2 },
+    Up:     { someValue: 3 },
+    Down:   { someValue: 4 }
 };
-Direction.opposite = function(dir)
+Direction.Left.opposite  = Direction.Right;
+Direction.Right.opposite = Direction.Left;
+Direction.Up.opposite    = Direction.Down;
+Direction.Down.opposite  = Direction.Up;
+
+Direction.getOpposite = function(dir)
 {
     switch (dir)
     {
@@ -217,7 +226,7 @@ var Game =
         },
         
         // returns array of squares of length `number` starting from `currSquare` and going in `direction` on the grid
-        getNumSquaresFrom: function(number, currSquare, direction)
+        getNumSquaresFromInDir: function(number, currSquare, direction)
         {
             if (number <= 0 || currSquare == null) // passed 0 or over the edge of the grid
                 return [];  // return empty array
@@ -229,7 +238,7 @@ var Game =
             
             if (number)
             {
-                arrOfSquares = this.getNumSquaresFrom(number, nextSquare, direction);
+                arrOfSquares = this.getNumSquaresFromInDir(number, nextSquare, direction);
             }
             else
                 arrOfSquares = [];
@@ -237,6 +246,11 @@ var Game =
             arrOfSquares.push(currSquare);
             
             return arrOfSquares;
+        },
+        // returns array of squares from `currSquare` to end of grid going in `direction`
+        getAllSquaresFrom_InDir: function(currSquare, direction)
+        {
+            return Game.Grid.getNumSquaresFromInDir(8, currSquare, direction);
         },
         
         numMatchesTo: function(currSquare, direction)
@@ -384,13 +398,13 @@ var Game =
                     
                     if (lineAlignment == Alignment.Horizontal)
                     {    
-                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFrom(numMatchesToLeft, currSquare.squareLeft, Direction.Left));
-                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFrom(numMatchesToRight, currSquare.squareRight, Direction.Right));
+                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFromInDir(numMatchesToLeft, currSquare.squareLeft, Direction.Left));
+                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFromInDir(numMatchesToRight, currSquare.squareRight, Direction.Right));
                     }
                     else // Alignment.Vertical
                     {
-                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFrom(numMatchesAbove, currSquare.squareAbove, Direction.Up));
-                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFrom(numMatchesBelow, currSquare.squareBelow, Direction.Down));
+                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFromInDir(numMatchesAbove, currSquare.squareAbove, Direction.Up));
+                        lineMatch = lineMatch.concat(Game.Grid.getNumSquaresFromInDir(numMatchesBelow, currSquare.squareBelow, Direction.Down));
                     }
                     
                     var matchGravDir = currSquare.quark.gravDir;
@@ -431,7 +445,8 @@ var Game =
                         lineSquare.gravStrength = Math.max(lineSquare.gravStrength, matchGravStrength);
                         
                         // store this square in the MatchGroup
-                        matchGroup.squares[lineSquare.gridKey] = lineSquare;
+                        //matchGroup.squares[lineSquare.gridKey] = lineSquare;
+                        matchGroup.squares.push(lineSquare);
                                                 
                         if (lineSquare.matchGroupIndex != -1) // if this square is already in a match group
                         {
@@ -453,8 +468,12 @@ var Game =
                     else // merge with existing MatchGroup
                     {
                         matchGroup.assignIndexToSquares(matchGroupIndex);
+                        
                         // merge objects (using jQuery)
-                        $.extend(Game.matchGroups[matchGroupIndex], matchGroup);
+                        //$.extend(Game.matchGroups[matchGroupIndex].squares, matchGroup.squares);
+                        
+                        // merge arrays using array extension in array.js
+                        Game.matchGroups[matchGroupIndex].squares = Game.matchGroups[matchGroupIndex].squares.union(matchGroup.squares);
                     }
                     
                     // rowMatches.push(lineMatch);
@@ -507,8 +526,9 @@ var Game =
             if (currSquare.state == Square.State.Quark) // state hasn't been updated yet
             {
                 // get adjacent square in direction opposite to gravDir
-                var oppSquare = currSquare.neighborInDir(Direction.opposite(currSquare.gravDir));
-                if (oppSquare != null && oppSquare.gravDir == Direction.opposite(currSquare.gravDir))
+                //var oppSquare = currSquare.neighborInDir(Direction.getOpposite(currSquare.gravDir));
+                var oppSquare = currSquare.neighborInDir(currSquare.gravDir.opposite);
+                if (oppSquare != null && oppSquare.gravDir === currSquare.gravDir.opposite)
                 {
                     //Game.gravBombs[currSquare.gridKey] = currSquare;
                     //Game.gravBombs[oppSquare.gridKey] = oppSquare;
@@ -518,14 +538,16 @@ var Game =
                     oppSquare.state = Square.State.GravityBomb;
                     
                     // remove grav bombs from match groups
-                    if (currSquare.matchGroupIndex != -1)
+                    if (currSquare.matchGroupIndex != -1) // this check might be redundant
                     {
-                        delete Game.matchGroups[currSquare.matchGroupIndex].squares[currSquare.gridKey];
+                        //delete Game.matchGroups[currSquare.matchGroupIndex].squares[currSquare.gridKey];
+                        Game.matchGroups[currSquare.matchGroupIndex].squares.remove(currSquare);
                         currSquare.matchGroupIndex = -1;
                     }
-                    if (oppSquare.matchGroupIndex != -1)
+                    if (oppSquare.matchGroupIndex != -1) // this check might be redundant
                     {
-                        delete Game.matchGroups[oppSquare.matchGroupIndex].squares[oppSquare.gridKey];
+                        //delete Game.matchGroups[oppSquare.matchGroupIndex].squares[oppSquare.gridKey];
+                        Game.matchGroups[oppSquare.matchGroupIndex].squares.remove(oppSquare);
                         oppSquare.matchGroupIndex = -1;
                     }
                 }
@@ -538,9 +560,10 @@ var Game =
                 }
             }
         });
+        Game.matchGroups.sort(Game.MatchGroup.compareFunction);
         
         // var eventData = [matchData];
-        var eventData = [matchSquares];
+        var eventData = [Square.cloneArray(matchSquares)];
         
         eventData.push(Game.gravBombs);
         
@@ -595,18 +618,127 @@ var Game =
         if (Game.matchGroups.length == 0 && Game.gravBombs.length == 0)
         {
             Game.spawnNewQuarks(Game.spawnSquares);
+            Game.spawnSquares = [];
         }
         else
         {
-            // TODO: Actual gravity logic
-            Game.gravBombs.forEach(function(gravBomb)
+            console.log('==processGravity==');
+            console.log('num matchGroups', Game.matchGroups.length);
+            console.log('num gravBombs', Game.gravBombs.length);
+            console.log();
+            
+            var gravSquares = [];
+            if (Game.matchGroups.length > 0)
             {
+                Game.matchGroups.forEach(function(matchGroup)
+                {
+                    //for (var i = 0; i < matchGroup.squares.length; i++)
+                    var goodToGrav = matchGroup.squares.every(function(square)
+                    {   
+                        //var pullSquare = square.neighborInDir(Direction.getOpposite(square.gravDir));
+                        var pullSquare = square.neighborInDir(square.gravDir.opposite);
+                        if (!pullSquare.inSameGroupAs(square)) // this square directly pulls on a square outside the match group
+                        {
+                            //var checkSquares = Game.Grid.getAllSquaresFrom_InDir(pullSquare, Direction.getOpposite(square.gravDir));
+                            var checkSquares = Game.Grid.getAllSquaresFrom_InDir(pullSquare, square.gravDir.opposite);
+                            return checkSquares.every(function(checkSquare)
+                            {
+                                return (checkSquare.gravDir == null || checkSquare.gravDir == square.gravDir);
+                            });
+                        }
+                        return true;
+                    });
+                    
+                    if (goodToGrav)
+                    {   // loop through again and set gravity
+                        matchGroup.squares.forEach(function(square)
+                        {
+                            var gravSquaresTemp = [square];
+                            
+                            //var pullSquare = square.neighborInDir(Direction.getOpposite(square.gravDir));
+                            var pullSquare = square.neighborInDir(square.gravDir.opposite);
+                            if (!pullSquare.inSameGroupAs(square)) // this square directly pulls on a square outside the match group
+                            {
+                                //var checkSquares = Game.Grid.getAllSquaresFrom_InDir(pullSquare, Direction.getOpposite(square.gravDir));
+                                var setSquares = Game.Grid.getAllSquaresFrom_InDir(pullSquare, square.gravDir.opposite);
+                                setSquares.forEach(function(setSquare)
+                                {
+                                    setSquare.gravDir = square.gravDir;
+                                    setSquare.gravStrength += square.gravStrength;
+                                    
+                                    setSquare.dirty = true;
+                                });
+                                
+                                gravSquaresTemp = gravSquaresTemp.concat(setSquares);
+                            }
+                            
+                            gravSquares = gravSquares.union(gravSquaresTemp);
+                        });
+                        
+                        Game.matchGroups.remove(matchGroup);
+                    }
+                });
                 
-            });
+                if (gravSquares.length > 0)
+                {
+                    Game.dirtySquares = Game.dirtySquares.union(gravSquares); // merge gravSquares into dirties
+                    
+                    // deep copy gravSquares
+                    var oldSquares = Square.cloneArray(gravSquares);
+                    
+                    var eventData = [oldSquares];
+                    
+                    // start movin' quarks
+                    gravSquares.forEach(function(currSquare, i)
+                    {
+                        var swapSquare = oldSquares[i].nth_NeighborInDir(currSquare.gravStrength, currSquare.gravDir.opposite);
+                        
+                        if (!swapSquare || !swapSquare.quark) // past edge of grid or swapSquare has no quark
+                        {
+                            currSquare.quark = null;
+                            currSquare.state = Square.State.Spawn;
+                            Game.spawnSquares.push(currSquare);
+                        }
+                        else
+                        {
+                            currSquare.quark = swapSquare.quark;
+                            currSquare.state = Square.State.Quark;
+                        }
+                    });
+    
+                    if (Game.animating)
+                    {   // wait until finished
+                        var timer = window.setInterval(function()
+                        {
+                            if (!Game.animating)
+                            {
+                                window.clearInterval(timer);
+                
+                                Game.eventTarget.trigger(Game.EventType.BoardGravity, eventData);
+                                Game.processGravity();
+                            }
+                        }, 10);
+                    }
+                    else
+                    {
+                        Game.eventTarget.trigger(Game.EventType.BoardGravity, eventData);
+                        Game.processGravity();
+                    }
+                }
+                else
+                    console.log("Oh shit, didn't gravitize any matchGroups, gonna loop forever!");
+            }
+            else
+            {
+                Game.gravBombs.forEach(function(gravBomb)
+                {
+                    // TODO: gravBomb logic
+                });
+            }
             
             //// TEMPORARY
             // for now new quarks will just appear where the old ones were
-            Game.spawnSquares = Game.dirtySquares.slice(); // shallow copy
+            //Game.spawnSquares = Game.dirtySquares.slice(); // shallow copy
             //Game.spawnSquares = Game.dirtySquares.singleDepthCopy();
             //Game.gravHolesAll = {};
             //Game.gravHolesDir = [{}, {}, {}, {}];
@@ -676,20 +808,18 @@ var Game =
 };
 Game.MatchGroup = function()
 {
-    //this.totalGravStrength = 0;
-    this.squares = {};
+    this.squares = []; // {};
 };
 Object.defineProperty(Game.MatchGroup.prototype, 'assignIndexToSquares',
 {
     value: function(index)
     {
-        for (var gridKey in this.squares)
+        //for (var gridKey in this.squares)
+        this.squares.forEach(function(square)
         {
-            //if (gridKey == "totalGravStrength") // do not want
-            //    continue;
-            
-            this[gridKey].matchGroupIndex = index;
-        }
+            //this[gridKey].matchGroupIndex = index;
+            square.matchGroupIndex = index;
+        });
     },
     enumerable: false
 });
@@ -699,18 +829,22 @@ Object.defineProperty(Game.MatchGroup.prototype, 'totalGravStrength',
     {
         var total = 0;
         
-        for (var gridKey in this.squares)
-        {
-            //if (gridKey == "totalGravStrength")
-            //    continue;
-            
-            total += this[gridKey].gravStrength;
-        }
+        //for (var gridKey in this.squares)
+        this.squares.forEach(function(square)
+        {            
+            //total += this[gridKey].gravStrength;
+            total += square.gravStrength;
+        });
         
         return total;
     },
     enumerable: false
 });
+Game.MatchGroup.compareFunction = function(groupA, groupB)
+{
+    //return groupA.totalGravStrength - groupB.totalGravStrength;
+    return groupB.totalGravStrength - groupA.totalGravStrength; // sort descending
+};
 
 //// Square object constructor
 function Square(x, y, gridKey)
@@ -794,6 +928,17 @@ Square.prototype.neighborInDir = function(direction)
         break;
     }
 };
+Square.prototype.nth_NeighborInDir = function(n, direction)
+{
+    if (n == 0)
+        return this;
+    
+    var nextSquare = this.neighborInDir(direction);
+    if (!nextSquare)
+        return null;
+    
+    return nextSquare.nth_NeighborInDir(n-1, direction);
+};
 Square.prototype.spawnQuark = function()
 {
     this.quark = Quark.getRandomQuark();
@@ -804,6 +949,26 @@ Square.prototype.spawnQuark = function()
     this.matchAlignment = Alignment.None;
     this.matchGroupIndex = -1;
 };
+Square.prototype.clone = function()
+{
+    var clone = new Square(this.x, this.y, this.gridKey);
+    clone.quark = this.quark;
+    
+    clone.gravDir = this.gravDir;
+    clone.gravStrength = this.gravStrength;
+    
+    clone.matchAlignment = this.matchAlignment;
+    clone.matchGroupIndex = this.matchGroupIndex;
+    clone.state = this.state;
+    
+    clone.dirty = this.dirty;
+    
+    return clone;
+};
+Square.cloneArray = function(squaresArray)
+{
+    return squaresArray.filter(function(square){ return square.clone(); });
+};
 // Returns true if this square and otherSquare have the same non-negative matchGroupIndex
 Square.prototype.inSameGroupAs = function(otherSquare)
 {
@@ -812,7 +977,7 @@ Square.prototype.inSameGroupAs = function(otherSquare)
 // Checks all squares from this square to grid edge for following conditions:
 // (this.gravDir == gravDir || this.gravDir == null)
 // Returns true if all squares pass.
-Square.prototype.checkGravityInDir = function(direction, gravDir)
+/*Square.prototype.checkGravityInDir = function(direction, gravDir)
 {
     if (this.gravDir != null && this.gravDir != gravDir)
         return false;
@@ -831,7 +996,7 @@ Square.prototype.setGravityInDir = function(direction, gravDir, gravStrength)
     {
         nextSquare.setGravityInDir(direction, gravDir, gravStrength);
     }
-};
+};*/
 // Comparison function for sorting arrays of squares.
 Square.compareFunction = function(squareA, squareB)
 {

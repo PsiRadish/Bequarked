@@ -31,6 +31,30 @@ if (typeof Array.prototype.remove === 'undefined')
     };
 }
 
+if (typeof Array.prototype.union === 'undefined')
+{   
+    // Array.concat without duplicate values
+    Array.prototype.union = function(other)
+    {
+        var hash = {};
+        // add array elements to hash using their own value as key, eliminating duplicates
+        for (var i = 0; i < this.length; i++)
+            hash[this[i]] = this[i];
+        for (i = 0; i < other.length; i++)
+            hash[other[i]] = other[i];
+        
+        // convert back to an array
+        var union = [];
+        for (var k in hash)
+        {
+            if (hash.hasOwnProperty(k))  // <-- optional
+                union.push(hash[k]);
+        }
+        
+        return union;
+    }
+}
+
 /*if (typeof Array.prototype.singleDepthCopy === 'undefined')
 {
     Array.prototype.singleDepthCopy = function()  // It's useful, I swear.
