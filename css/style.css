@@ -212,19 +212,19 @@ body
     overflow: visible !important;
 }*/
 
-.grid-element.effect.w3 { height: 12.5%; width: 37.5%; }
-.grid-element.effect.w4 { height: 12.5%; width:   50%; }
-.grid-element.effect.w5 { height: 12.5%; width: 62.5%; }
-.grid-element.effect.w6 { height: 12.5%; width:   75%; }
-.grid-element.effect.w7 { height: 12.5%; width: 87.5%; }
-.grid-element.effect.w8 { height: 12.5%; width:  100%; }
+.grid-element.effect-container.w3 { height: 12.5%; width: 37.5%; }
+.grid-element.effect-container.w4 { height: 12.5%; width:   50%; }
+.grid-element.effect-container.w5 { height: 12.5%; width: 62.5%; }
+.grid-element.effect-container.w6 { height: 12.5%; width:   75%; }
+.grid-element.effect-container.w7 { height: 12.5%; width: 87.5%; }
+.grid-element.effect-container.w8 { height: 12.5%; width:  100%; }
 
-.grid-element.effect.h3 { width: 12.5%; height: 37.5%; }
-.grid-element.effect.h4 { width: 12.5%; height:   50%; }
-.grid-element.effect.h5 { width: 12.5%; height: 62.5%; }
-.grid-element.effect.h6 { width: 12.5%; height:   75%; }
-.grid-element.effect.h7 { width: 12.5%; height: 87.5%; }
-.grid-element.effect.h8 { width: 12.5%; height:  100%; }
+.grid-element.effect-container.h3 { width: 12.5%; height: 37.5%; }
+.grid-element.effect-container.h4 { width: 12.5%; height:   50%; }
+.grid-element.effect-container.h5 { width: 12.5%; height: 62.5%; }
+.grid-element.effect-container.h6 { width: 12.5%; height:   75%; }
+.grid-element.effect-container.h7 { width: 12.5%; height: 87.5%; }
+.grid-element.effect-container.h8 { width: 12.5%; height:  100%; }
 
 .quark-container /* grid-level element */
 {
