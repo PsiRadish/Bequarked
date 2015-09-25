@@ -621,7 +621,7 @@ body
     50%  { opacity: 0.5; }
     100% { opacity: 0.25; }
 }
-@keyframes grav-explosive-arrow-flicker
+@keyframes grav-bomb-arrow-flicker
 {
     0%   { opacity: 0.5; }
     50%  { opacity: 1.0; }
@@ -635,9 +635,9 @@ body
     animation-iteration-count:  infinite;
     animation-timing-function:  ease;
 }
-.grav-container.explosive .arrow-container
+.grav-container.bomb .arrow-container
 {
-    animation-name:     grav-explosive-arrow-flicker;
+    animation-name:     grav-bomb-arrow-flicker;
     animation-duration: 0.4s;
 }
 
@@ -676,18 +676,40 @@ body
 .grav-container.move-up,
 .grav-container.move-down,
 {
-    animation-duration:         0.25s;
-    animation-iteration-count:  1;
-    animation-timing-function:  linear;
+    /*animation-duration:         0.25s;*/
+    /*animation-iteration-count:  1;*/
+    /*animation-timing-function:  linear;*/
+    transition: width 0.25s ease,
+                height 0.25s ease,
+                margin-top 0.25s ease,
+                margin-left 0.25s ease;
 }
-.grav-container.arrow-left.move-left   { animation-name: grav-container-fold-left; }
-.grav-container.arrow-right.move-right { animation-name: grav-container-fold-right; }
-.grav-container.arrow-down.move-down   { animation-name: grav-container-fold-down; }
-.grav-container.arrow-up.move-up       { animation-name: grav-container-fold-up; }
+.grav-container.arrow-left.move-left
+{
+    /*animation-name: grav-container-fold-left;*/
+    width: 0%;
+}
+.grav-container.arrow-right.move-right
+{
+    /*animation-name: grav-container-fold-right;*/
+    width: 0%;
+    margin-left: 12.5%;
+}
+.grav-container.arrow-down.move-down
+{
+    /*animation-name: grav-container-fold-down;*/
+    height: 0%;
+    margin-top: 12.5%;
+}
+.grav-container.arrow-up.move-up
+{
+    /*animation-name: grav-container-fold-up;*/
+    height: 0%;
+}
 
 /* TweenLite.to(gravContainer, 0.4, {height:"7.5%",  ease:Elastic.easeIn}); */
 /* TweenLite.to(gravContainer, 0.4, {height:"12.5%", ease:Elastic.easeOut, delay: 0.4}); */
-@keyframes grav-container-explosive-up
+@keyframes grav-container-bomb-up
 {
     30%
     {
@@ -710,7 +732,7 @@ body
         margin-top:     5%;
     }
 }
-@keyframes grav-container-explosive-left
+@keyframes grav-container-bomb-left
 {
     30%
     {
@@ -733,7 +755,7 @@ body
         margin-left:    5%;
     }
 }
-@keyframes grav-container-explosive-down
+@keyframes grav-container-bomb-down
 {
     30%
     {
@@ -752,7 +774,7 @@ body
         height:         7.5%;
     }
 }
-@keyframes grav-container-explosive-right
+@keyframes grav-container-bomb-right
 {
     30%
     {
@@ -771,16 +793,16 @@ body
         width:          7.5%;
     }
 }
-.grav-container.explosive
+.grav-container.bomb
 {
     animation-duration:         0.8s;
     animation-iteration-count:  infinite;
     animation-timing-function:  ease;
 }
-.grav-container.explosive.arrow-up    { animation-name: grav-container-explosive-up; }
-.grav-container.explosive.arrow-left  { animation-name: grav-container-explosive-left; }
-.grav-container.explosive.arrow-down  { animation-name: grav-container-explosive-down; }
-.grav-container.explosive.arrow-right { animation-name: grav-container-explosive-right; }
+.grav-container.bomb.arrow-up    { animation-name: grav-container-bomb-up; }
+.grav-container.bomb.arrow-left  { animation-name: grav-container-bomb-left; }
+.grav-container.bomb.arrow-down  { animation-name: grav-container-bomb-down; }
+.grav-container.bomb.arrow-right { animation-name: grav-container-bomb-right; }
 
 #game.tie #board          { background-color: purple; }
 #game.player-1-win #board { background-color: DarkBlue }
