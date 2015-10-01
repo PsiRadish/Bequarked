@@ -497,20 +497,20 @@ function main()
             switch (gravSquare.gravDir)
             {
                 case Direction.Right:
-                    fallerX = gravSquare.x + gravSquare.gravApplied;
+                    fallerX = gravSquare.x - gravSquare.gravApplied;
                     fallerY = gravSquare.y;
                     break;
                 case Direction.Left:
-                    fallerX = gravSquare.x - gravSquare.gravApplied;
+                    fallerX = gravSquare.x + gravSquare.gravApplied;
                     fallerY = gravSquare.y;
                     break;
                 case Direction.Down:
                     fallerX = gravSquare.x;
-                    fallerY = gravSquare.y + gravSquare.gravApplied;
+                    fallerY = gravSquare.y - gravSquare.gravApplied;
                     break;
                 case Direction.Up:
                     fallerX = gravSquare.x;
-                    fallerY = gravSquare.y - gravSquare.gravApplied;
+                    fallerY = gravSquare.y + gravSquare.gravApplied;
                     break;
             }
             
@@ -519,12 +519,12 @@ function main()
             faller.addClass("move-" + gravSquare.gravDir.string);
             
             faller.one('transitionend webkitTransitionEnd oTransitionEnd', function()
-            {   console.log("Transition ended WAAAAAA");
+            {   //console.log("Transition ended WAAAAAA");
                 callback(null, [gravSquare, target, faller]);
             });
         },
         function(err, results)
-        {
+        {   //console.log("async uber end reached");
             if (!err)
             {
                 results.forEach(function(result)
@@ -534,13 +534,17 @@ function main()
                     var faller = result[2];
                     
                     target.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
-                    target.addClass(gravSquare.quark.css);
+                    if (gravSquare.quark)
+                        target.addClass(gravSquare.quark.css);
                     
                     if (faller)
                     {
                         faller.removeClass("move-" + gravSquare.gravApplied + " move-" + gravSquare.gravDir.string);
                     }
                 });
+                
+                Game.animating = false;
+                unpauseInput();
             }
             else // omg wtf
                 throw err; // throwing shit always makes me feel better when things go wrong
