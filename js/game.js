@@ -6,11 +6,6 @@
  */
 
 
-var Debug =
-{
-    traceQuarksSquares: {}
-};
-
 /**
  * @namespace
  * @description Direction enum.
@@ -104,6 +99,9 @@ var Game =
             {   // get a new random quark
                 currSquare.quark = Quark.getRandomQuark();
             }
+            
+            // TEST OVERRIDE
+            
         }
         
         this.eventTarget.trigger(Game.EventType.GameStart, [Game.Grid.squares]);
@@ -1524,3 +1522,17 @@ var Quark =
 //{    
 //    console.log(Game.Grid.getSquare(5,3).neighborInDir(Direction.Up));
 //}
+
+var Debug =
+{
+    traceQuarksSquares: {},
+    initQuarksOverride:
+    {
+        0x14: Quark.RedLeft,
+        0x24: Quark.BlueUp,
+        0x34: Quark.RedLeft,
+        0x15: Quark.BlueUp,
+        0x25: Quark.RedLeft,
+        0x35: Quark.BlueUp
+    }
+};

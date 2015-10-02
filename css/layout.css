@@ -1,0 +1,76 @@
+#left-bar {
+  max-width: 145px;
+  width: 13.30275%;
+  padding: 0 1.37615%;
+}
+
+#right-bar {
+  max-width: 145px;
+  width: 13.30275%;
+  padding: 0 1.37615%;
+  position: relative;
+}
+#right-bar .toggle::before {
+  content: "";
+  position: absolute;
+  top: 1.37615%;
+  right: 1.37615%;
+}
+
+.sidebar > h2,
+.sidebar > .h2,
+.sidebar > h3,
+.sidebar > .h3 {
+  width: 100%;
+}
+
+#board, #winner-display {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 800px;
+  width: 73.3945%;
+  max-height: 800px;
+  height: 100%;
+}
+
+#game {
+  max-width: 1090px;
+  width: 100%;
+  max-height: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+  #left-bar {
+    width: 13.30275%;
+    padding: 0 1.37615%;
+  }
+
+  #right-bar {
+    width: 13.30275%;
+    padding: 0 1.37615%;
+  }
+  #right-bar .toggle::before {
+    content: "?";
+    top: 1.37615%;
+    right: 1.37615%;
+  }
+
+  #board, #winner-display {
+    width: 73.3945%;
+  }
+
+  #game {
+    max-width: 1090px;
+  }
+
+  #right-bar #instructions {
+    display: none;
+  }
+
+  #right-bar.show-instructions #instructions {
+    display: initial;
+  }
+}
+
+/*# sourceMappingURL=layout.css.map */

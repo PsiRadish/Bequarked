@@ -17,38 +17,28 @@ function main()
     //var board = $(STYLE.sel.board);
     var board = $('#board');
     
-    var playerPanes = $('.player');
-    // var player1Pane = $('.player-1');
-    // var player2Pane = $('.player-2');
+    //var sideBars = $('.sidebar');
     
-    // TIMEOUT IN LOOP TEST
-    // for (var i = 0; i < 10; i++)
-    // {
-    //     var tId = window.setTimeout(function()
-    //     {
-    //         console.log(i, tId);
-    //     }, 500);
-    // };
+    //var player1Pane = $('.player-1');
+    //var player2Pane = $('.player-2');
     
     // size the board appropriately
     function sizeGame()
     {
-        var playerPaneWithTurn = playerPanes.filter('.my-turn');
+        //var playerPaneWithTurn = playerPanes.filter('.my-turn');
         
         // remove inline styles previously added by jQuery,
         // reverting to slightly-broken CSS-only sizing
         gameView.removeAttr('style');
         board.removeAttr('style');
-        playerPaneWithTurn.removeAttr('style');
+        //playerPaneWithTurn.removeAttr('style');
         
         if (!closeEnough(board.height(), board.width())) // height and width are different
         {
             if (board.width() > board.height())
-            {
-                // want to maintain ratio between board width and gameView width
-                // first, get that ratio
+            {   // Want to maintain ratio between board width and gameView width, so first we need to find out what ratio is.
                 var ratio = board.width() / gameView.width();
-                // now apply it in reverse to the board width we want (same as height) and apply to game area
+                // Now apply it in reverse to the board width we want (same as height) and apply to game area
                 gameView.width(board.height() / ratio);
             }
             else // board height > board width
@@ -57,11 +47,9 @@ function main()
             }
         }
         
-        //box-shadow: inset 0 0 22px 22px black
-        
-        var shadowPower = Math.round(playerPaneWithTurn.height() * 0.055);
-        var shadowString = 'inset 0 0 ' + shadowPower + 'px ' + shadowPower + 'px black';
-        playerPaneWithTurn.css('box-shadow', shadowString);
+        //var shadowPower = Math.round(playerPaneWithTurn.height() * 0.055);            // box-shadow: inset 0 0 22px 22px black
+        //var shadowString = 'inset 0 0 ' + shadowPower + 'px ' + shadowPower + 'px black';
+        //playerPaneWithTurn.css('box-shadow', shadowString);
     }
     sizeGame();
     
@@ -69,8 +57,8 @@ function main()
     $(window).resize(sizeGame);
     
     // FitText.js calls for fully responsive text
-    $('.player h2').fitText(0.38333333333333333333333333333333); // 30px font size at max game size
-    $('.player h3').fitText(0.47916666666666666666666666666667); // 24px font size at max game size
+    $('.sidebar h2').fitText(0.38333333333333333333333333333333); // 30px font size at max game size
+    $('.sidebar h3').fitText(0.47916666666666666666666666666667); // 24px font size at max game size
     $('#title-container').find('h1').fitText(0.77857142857142857142857142857143);  // 140px font size at max game size
     $('#winner-display').fitText(0.90825688073394495412844036697248); // 99px font size at max game size
     
@@ -103,7 +91,7 @@ function main()
             return Helper.quarkClassRegex.exec($quark.attr('class'))[1];
         },
         
-        createQuarkElementFromGameSquare: function(gameSquare)
+        createQuarkContainerFromGameSquare: function(gameSquare)
         {
             var quarkElement = $('<div class="grid-element"> <div class="arrow-container"></div></div>');
             quarkElement.addClass("x" + gameSquare.x + " y" + gameSquare.y + " quark-container");
@@ -209,14 +197,17 @@ function main()
     /// GameStart – Game start, fill in the board without any animation
     function onGameStart(e, gameSquares)
     {
-        board.html(''); // clear the board
+        //board.html(''); // clear the board
         
         for (var gridKey in gameSquares)
-        {   var currSquare = gameSquares[gridKey];
+        {   var gameSquare = gameSquares[gridKey];
             
-            //var quarkElement = Helper.createQuarkElementFromGameSquare(currSquare);
-            
-            Helper.createQuarkElementFromGameSquare(currSquare).appendTo(board);
+            //Helper.createQuarkContainerFromGameSquare(gameSquare).appendTo(board);
+            var quarkBox = $('<div class="grid-element"> <div class="arrow-container"></div> </div>');
+            quarkBox.addClass("x" + gameSquare.x + " y" + gameSquare.y + " quark-container");
+            quarkBox.addClass(gameSquare.quark.css);
+    
+            quarkBox.appendTo(board);
         }
     } gameView.on(Game.EventType.GameStart, onGameStart);
     
@@ -260,8 +251,10 @@ function main()
         }
         
         // .swapping.left-swap
-        var animClassesA = 'distorting swapping ' + swapDirectionA + '-swap';
-        var animClassesB = 'distorting swapping ' + swapDirectionB + '-swap';
+        //var animClassesA = 'distorting swapping ' + swapDirectionA + '-swap';
+        //var animClassesB = 'distorting swapping ' + swapDirectionB + '-swap';
+        var animClassesA = 'swapping ' + swapDirectionA + '-swap';
+        var animClassesB = 'swapping ' + swapDirectionB + '-swap';
         // adding these classes will initiate CSS animations
         quarkA.addClass(animClassesA);
         quarkB.addClass(animClassesB);
@@ -326,8 +319,10 @@ function main()
             }
         }
         
-        var animClassesA = 'distorting swap-fail ' + swapDirectionA + '-swap-fail';
-        var animClassesB = 'distorting swap-fail ' + swapDirectionB + '-swap-fail';
+        //var animClassesA = 'distorting swap-fail ' + swapDirectionA + '-swap-fail';
+        //var animClassesB = 'distorting swap-fail ' + swapDirectionB + '-swap-fail';
+        var animClassesA = 'swap-fail ' + swapDirectionA + '-swap-fail';
+        var animClassesB = 'swap-fail ' + swapDirectionB + '-swap-fail';
         
         // adding these classes will initiate CSS animations
         quarkA.addClass(animClassesA);
@@ -354,7 +349,8 @@ function main()
         if (scoreMult > 1) // only show multiplier if > 1
             chainString += ' ×' + scoreMult;
         
-        $('.my-turn .score-chain').html(chainString);
+        //$('.my-turn .score-chain').html(chainString);
+        $('.player-score .score-chain').html(chainString);
         
         pauseInput();
         Game.animating = true;
@@ -455,11 +451,11 @@ function main()
         
         newSquares.forEach(function(newSquare)
         {
-            var quarkBox = $('.grid-element.x' + newSquare.x + '.y' + newSquare.y);
+            var quarkBox = $('.grid-element.quark-container.x' + newSquare.x + '.y' + newSquare.y);
             newQuarks.push(quarkBox);
             
             // I'll just blissfully assume the quarkBox isn't already showing a quark
-            quarkBox.addClass("quark-container " + newSquare.quark.css + " spawning"); // "spawning" class applies spawning animation
+            quarkBox.addClass(newSquare.quark.css + " spawning"); // "spawning" class applies spawning animation
         });
         
         // wait for animations to finish
@@ -482,13 +478,15 @@ function main()
         pauseInput();
         Game.animating = true;
         
+        // Use async to trigger next step only after everything is done falling (since falling time may vary)
         async.map(gravSquares,
         function(gravSquare, callback)
         {
-            // retrieve the DOM element that will be falling into this square
+            // find the DOM element for this square
             var target = Helper.findGridElementAtCoords('quark', gravSquare.x, gravSquare.y);
-            if (!gravSquare.quark)
-            {
+            
+            if (!gravSquare.quark) // no quark is landing in this space
+            {   // no transition to set up, just move on
                 return callback(null, [gravSquare, target, null]);
             }
             
@@ -513,32 +511,36 @@ function main()
                     fallerY = gravSquare.y + gravSquare.gravApplied;
                     break;
             }
-            
+    
+            // find the DOM element that will be falling into this space
             var faller = Helper.findGridElementAtCoords('quark', fallerX, fallerY);
             faller.addClass("move-" + gravSquare.gravApplied);
             faller.addClass("move-" + gravSquare.gravDir.string);
             
+            // Once falling transition animation is completed.
             faller.one('transitionend webkitTransitionEnd oTransitionEnd', function()
             {   //console.log("Transition ended WAAAAAA");
                 callback(null, [gravSquare, target, faller]);
             });
         },
-        function(err, results)
-        {   //console.log("async uber end reached");
+        function(err, results) // all transitions have completed
+        {   
             if (!err)
-            {
+            {   // move all quark containers back where they were but change their quarks to match the new contents
                 results.forEach(function(result)
                 {
                     var gravSquare = result[0];
                     var target = result[1];
                     var faller = result[2];
                     
+                    // remove any previous quark class
                     target.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
+                    // add the new correct quark class
                     if (gravSquare.quark)
                         target.addClass(gravSquare.quark.css);
                     
                     if (faller)
-                    {
+                    {   // revert to original position
                         faller.removeClass("move-" + gravSquare.gravApplied + " move-" + gravSquare.gravDir.string);
                     }
                 });
@@ -605,8 +607,8 @@ function main()
         Game.animating = true;
         
         // TODO: animate score chain moving up into total score before changing these values
-        $('.my-turn .score').html(newScore);
-        $('.my-turn .score-chain').html('');
+        $('.player-score .score').html(newScore);
+        $('.player-score .score-chain').html('');
         
         // playerPanes.removeClass("my-turn");
         // board.removeClass("player-" + oldTurn + "-turn");

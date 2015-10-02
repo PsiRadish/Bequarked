@@ -1,0 +1,105 @@
+
+$left-bar-full-width  : 145px;
+$right-bar-full-width : 145px;
+$board-full-width     : 800px;
+$board-full-height    : 800px;
+
+$game-full-width      : $left-bar-full-width + $right-bar-full-width + $board-full-width;
+
+$right-bar-breakpoint : 480px;
+$right-bar-hide-width : 20px;
+
+#left-bar
+{
+    max-width: $left-bar-full-width;
+    width: $left-bar-full-width / $game-full-width * 100%;
+    padding: 0 (15px / $game-full-width * 100%);
+}
+#right-bar
+{
+    max-width: $right-bar-full-width;
+    width: $right-bar-full-width / $game-full-width * 100%;
+    padding: 0 (15px / $game-full-width * 100%);
+    
+    position: relative;
+    .toggle::before
+    {
+        content: "";
+        position: absolute;
+        top: 15px / $game-full-width * 100%;
+        right: 15px / $game-full-width * 100%;
+    }
+}
+
+.sidebar
+{
+    > h2,
+    > .h2,
+    > h3,
+    > .h3
+    {
+        width: 100%;
+    }
+}
+
+#board, #winner-display
+{
+    text-align: center;
+    margin: 0 auto;
+    
+    max-width: $board-full-width;
+    width: $board-full-width / $game-full-width * 100%;
+    
+    max-height: $board-full-height;
+    height: 100%;
+}
+
+#game
+{
+    max-width: $game-full-width;
+    width: 100%;
+    max-height: $board-full-height;
+    margin: 0 auto;
+}
+
+@media (max-width: $right-bar-breakpoint)
+{
+    #left-bar
+    {
+        width: $left-bar-full-width / $game-full-width * 100%;
+        padding: 0 (15px / $game-full-width * 100%);
+    }
+    #right-bar
+    {
+        width: $right-bar-full-width / $game-full-width * 100%;
+        padding: 0 (15px / $game-full-width * 100%);
+        
+        .toggle::before
+        {
+            content: "?";
+            
+            top: 15px / $game-full-width * 100%;
+            right: 15px / $game-full-width * 100%;
+        }
+    }
+    
+    #board, #winner-display
+    {
+        width: $board-full-width / $game-full-width * 100%;
+    }
+    
+    #game
+    {
+        max-width: $game-full-width;
+    }
+    
+    #right-bar #instructions
+    {
+        display: none;
+    }
+    
+    #right-bar.show-instructions #instructions
+    {
+        display: initial;
+    }
+}

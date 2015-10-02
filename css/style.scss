@@ -1,0 +1,898 @@
+/*
+  REFERENCE
+  Programmable CSS transition(/animation) through jQuery:
+    $('.quark-container.x0.y0').css(
+    {
+        'transition': 'transform 1s',
+        'transform': 'translate3d(687px, 443px, 0px)'
+    }).on('transitionend', function()
+    {
+        ...
+    });
+*/
+
+html, body, #game
+{
+    color: white;
+    /*background-color: black;*/
+    height: 100%;
+}
+body
+{
+    margin: 0.5vh;
+    background-color: black;
+    
+    font-size: 14px;
+    font-family: Segoe UI, Frutiger, DejaVu Sans, Helvetica Neue, Helvetica, Source Sans Pro, Open Sans, Arial, sans-serif;
+    
+    /*background: black no-repeat center center fixed;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url(http://i.imgur.com/cGpKK.jpg);*/
+}
+
+* { box-sizing: border-box; }
+
+/* Lovingly stolen from Bootstrap. */
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 
+{
+    font-weight: 500;
+    line-height: 1.1;
+}
+.h1, h1 
+{
+    font-size: 36px;
+}
+.h2, h2 
+{
+    font-size: 30px;
+}
+.h3, h3
+{
+    font-size: 24px;
+}
+.h4, h4 
+{
+    font-size: 18px;
+}
+.h5, h5 
+{
+    font-size: 16px;
+    font-weight: 600;
+}
+.h6, h6
+{
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#title-container h1
+{
+    text-align: center;
+    font-size: 8vh;
+    font-family: monospace;
+    font-variant: small-caps;
+    margin: 0.5vh 0 0 0;
+}
+
+#preload
+{
+    visibility: hidden;
+}
+
+#game
+{
+    width: 100%;
+    max-width: 1090px;
+    max-height: 800px;
+    margin: 0 auto;
+}
+
+#left-bar
+{
+    float: left;
+}
+#right-bar
+{
+    float: right;
+    /*display: none;*/
+}
+
+.sidebar.instructions a.toggle/*,
+.sidebar.instructions a.toggle::before*/
+{
+    font-family: Segoe UI Symbol;
+    text-decoration: none;
+    color: white;
+}
+
+#left-bar, #right-bar
+{
+    width: 13.302752%;
+    max-width: 145px;
+    /*height: 50%;*/
+    /*max-height: 400px;*/
+    padding: 0 1.3761468%;
+}
+
+/*.sidebar
+{
+    width: 13.302752%;
+    max-width: 145px;
+    height: 50%;
+    max-height: 400px;
+    padding: 0 1.3761468%;
+}*/
+.sidebar-title
+{
+    margin-top: 26.086956%;
+    /*text-align: center;*/
+    /*width: 100%;*/
+}
+
+.sidebar h3
+{
+    margin-left: 3.478261%;
+}
+
+.score
+{
+    margin-top: 43.478261%;
+}
+.score-chain
+{
+    margin-top: 104.347826%
+}
+.score-chain-multiplier
+{
+    /* I'll think of something */
+}
+
+@keyframes energy-background
+{
+    0%   { background-position:     0%   0%; }
+    25%  { background-position:   120% 240%; }
+    50%  { background-position:     0% 480%; }
+    75%  { background-position:   -60% 240%; }
+    100% { background-position:     0%   0%; }
+}
+/*.sidebar.my-turn
+{
+    background: url('../img/turn-bk.jpg') top left;
+    background-size: auto 180%;
+    box-shadow: inset 0 0 22px 22px black;
+    animation: energy-background 1s linear infinite;
+}*/
+.sidebar .sidebar-title
+{
+    text-decoration: underline;
+}
+
+/*
+#player-1.my-turn
+{
+    color: LightSkyBlue;
+}
+#player-2.my-turn
+{
+    color: LightPink;
+}
+*/
+
+#board, #winner-display
+{
+    text-align: center;
+    margin: 0 auto;
+    
+    width: 73.394495%;
+    max-width: 800px;
+    height: 100%;
+    max-height: 800px;
+}
+#board
+{
+    position: relative;
+    z-index: 1;
+}
+#winner-display
+{
+    position: absolute;
+    top: 34%;
+    left: 20%;
+    z-index: 50;
+    display: none;
+    font-size: 10vh;
+}
+
+/* Positioning and sizing for all elements that will directly align to the game grid */
+.grid-element
+{
+    width: 12.5%;
+    height: 12.5%;
+    position: absolute;
+    overflow: visible;
+}
+.grid-element.x0 { left: 0; }
+.grid-element.x1 { left: 12.5%; }
+.grid-element.x2 { left: 25%; }
+.grid-element.x3 { left: 37.5%; }
+.grid-element.x4 { left: 50%; }
+.grid-element.x5 { left: 62.5%; }
+.grid-element.x6 { left: 75%; }
+.grid-element.x7 { left: 87.5%; }
+.grid-element.y0 { top : 0; }
+.grid-element.y1 { top : 12.5%; }
+.grid-element.y2 { top : 25%; }
+.grid-element.y3 { top : 37.5%; }
+.grid-element.y4 { top : 50%; }
+.grid-element.y5 { top : 62.5%; }
+.grid-element.y6 { top : 75%; }
+.grid-element.y7 { top : 87.5%; }
+/*.grid-element *
+{
+    overflow: visible !important;
+}*/
+
+.grid-element.fx-container { z-index: 20; }
+
+.grid-element.fx-container.fx-h.fx-len-1 { height: 12.5%; width: 12.5%; }
+.grid-element.fx-container.fx-h.fx-len-2 { height: 12.5%; width:   25%; }
+.grid-element.fx-container.fx-h.fx-len-3 { height: 12.5%; width: 37.5%; transform: scaleX(1+(1/3)) }
+.grid-element.fx-container.fx-h.fx-len-4 { height: 12.5%; width:   50%; }
+.grid-element.fx-container.fx-h.fx-len-5 { height: 12.5%; width: 62.5%; }
+.grid-element.fx-container.fx-h.fx-len-6 { height: 12.5%; width:   75%; }
+.grid-element.fx-container.fx-h.fx-len-7 { height: 12.5%; width: 87.5%; }
+.grid-element.fx-container.fx-h.fx-len-8 { height: 12.5%; width:  100%; }
+
+.grid-element.fx-container.fx-v.fx-len-1 { width: 12.5%; height: 12.5%; }
+.grid-element.fx-container.fx-v.fx-len-2 { width: 12.5%; height:   25%; }
+.grid-element.fx-container.fx-v.fx-len-3 { width: 12.5%; height: 37.5%; }
+.grid-element.fx-container.fx-v.fx-len-4 { width: 12.5%; height:   50%; }
+.grid-element.fx-container.fx-v.fx-len-5 { width: 12.5%; height: 62.5%; }
+.grid-element.fx-container.fx-v.fx-len-6 { width: 12.5%; height:   75%; }
+.grid-element.fx-container.fx-v.fx-len-7 { width: 12.5%; height: 87.5%; }
+.grid-element.fx-container.fx-v.fx-len-8 { width: 12.5%; height:  100%; }
+
+.grid-element.fx-container .fx
+{
+    width: 100%;
+    height: 100%;
+    background: no-repeat center center;
+    background-size: 100% 100%;
+    
+    position: absolute;
+    z-index: 20;
+}
+.grid-element.fx-container      .fx.fx-flash-round { background-image: url("../img/flash-round.png"); }
+.grid-element.fx-container.fx-h .fx.fx-flash-star  { background-image: url("../img/flash-star-h.png"); }
+.grid-element.fx-container.fx-h .fx.fx-flash-bomb  { background-image: url("../img/flash-bomb-h.png"); }
+.grid-element.fx-container.fx-v .fx.fx-flash-star  { background-image: url("../img/flash-star-v.png"); }
+.grid-element.fx-container.fx-v .fx.fx-flash-bomb  { background-image: url("../img/flash-bomb-v.png"); }
+
+.quark-container /* grid-level element */
+{
+    z-index: 5;
+}
+.quark-container::before, .arrow-container::before
+{   /* use `before` pseudoelement to rotate background image without rotating div itself */
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    background               : no-repeat center center;
+    animation-iteration-count:  infinite;
+    animation-timing-function:  linear;
+}
+.quark-container::before
+{
+    background-size: 96% 96%;
+    animation-duration: 1s;
+}
+@keyframes rotate-ring-blue
+{
+    from { transform: rotate(  0deg); }
+    to   { transform: rotate(360deg); }
+}
+.quark-container.ring-blue::before
+{
+    background-image: url('../img/ring_blue.png');
+    animation-name: rotate-ring-blue;
+}
+@keyframes rotate-ring-red
+{
+    from { transform: rotate(360deg); }
+    to   { transform: rotate(  0deg); }
+}
+.quark-container.ring-red::before
+{
+    background-image: url('../img/ring_red.png');
+    animation-name: rotate-ring-red;
+}
+.quark-container.distorting::before /* quit spinning when I'm doing some fancy other animation */
+{
+    animation-name: none;
+}
+
+@keyframes left-swap-anim
+{
+    25%
+    {
+        transform: translateX(-50%) scale(1.5, 0.25);
+    }
+    50%
+    {
+        transform: translateX(-100%) scale(1, 1);
+    }
+    100%
+    {
+        transform: translateX(-100%);
+    }
+}
+@keyframes left-swap-fail-anim
+{
+    50%
+    {
+        transform: translateX(-25%) scale(1.25, 0.5);
+    }
+}
+@keyframes right-swap-anim
+{
+    25%
+    {
+        transform: translateX(50%) scale(1.5, 0.25);
+    }
+    50%
+    {
+        transform: translateX(100%) scale(1, 1);
+    }
+    100%
+    {
+        transform: translateX(100%);
+    }
+}
+@keyframes right-swap-fail-anim
+{
+    50%
+    {
+        transform: translateX(25%) scale(1.25, 0.5);
+    }
+}
+@keyframes up-swap-anim
+{
+    25%
+    {
+        transform: translateY(-50%) scale(0.25, 1.5);
+    }
+    50%
+    {
+        transform: translateY(-100%) scale(1, 1);
+    }
+    100%
+    {
+        transform: translateY(-100%);
+    }
+}
+@keyframes up-swap-fail-anim
+{
+    50%
+    {
+        transform: translateY(-25%) scale(0.5, 1.25);
+    }
+}
+@keyframes down-swap-anim
+{
+    25%
+    {
+        transform: translateY(50%) scale(0.25, 1.5);
+    }
+    50%
+    {
+        transform: translateY(100%) scale(1, 1);
+    }
+    100%
+    {
+        transform: translateY(100%);
+    }
+}
+@keyframes down-swap-fail-anim
+{
+    50%
+    {
+        transform: translateY(25%) scale(0.5, 1.25);
+    }
+}
+.quark-container.swapping
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         0.6s;
+}
+.quark-container.swap-fail
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         0.21s;
+}
+.quark-container.swapping.left-swap         { animation-name: left-swap-anim; }
+.quark-container.swap-fail.left-swap-fail   { animation-name: left-swap-fail-anim; }
+.quark-container.swapping.right-swap        { animation-name: right-swap-anim; }
+.quark-container.swap-fail.right-swap-fail  { animation-name: right-swap-fail-anim; }
+.quark-container.swapping.up-swap           { animation-name: up-swap-anim; }
+.quark-container.swap-fail.up-swap-fail     { animation-name: up-swap-fail-anim; }
+.quark-container.swapping.down-swap         { animation-name: down-swap-anim; }
+.quark-container.swap-fail.down-swap-fail   { animation-name: down-swap-fail-anim; }
+
+@keyframes h-match-anim
+{
+    50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
+    {
+        transform: scale(2, 0);
+    }
+    100%
+    {
+        transform: scale(2, 0);
+    }
+}
+@keyframes v-match-anim
+{
+    50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
+    {
+        transform: scale(0, 2);
+    }
+    100%
+    {
+        transform: scale(0, 2);
+    }
+}
+@keyframes hv-match-anim
+{
+    12%
+    {
+        transform: scale(1.25, 0.5);
+    }
+    28%
+    {
+        transform: scale(0.25, 1);
+    }
+    50%  /* End of the animation, set at both 50% and 100% so there's some extra time before it reverts to its pre-animation state */
+    {
+        transform: scale(0, 0);
+    }
+    100%
+    {
+        transform: scale(0, 0);
+    }
+}
+.quark-container.matching
+{
+    animation-iteration-count:  1;
+    /*animation-timing-function:  ease;*/
+    animation-timing-function:  cubic-bezier(1, 0, 0, 1);
+    animation-duration:         0.8s;
+}
+.quark-container.matching.h-match  { animation-name: h-match-anim; }
+.quark-container.matching.v-match  { animation-name: v-match-anim; }
+.quark-container.matching.hv-match { animation-name: hv-match-anim; }
+
+@keyframes spawn-anim
+{
+    0%
+    {
+        height:         12.5%;
+        margin-top:     0;
+        width:          3.125%;
+        margin-left:    4.6875%;
+        opacity:        0;
+    }
+    25%
+    {
+        height:         6.25%;
+        margin-top:     3.125%;
+        width:          15.625%;
+        margin-left:    -1.5625%;
+        opacity:        0.65;
+    }
+    50%
+    {
+        height:         12.5%;
+        margin-top:     0;
+        width:          12.5%;
+        margin-left:    0;
+        opacity:        1;
+    }
+}
+.quark-container.spawning
+{
+    animation-iteration-count:  1;
+    animation-timing-function:  ease;
+    animation-duration:         1.2s;
+}
+.quark-container.spawning { animation-name: spawn-anim; }
+
+#board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
+{
+    border: 3px solid;
+    border-radius: 10%;
+    width:  calc(12.5% + 6px);
+    height: calc(12.5% + 6px);
+    margin-left: -3px;
+    margin-top: -3px;
+}
+#board.taking-input .quark-container:hover
+{
+    border-color:     rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+#board.taking-input .quark-container.selected
+{
+    border-color: white;
+}
+/*
+#board.player-1-turn.taking-input .quark-container:hover
+{
+    border-color:     rgba(0, 0, 255, 0.3);
+    background-color: rgba(0, 0, 255, 0.3);
+}
+#board.player-1-turn.taking-input .quark-container.selected
+{
+    border-color: blue;
+}
+#board.player-2-turn.taking-input .quark-container:hover
+{
+    border-color:     rgba(255, 0, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0.25);
+}
+#board.player-2-turn.taking-input .quark-container.selected
+{
+    border-color: red;
+}
+*/
+
+.arrow-container
+{
+    width: 64%;
+    height: 64%;
+    position: absolute;
+    top: 18%;
+    left: 18%;
+    background     : no-repeat center center;
+    background-size: 100% 100%;
+}
+.quark-container .arrow-container
+{
+    z-index: 10;
+}
+.arrow-left .arrow-container
+{
+    background-image: url('../img/arrow-left.png');
+}
+.arrow-right .arrow-container
+{
+    background-image: url('../img/arrow-right.png');
+}
+.arrow-down .arrow-container
+{
+    background-image: url('../img/arrow-down.png');
+}
+.arrow-up .arrow-container
+{
+    background-image: url('../img/arrow-up.png');
+}
+@keyframes quark-arrow-flicker
+{
+    0%   { opacity: 1; }
+    50%  { opacity: 0.25; }
+    100% { opacity: 1; }
+}
+.quark-container .arrow-container::before /* use `before` pseudoelement to layer a flickering copy of the arrow graphic for an animated glowing effect  */
+{
+    content:            '';
+    background-size:    100% 100%;
+    animation-duration: 0.5s;
+    animation-name:     quark-arrow-flicker;
+}
+.quark-container.arrow-left .arrow-container::before
+{
+    background-image: url('../img/arrow-left.png');
+}
+.quark-container.arrow-right .arrow-container::before
+{
+    background-image: url('../img/arrow-right.png');
+}
+.quark-container.arrow-down .arrow-container::before
+{
+    background-image: url('../img/arrow-down.png');
+}
+.quark-container.arrow-up .arrow-container::before
+{
+    background-image: url('../img/arrow-up.png');
+}
+
+.quark-container.move-1 { transition: transform 0.125s; }
+.quark-container.move-2 { transition: transform 0.25s; }
+.quark-container.move-3 { transition: transform 0.375s; }
+.quark-container.move-4 { transition: transform 0.5s; }
+.quark-container.move-5 { transition: transform 0.625s; }
+.quark-container.move-6 { transition: transform 0.75s; }
+.quark-container.move-7 { transition: transform 0.875s; }
+.quark-container.move-8 { transition: transform 1s; }
+
+.quark-container.move-1.move-right { transform: translateX( 100%); }
+.quark-container.move-2.move-right { transform: translateX( 200%); }
+.quark-container.move-3.move-right { transform: translateX( 300%); }
+.quark-container.move-4.move-right { transform: translateX( 400%); }
+.quark-container.move-5.move-right { transform: translateX( 500%); }
+.quark-container.move-6.move-right { transform: translateX( 600%); }
+.quark-container.move-7.move-right { transform: translateX( 700%); }
+.quark-container.move-8.move-right { transform: translateX( 800%); }
+
+.quark-container.move-1.move-left  { transform: translateX(-100%); }
+.quark-container.move-2.move-left  { transform: translateX(-200%); }
+.quark-container.move-3.move-left  { transform: translateX(-300%); }
+.quark-container.move-4.move-left  { transform: translateX(-400%); }
+.quark-container.move-5.move-left  { transform: translateX(-500%); }
+.quark-container.move-6.move-left  { transform: translateX(-600%); }
+.quark-container.move-7.move-left  { transform: translateX(-700%); }
+.quark-container.move-8.move-left  { transform: translateX(-800%); }
+
+.quark-container.move-1.move-down  { transform: translateY( 100%); }
+.quark-container.move-2.move-down  { transform: translateY( 200%); }
+.quark-container.move-3.move-down  { transform: translateY( 300%); }
+.quark-container.move-4.move-down  { transform: translateY( 400%); }
+.quark-container.move-5.move-down  { transform: translateY( 500%); }
+.quark-container.move-6.move-down  { transform: translateY( 600%); }
+.quark-container.move-7.move-down  { transform: translateY( 700%); }
+.quark-container.move-8.move-down  { transform: translateY( 800%); }
+
+.quark-container.move-1.move-up    { transform: translateY(-100%); }
+.quark-container.move-2.move-up    { transform: translateY(-200%); }
+.quark-container.move-3.move-up    { transform: translateY(-300%); }
+.quark-container.move-4.move-up    { transform: translateY(-400%); }
+.quark-container.move-5.move-up    { transform: translateY(-500%); }
+.quark-container.move-6.move-up    { transform: translateY(-600%); }
+.quark-container.move-7.move-up    { transform: translateY(-700%); }
+.quark-container.move-8.move-up    { transform: translateY(-800%); }
+
+.grav-container /* grid-level element */
+{
+    
+}
+@keyframes grav-arrow-flicker
+{
+    0%   { opacity: 0.25; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 0.25; }
+}
+@keyframes grav-bomb-arrow-flicker
+{
+    0%   { opacity: 0.5; }
+    50%  { opacity: 1.0; }
+    100% { opacity: 0.5; }
+}
+.grav-container .arrow-container
+{
+    z-index: 4;
+    animation-name:             grav-arrow-flicker;
+    animation-duration:         1s;
+    animation-iteration-count:  infinite;
+    animation-timing-function:  ease;
+}
+.grav-container.bomb .arrow-container
+{
+    animation-name:     grav-bomb-arrow-flicker;
+    animation-duration: 0.4s;
+}
+
+@keyframes grav-container-fold-up
+{
+    100%
+    {
+        height: 0%;
+    }
+}
+@keyframes grav-container-fold-left
+{
+    100%
+    {
+        width: 0%;
+    }
+}
+@keyframes grav-container-fold-down
+{
+    100%
+    {
+        height: 0%;
+        margin-top: 12.5%;
+    }
+}
+@keyframes grav-container-fold-right
+{
+    100%
+    {
+        width: 0%;
+        margin-left: 12.5%;
+    }
+}
+.grav-container.move-left,
+.grav-container.move-right,
+.grav-container.move-up,
+.grav-container.move-down,
+{
+    /*animation-duration:         0.25s;*/
+    /*animation-iteration-count:  1;*/
+    /*animation-timing-function:  linear;*/
+    transition: width 0.25s ease,
+                height 0.25s ease,
+                margin-top 0.25s ease,
+                margin-left 0.25s ease;
+}
+.grav-container.arrow-left.move-left
+{
+    /*animation-name: grav-container-fold-left;*/
+    width: 0%;
+}
+.grav-container.arrow-right.move-right
+{
+    /*animation-name: grav-container-fold-right;*/
+    width: 0%;
+    margin-left: 12.5%;
+}
+.grav-container.arrow-down.move-down
+{
+    /*animation-name: grav-container-fold-down;*/
+    height: 0%;
+    margin-top: 12.5%;
+}
+.grav-container.arrow-up.move-up
+{
+    /*animation-name: grav-container-fold-up;*/
+    height: 0%;
+}
+
+/* TweenLite.to(gravContainer, 0.4, {height:"7.5%",  ease:Elastic.easeIn}); */
+/* TweenLite.to(gravContainer, 0.4, {height:"12.5%", ease:Elastic.easeOut, delay: 0.4}); */
+@keyframes grav-container-bomb-up
+{
+    30%
+    {
+        height:         11%;
+        margin-top:     1.5%;
+    }
+    50%
+    {
+        height:         8.3333333333333333333333333333333%;
+        margin-top:     4.1666666666666666666666666666667%;
+    }
+    75%
+    {
+        height:         9.1666666666666666666666666666667%;
+        margin-top:     3.3333333333333333333333333333333%;
+    }
+    90%
+    {
+        height:         7.5%;
+        margin-top:     5%;
+    }
+}
+@keyframes grav-container-bomb-left
+{
+    30%
+    {
+        width:          11%;
+        margin-left:    1.5%;
+    }
+    50%
+    {
+        width:          8.3333333333333333333333333333333%;
+        margin-left:    4.1666666666666666666666666666667%;
+    }
+    75%
+    {
+        width:          9.1666666666666666666666666666667%;
+        margin-left:    3.3333333333333333333333333333333%;
+    }
+    90%
+    {
+        width:          7.5%;
+        margin-left:    5%;
+    }
+}
+@keyframes grav-container-bomb-down
+{
+    30%
+    {
+        height:         11%;
+    }
+    50%
+    {
+        height:         8.3333333333333333333333333333333%;
+    }
+    75%
+    {
+        height:         9.1666666666666666666666666666667%;
+    }
+    90%
+    {
+        height:         7.5%;
+    }
+}
+@keyframes grav-container-bomb-right
+{
+    30%
+    {
+        width:          11%;
+    }
+    50%
+    {
+        width:          8.3333333333333333333333333333333%;
+    }
+    75%
+    {
+        width:          9.1666666666666666666666666666667%;
+    }
+    90%
+    {
+        width:          7.5%;
+    }
+}
+.grav-container.bomb
+{
+    animation-duration:         0.8s;
+    animation-iteration-count:  infinite;
+    animation-timing-function:  ease;
+}
+.grav-container.bomb.arrow-up    { animation-name: grav-container-bomb-up; }
+.grav-container.bomb.arrow-left  { animation-name: grav-container-bomb-left; }
+.grav-container.bomb.arrow-down  { animation-name: grav-container-bomb-down; }
+.grav-container.bomb.arrow-right { animation-name: grav-container-bomb-right; }
+
+#game.tie #board          { background-color: purple; }
+#game.player-1-win #board { background-color: DarkBlue }
+#game.player-2-win #board { background-color: DarkRed }
+#game.tie #winner-display, #game.player-1-win #winner-display, #game.player-2-win #winner-display
+{
+    display: initial;
+}
+#game.tie #winner-display::after, #game.player-1-win #winner-display::after, #game.player-2-win #winner-display::after
+{
+    font-size: 10vh;
+    text-align: center;
+    z-index: 50;
+}
+#game.tie #winner-display::after          { content: "TIE"; }
+#game.player-1-win #winner-display::after { content: "PLAYER 1 WINS"; }
+#game.player-2-win #winner-display::after { content: "PLAYER 2 WINS"; }
+
+/* Media queries to scale down border width at lower resolution.
+   (Because apparently you can't put a % in border-width)       */
+@media (max-height: 664px) and (min-height: 401px), (max-width: 905px) and (min-width: 546px)
+{
+    #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
+    {
+        border: 2px solid;
+        width:  calc(12.5% + 4px);
+        height: calc(12.5% + 4px);
+        margin-left: -2px;
+        margin-top: -2px;
+    }
+}
+@media (max-height: 400px), (max-width: 545px)
+{
+    #board.taking-input .quark-container:hover, #board.taking-input .quark-container.selected
+    {
+        border: 1px solid;
+        width:  calc(12.5% + 2px);
+        height: calc(12.5% + 2px);
+        margin-left: -1px;
+        margin-top: -1px;
+    }
+}
+
+/*.quark-container:not(.ring-red):not(.ring-blue):not([style])::before
+{
+    content: "No ring WTF";
+}*/
+
+.vis-hide
+{
+    visibility: hidden;
+}
