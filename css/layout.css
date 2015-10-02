@@ -1,0 +1,146 @@
+body, html
+{
+    width : 100%;
+}
+
+#left-bar
+{
+    max-width : 145px;
+    width     : 13.30275%;
+    padding   : 0 0.91743%;
+}
+
+#right-bar
+{
+    max-width : 145px;
+    width     : 13.30275%;
+    padding   : 0 0.91743%;
+}
+
+.sidebar.instructions
+{
+    position : relative;
+}
+
+.sidebar.instructions .toggle
+{
+    font-size : 32px;
+    display   : none;
+    position  : absolute;
+}
+
+.sidebar.instructions .toggle::before
+{
+    content : "";
+}
+
+#board, #winner-display
+{
+    text-align : center;
+    float      : left;
+    max-width  : 800px;
+    width      : 73.3945%;
+    min-width  : 200px;
+    max-height : 800px;
+    height     : 100%;
+    min-height : 200px;
+}
+
+#game
+{
+    max-width  : 1090px;
+    width      : 100%;
+    min-width  : 250px;
+    max-height : 800px;
+    min-height : 200px;
+    margin     : 0 auto;
+}
+
+@media (max-width : 450.25px)
+{
+    #left-bar
+    {
+        max-width : 65.25px;
+        width     : 14.49195%;
+        padding   : 0 0.99944%;
+    }
+    
+    #right-bar
+    {
+        max-width : 65.25px;
+        width     : 14.49195%;
+        padding   : 0 0.99944%;
+    }
+    
+    .sidebar.instructions
+    {
+        max-width : 25px !important;
+        width     : 5.55247% !important;
+    }
+    
+    .sidebar.instructions #instructions
+    {
+        display : none;
+    }
+    
+    .sidebar.instructions .toggle
+    {
+        display    : inline-block;
+        max-width  : 16px;
+        width      : 64%;
+        max-height : 16px;
+        height     : auto;
+        top        : 0.99944vw;
+        right      : 18%;
+    }
+    
+    .sidebar.instructions .toggle::before
+    {
+        content : "\F059";
+    }
+    
+    .sidebar.instructions.expanded
+    {
+        /*max-width: $help-expanded-width !important;
+        //width: ratio($help-expanded-width, $game-full-width);
+        width: $help-expanded-width !important;*/
+        /*.toggle
+        {
+            width: ratio($help-button-size, $help-expanded-width);
+            
+            right: ratio($padding, $help-expanded-width);
+        }*/
+    }
+    
+    .sidebar.instructions.expanded #instructions
+    {
+        display          : initial;
+        width            : 145px;
+        background-color : rgba(0, 0, 0, 0.65);
+        position         : absolute;
+        top              : 0.99944vw;
+        right            : 100%;
+        padding          : 4.5px;
+        z-index          : 100;
+    }
+    
+    .sidebar.instructions.expanded .toggle::before
+    {
+        content : "\F00D";
+    }
+    
+    #board, #winner-display
+    {
+        max-width  : 360px;
+        width      : 79.95558%;
+        max-height : 360px;
+    }
+    
+    #game
+    {
+        max-width  : 450.25px;
+        max-height : 360px;
+    }
+}
+
+/*# sourceMappingURL=layout.css.map */
