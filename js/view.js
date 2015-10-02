@@ -56,9 +56,10 @@ function main()
     // do it again on resize
     $(window).resize(sizeGame);
     
-    // FitText.js calls for fully responsive text
-    $('.sidebar h2').fitText(0.38333333333333333333333333333333); // 30px font size at max game size
-    $('.sidebar h3').fitText(0.47916666666666666666666666666667); // 24px font size at max game size
+    // use FitText.js for fully scaletastic text
+    $('.sidebar h2').fitText(0.41666666666666666666666666666667); // 30px font size at max game size
+    $('.sidebar h3').fitText(0.52083333333333333333333333333333, {thisEvents: "visible.fittext"}); // 24px font size at max game size
+    $('.instructions .toggle').fitText(0.1); // 16px max
     $('#title-container').find('h1').fitText(0.77857142857142857142857142857143);  // 140px font size at max game size
     $('#winner-display').fitText(0.90825688073394495412844036697248); // 99px font size at max game size
     
@@ -128,16 +129,6 @@ function main()
         board.addClass('taking-input');
     }
     
-    /*function doAnimateSwapSuccess($quarkA, $quarkB)
-    {
-    
-    }*/
-    
-    /*function animateSwapFail($quarkA, $quarkB)
-    {
-    
-    }*/
-    
     board.on('click', function(e)
     {
         if (board.is('.taking-input') && !Game.animating)
@@ -188,6 +179,17 @@ function main()
                    clickedQuark.addClass("selected");
                 }
             }
+        }
+    });
+    // Instructions Toggle Button
+    $('.sidebar.instructions .toggle').on('click', function(e)
+    {
+        if (!Game.animating)
+        {
+            $('.sidebar.instructions').toggleClass('expanded');
+            board.toggleClass('taking-input');
+            
+            $(this).trigger('visible'); // custom event to be heard by modified FitText.js
         }
     });
     

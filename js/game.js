@@ -101,7 +101,10 @@ var Game =
             }
             
             // TEST OVERRIDE
-            
+            if (gridKey in Debug.initQuarksOverride)
+            {
+                currSquare.quark = Debug.initQuarksOverride[gridKey]; 
+            }
         }
         
         this.eventTarget.trigger(Game.EventType.GameStart, [Game.Grid.squares]);
@@ -647,8 +650,8 @@ var Game =
     
     processGravity: function()
     {
-        //if (Object.keys(Game.gravHolesAll).length == 0 && Object.keys(Game.gravBombs).length == 0)
-        if (Game.matchGroups.length == Object.keys(Game.resolvedMatchGroups).length  // all matchGroups resolved
+        // All match groups resolved, done processing gravity.
+        if (Game.matchGroups.length == Object.keys(Game.resolvedMatchGroups).length
             && Game.gravBombs.length == 0)
         {
             Game.matchGroups.forEach(function(matchGroup)
@@ -660,7 +663,7 @@ var Game =
             
             Game.spawnNewQuarks();
         }
-        else
+        else // Process (more) gravity
         {
             console.log('==processGravity==');
             console.log('num resolvedMatchGroups', Object.keys(Game.resolvedMatchGroups).length);
@@ -673,8 +676,15 @@ var Game =
                 // Initial filtering of matchGroups to weed out obvious conflicts and map dependencies
                 var groupsGoodToGrav = Game.matchGroups.filter(function(matchGroup)
                 {
-                    return matchGroup.goodToGrav;
+                    //return matchGroup.goodToGrav;
+                    
+                    // DEBUG
+                    var goodToGrav = matchGroup.goodToGrav;
+                    console.log("matchGroup", matchGroup.index, "goodToGrav =", goodToGrav);
+                    return goodToGrav;
                 });
+                
+                console.log("groupsGoodToGrav.length =", groupsGoodToGrav.length);
                 
                 var gravSquares = [];
                 for (var i = 0; i < groupsGoodToGrav.length; i++)
@@ -683,6 +693,7 @@ var Game =
                     
                     if (matchGroup.resolved) // already resolved (as a dependency of a previous matchGroup)
                         continue;
+                    console.log("matchGroup", matchGroup.index, "not resolved yet.");
                     
                     // initial values
                     var expandedGroup = [matchGroup],
@@ -732,6 +743,8 @@ var Game =
                     
                     if (!greatToGrav)
                         continue;
+    
+                    console.log("matchGroup", matchGroup.index, "was greatToGrav.");
                     
                     // loop through again, this time setting real values
                     for (var x = 0; x < allDependentSquares.length; x++)
@@ -774,17 +787,17 @@ var Game =
                         });
                         
                         // find additional holes in the line and apply gravity accordingly
-                        for (i = square.gravStrength; i < gravLine.length; i++)
-                        {   var holeMaybe = gravLine[i];
+                        for (var h = square.gravStrength; h < gravLine.length; h++)
+                        {   var holeMaybe = gravLine[h];
                             
                             if (holeMaybe.quark == null && holeMaybe.gravStrength == null) // unmeasured hole
                             {
-                                for (var holePos = i; holePos < gravLine.length; holePos++)
+                                for (var holePos = h; holePos < gravLine.length; holePos++)
                                 {
                                     if (gravLine[holePos].quark != null || gravLine[holePos].gravStrength != null)
                                         break;
                                 }
-                                var holeSize = holePos - i;
+                                var holeSize = holePos - h;
                                 
                                 Game.Grid.forNumSquaresFrom_InDir(holeSize, holeMaybe, ahead, function(holeSquare)
                                 {
@@ -802,7 +815,7 @@ var Game =
                                     affectedSquare.gravApplied += holeMaybe.gravStrength;
                                 });
                                 
-                                i += holeMaybe.gravStrength - 1;
+                                h += holeMaybe.gravStrength - 1;
                             }
                         }
                         
@@ -1122,7 +1135,7 @@ Game.MatchGroup.prototype._checkConflicts = function()
     
     console.log(this.index, "_checkConflicts");
     this._goodToGrav = this.squares.every(function(square)
-    {   console.log('square', square.x, square.y, 'gravDir', square.gravDir);
+    {   console.log('square', square.x, square.y, 'gravDir', square.gravDir.string);
         var pullSquare = square.neighborInDir(square.gravDir.opposite);
         if (pullSquare && !pullSquare.inSameGroupAs(square)) // this square directly pulls on a square outside the match group
         {
@@ -1153,6 +1166,9 @@ Object.defineProperty(Game.MatchGroup.prototype, 'goodToGrav',
 {
     get: function()
     {
+        if (this.resolved) // already did this one's gravity
+            return false;
+        
         if (this._lastResolvedGroupsLength != Game.matchGroups.length) // Mismatch, call _checkConflicts() to update
             this._checkConflicts(); // check for conflicts and dependencies
         
@@ -1528,11 +1544,11 @@ var Debug =
     traceQuarksSquares: {},
     initQuarksOverride:
     {
-        0x14: Quark.RedLeft,
-        0x24: Quark.BlueUp,
-        0x34: Quark.RedLeft,
-        0x15: Quark.BlueUp,
-        0x25: Quark.RedLeft,
-        0x35: Quark.BlueUp
+        //0x14: Quark.RedLeft,
+        //0x24: Quark.BlueDown,
+        //0x34: Quark.RedLeft,
+        //0x15: Quark.BlueDown,
+        //0x25: Quark.RedLeft,
+        //0x35: Quark.BlueDown
     }
 };

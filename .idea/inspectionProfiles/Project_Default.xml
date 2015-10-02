@@ -2,6 +2,7 @@
   <profile version="1.0">
     <option name="myName" value="Project Default" />
     <inspection_tool class="CoffeeScriptUnusedLocalSymbols" enabled="true" level="UNUSED ENTRY" enabled_by_default="true" />
+    <inspection_tool class="CssNoGenericFontName" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="CssRedundantUnit" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="CssUnusedSymbol" enabled="true" level="UNUSED ENTRY" enabled_by_default="true" />
     <inspection_tool class="JSReferencingMutableVariableFromClosure" enabled="false" level="WARNING" enabled_by_default="false" />

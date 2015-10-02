@@ -78,13 +78,13 @@ body
     visibility: hidden;
 }
 
-#game
+/*#game
 {
     width: 100%;
     max-width: 1090px;
     max-height: 800px;
     margin: 0 auto;
-}
+}*/
 
 #left-bar
 {
@@ -99,19 +99,19 @@ body
 .sidebar.instructions a.toggle/*,
 .sidebar.instructions a.toggle::before*/
 {
-    font-family: Segoe UI Symbol;
+    //font-family: FontAwesome;
     text-decoration: none;
     color: white;
 }
 
-#left-bar, #right-bar
+/*#left-bar, #right-bar
 {
     width: 13.302752%;
     max-width: 145px;
-    /*height: 50%;*/
-    /*max-height: 400px;*/
+    //height: 50%;
+    //max-height: 400px;
     padding: 0 1.3761468%;
-}
+}*/
 
 /*.sidebar
 {
@@ -126,6 +126,10 @@ body
     margin-top: 26.086956%;
     /*text-align: center;*/
     /*width: 100%;*/
+}
+.sidebar.instructions.expanded > #instructions > .sidebar-title
+{
+    margin-top: 13.043478%;
 }
 
 .sidebar h3
@@ -177,7 +181,7 @@ body
 }
 */
 
-#board, #winner-display
+/*#board, #winner-display
 {
     text-align: center;
     margin: 0 auto;
@@ -186,12 +190,13 @@ body
     max-width: 800px;
     height: 100%;
     max-height: 800px;
-}
+}*/
 #board
 {
     position: relative;
     z-index: 1;
 }
+
 #winner-display
 {
     position: absolute;

@@ -1,105 +1,185 @@
 
+body, html
+{
+    width: 100%;
+}
+
+
 $left-bar-full-width  : 145px;
-$right-bar-full-width : 145px;
-$board-full-width     : 800px;
-$board-full-height    : 800px;
+$right-bar-full-width : $left-bar-full-width;
+$board-full-size      : 800px;
+$board-min-size       : 200px;
 
-$game-full-width      : $left-bar-full-width + $right-bar-full-width + $board-full-width;
+$game-full-width      : $left-bar-full-width + $right-bar-full-width + $board-full-size;
 
-$right-bar-breakpoint : 480px;
-$right-bar-hide-width : 20px;
+$padding              : 10px;
+
+@function ratio($elem-max-width, $elem-container-width)
+{
+    @return $elem-max-width / $elem-container-width * 100%
+}
+
+$right-bar-breakpoint : 450.25px;
 
 #left-bar
 {
     max-width: $left-bar-full-width;
-    width: $left-bar-full-width / $game-full-width * 100%;
-    padding: 0 (15px / $game-full-width * 100%);
+    width: ratio($left-bar-full-width, $game-full-width);
+    padding: 0 ratio($padding, $game-full-width);
 }
 #right-bar
 {
     max-width: $right-bar-full-width;
-    width: $right-bar-full-width / $game-full-width * 100%;
-    padding: 0 (15px / $game-full-width * 100%);
-    
-    position: relative;
-    .toggle::before
-    {
-        content: "";
-        position: absolute;
-        top: 15px / $game-full-width * 100%;
-        right: 15px / $game-full-width * 100%;
-    }
+    width: ratio($right-bar-full-width, $game-full-width);
+    padding: 0 ratio($padding, $game-full-width);
 }
 
-.sidebar
+.sidebar.instructions
 {
-    > h2,
-    > .h2,
-    > h3,
-    > .h3
+    position: relative;
+    
+    .toggle
     {
-        width: 100%;
+        font-size: 32px;
+        
+        display: none;
+        position: absolute;
+        
+        &::before
+        {
+            content: "";
+        }
     }
 }
 
 #board, #winner-display
 {
     text-align: center;
-    margin: 0 auto;
+    //margin: 0 auto;
+    float: left;
     
-    max-width: $board-full-width;
-    width: $board-full-width / $game-full-width * 100%;
+    max-width: $board-full-size;
+    width: ratio($board-full-size, $game-full-width);
+    min-width: $board-min-size;
     
-    max-height: $board-full-height;
+    max-height: $board-full-size;
     height: 100%;
+    min-height: $board-min-size;
 }
 
 #game
 {
     max-width: $game-full-width;
     width: 100%;
-    max-height: $board-full-height;
+    //min-width: 250px;
+    min-width: $board-min-size * 1.25;
+    
+    max-height: $board-full-size;
+    min-height: $board-min-size;
+    
     margin: 0 auto;
 }
 
 @media (max-width: $right-bar-breakpoint)
 {
+    $left-bar-full-width  : 65.25px;
+    $right-bar-full-width : $left-bar-full-width;
+    
+    $board-full-size      : 360px;
+    
+    $padding              : 4.5px;
+    
+    $help-button-size     : 16px;
+    $help-collapsed-width : $help-button-size + 2 * $padding;
+    $help-expanded-width  : $right-bar-full-width;
+    
+    //$game-full-width      : $left-bar-full-width + $right-bar-full-width + $board-full-size;
+    $game-full-width      : $left-bar-full-width + $help-collapsed-width + $board-full-size;
+    
     #left-bar
     {
-        width: $left-bar-full-width / $game-full-width * 100%;
-        padding: 0 (15px / $game-full-width * 100%);
+        max-width: $left-bar-full-width;
+        width: ratio($left-bar-full-width, $game-full-width);
+        padding: 0 ratio($padding, $game-full-width);
     }
     #right-bar
     {
-        width: $right-bar-full-width / $game-full-width * 100%;
-        padding: 0 (15px / $game-full-width * 100%);
+        max-width: $right-bar-full-width;
+        width: ratio($right-bar-full-width, $game-full-width);
+        padding: 0 ratio($padding, $game-full-width);
+    }
+    
+    .sidebar.instructions
+    {
+        max-width: $help-collapsed-width !important;
+        width: ratio($help-collapsed-width, $game-full-width) !important;
         
+        #instructions
+        {
+            display: none;
+        }
+        
+        .toggle
+        {
+            display: inline-block;
+            max-width: $help-button-size;
+            width: ratio($help-button-size, $help-collapsed-width);
+            max-height: $help-button-size;
+            height: auto;
+            
+            //top: ($padding / $help-collapsed-width) * ($help-collapsed-width / $game-full-width´) * 100vw;
+            top: $padding / $game-full-width * 100vw;
+            right: ratio($padding, $help-collapsed-width);
+        }
         .toggle::before
         {
-            content: "?";
+            content: "\F059";
+        }
+    }
+    .sidebar.instructions.expanded
+    {
+        /*max-width: $help-expanded-width !important;
+        //width: ratio($help-expanded-width, $game-full-width);
+        width: $help-expanded-width !important;*/
+    
+        #instructions
+        {
+            display: initial;
+            width: 145px;
+            background-color: rgba(black, 0.65);
             
-            top: 15px / $game-full-width * 100%;
-            right: 15px / $game-full-width * 100%;
+            position: absolute;
+            top: $padding / $game-full-width * 100vw;
+            //right: $help-collapsed-width;
+            right: 100%;
+            padding: $padding;
+            
+            z-index: 100;
+        }
+        
+        /*.toggle
+        {
+            width: ratio($help-button-size, $help-expanded-width);
+            
+            right: ratio($padding, $help-expanded-width);
+        }*/
+        .toggle::before
+        {
+            content: "\F00D";
         }
     }
     
     #board, #winner-display
-    {
-        width: $board-full-width / $game-full-width * 100%;
+    {        
+        max-width: $board-full-size;
+        width: ratio($board-full-size, $game-full-width);
+        
+        max-height: $board-full-size;
     }
     
     #game
     {
         max-width: $game-full-width;
-    }
-    
-    #right-bar #instructions
-    {
-        display: none;
-    }
-    
-    #right-bar.show-instructions #instructions
-    {
-        display: initial;
+        max-height: $board-full-size;
     }
 }
