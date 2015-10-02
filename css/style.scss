@@ -11,6 +11,9 @@
     });
 */
 
+//@import "compass";
+//@import "ceaser-easing";
+
 html, body, #game
 {
     color: white;
@@ -611,15 +614,23 @@ body
 {
     background-image: url('../img/arrow-up.png');
 }
-
-.quark-container.move-1 { transition: transform 0.125s; }
-.quark-container.move-2 { transition: transform 0.25s; }
-.quark-container.move-3 { transition: transform 0.375s; }
-.quark-container.move-4 { transition: transform 0.5s; }
-.quark-container.move-5 { transition: transform 0.625s; }
-.quark-container.move-6 { transition: transform 0.75s; }
-.quark-container.move-7 { transition: transform 0.875s; }
-.quark-container.move-8 { transition: transform 1s; }
+// Cubic Bezier function or something
+// F(t) = (1 ? t)³P? + 3t(1 ? t)²P? + 3t²(1 ? t)P? + t³P?
+.quark-container.move-1 { transition: transform 0.125s          cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+.quark-container.move-2 { transition: transform 0.176776695297s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+.quark-container.move-3 { transition: transform 0.216506350946s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+.quark-container.move-4 { transition: transform 0.25s           cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+.quark-container.move-5 { transition: transform 0.279508497187s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+.quark-container.move-6 { transition: transform 0.306186217848s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+.quark-container.move-7 { transition: transform 0.330718913883s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+.quark-container.move-8 { transition: transform 0.353553390593s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+//.quark-container.move-2 { transition: transform 0.25s  cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+//.quark-container.move-3 { transition: transform 0.375s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+//.quark-container.move-4 { transition: transform 0.5s   cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+//.quark-container.move-5 { transition: transform 0.625s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+//.quark-container.move-6 { transition: transform 0.75s  cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+//.quark-container.move-7 { transition: transform 0.875s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
+//.quark-container.move-8 { transition: transform 1s     cubic-bezier(0.6, 0.04, 0.96, 0.4); }
 
 .quark-container.move-1.move-right { transform: translateX( 100%); }
 .quark-container.move-2.move-right { transform: translateX( 200%); }

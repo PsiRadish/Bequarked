@@ -1,3 +1,4 @@
 screenshot*
 Thumbs.db
 *.css.map
+.sass-cache
