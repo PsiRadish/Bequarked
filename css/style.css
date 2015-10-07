@@ -137,6 +137,12 @@ body
     margin-top : 13.043478%;
 }
 
+#instructions
+{
+  font-family: Segoe UI, Tahoma, Verdana, sans-serif;
+  font-size: 12px;
+}
+
 .sidebar h3
 {
     margin-left : 3.478261%;
