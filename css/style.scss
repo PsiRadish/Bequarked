@@ -135,6 +135,12 @@ body
     margin-top: 13.043478%;
 }
 
+#instructions
+{
+    font-family: Segoe UI, Tahoma, Verdana, sans-serif;
+    font-size: 12px;
+}
+
 .sidebar h3
 {
     margin-left: 3.478261%;
@@ -615,7 +621,7 @@ body
     background-image: url('../img/arrow-up.png');
 }
 // Cubic Bezier function or something
-// F(t) = (1 ? t)³P? + 3t(1 ? t)²P? + 3t²(1 ? t)P? + t³P?
+// F(t) = (1 ? t)ï¿½P? + 3t(1 ? t)ï¿½P? + 3tï¿½(1 ? t)P? + tï¿½P?
 .quark-container.move-1 { transition: transform 0.125s          cubic-bezier(0.6, 0.04, 0.96, 0.4); }
 .quark-container.move-2 { transition: transform 0.176776695297s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
 .quark-container.move-3 { transition: transform 0.216506350946s cubic-bezier(0.6, 0.04, 0.96, 0.4); }
