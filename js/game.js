@@ -57,7 +57,7 @@ var Alignment =
 var Game = 
 {
     // the DOM element all trigger() calls will be made on, passed in through init()
-    eventTarget: null,
+    View: null,
     
     EventType:
     {
@@ -82,7 +82,7 @@ var Game =
      */
     init: function($eTarget)
     {
-        this.eventTarget = $eTarget;
+        Game.View = $eTarget;
         
         // iterate through all squares and fill them with quarks
         for (var gridKey in this.Grid.squares)
@@ -107,11 +107,10 @@ var Game =
             }
         }
         
-        this.eventTarget.trigger(Game.EventType.GameStart, [Game.Grid.squares]);
+        Game.View.trigger(Game.EventType.GameStart, [Game.Grid.squares]);
     },
     
-    animating:  false, // input ignored and game logic paused while true
-    turn:       1,
+    turn: 1,
     
     player1Score:       0,
     player1ChainScore:  0,
@@ -300,7 +299,7 @@ var Game =
         
         if (quarkA == quarkB) // switching identical quarks will never produce a match
         {
-            Game.eventTarget.trigger(Game.EventType.BoardSwapFail, [squareA, squareB]);
+            Game.View.trigger(Game.EventType.BoardSwapFail, [squareA, squareB]);
             
             return;
         }
@@ -314,7 +313,7 @@ var Game =
             squareA.quark = quarkA;
             squareB.quark = quarkB;
             
-            Game.eventTarget.trigger(Game.EventType.BoardSwapFail, [squareA, squareB]);
+            Game.View.trigger(Game.EventType.BoardSwapFail, [squareA, squareB]);
             
             return;
         }
@@ -322,7 +321,7 @@ var Game =
         squareA.dirty = true;
         squareB.dirty = true;
         
-        Game.eventTarget.trigger(Game.EventType.BoardSwapSuccess, [squareA, squareB]);
+        Game.View.trigger(Game.EventType.BoardSwapSuccess, [squareA, squareB]);
         
         Game.processChangedSquares();
     },
@@ -352,7 +351,7 @@ var Game =
             
             var eventData = [Game.player1Score];
             
-          /*switch (Game.turn)
+            /*switch (Game.turn)
             {
                 case 1:
                     //Game.turn = 2;
@@ -373,32 +372,15 @@ var Game =
                     eventData.push(Game.player2Score);
                     break;
             }*/
-    
-            // TODO: Replace timer loop with an event listener for some sort of "spawn animation done" event from the view
-            if (Game.animating)
-            {   // wait until finished
-                var timer = window.setInterval(function()
-                {
-                    if (!Game.animating)
-                    {
-                        window.clearInterval(timer);
-                        
-                        Game.eventTarget.trigger(Game.EventType.BoardStable, eventData);
-                        if (Game.movesMade >= Game.maxMoves)
-                        {
-                            Game.Over();
-                        }
-                    }
-                }, 10);
-            }
-            else
+            
+            Game.View.ready.then(function ()
             {
-                Game.eventTarget.trigger(Game.EventType.BoardStable, eventData);
+                Game.View.trigger(Game.EventType.BoardStable, eventData);
                 if (Game.movesMade >= Game.maxMoves)
                 {
                     Game.Over();
                 }
-            }
+            });
         }
     },
     
@@ -607,30 +589,12 @@ var Game =
                 eventData.push(Game.player2ChainMult);
                 break;
         }*/
-    
-        // TODO: Replace timer loop with an event listener for some sort of "swap animation done" event from the view
-        if (Game.animating)
-        {   // wait until finished
-            var timer = window.setInterval(function()
-            {
-                if (!Game.animating)
-                {
-                    window.clearInterval(timer);
-                    
-                    Game.eventTarget.trigger(Game.EventType.BoardRemoveMatches, eventData);
-                    // Game.spawnNewQuarks(matchData);
-                    // Game.spawnNewQuarks(matchSquares);
-                    Game.processGravity();
-                }
-            }, 10);
-        }
-        else
+        
+        Game.View.ready.then(function ()
         {
-            Game.eventTarget.trigger(Game.EventType.BoardRemoveMatches, eventData);
-            // Game.spawnNewQuarks(matchData);
-            // Game.spawnNewQuarks(matchSquares);
+            Game.View.trigger(Game.EventType.BoardRemoveMatches, eventData);
             Game.processGravity();
-        }
+        });
     },
     
     processGravity: function()
@@ -650,10 +614,10 @@ var Game =
         }
         else // Process (more) gravity
         {
-            console.log('==processGravity==');
-            console.log('num resolvedMatchGroups', Object.keys(Game.resolvedMatchGroups).length);
-            console.log('num gravBombs', Game.gravBombs.length);
-            console.log();
+            // console.log('==processGravity==');
+            // console.log('num resolvedMatchGroups', Object.keys(Game.resolvedMatchGroups).length);
+            // console.log('num gravBombs', Game.gravBombs.length);
+            // console.log();
             
             //// Standard Gravity
             if (Game.matchGroups.length > 0)
@@ -661,24 +625,24 @@ var Game =
                 // Initial filtering of matchGroups to weed out obvious conflicts and map dependencies
                 var groupsGoodToGrav = Game.matchGroups.filter(function(matchGroup)
                 {
-                    //return matchGroup.goodToGrav;
+                    return matchGroup.goodToGrav;
                     
                     // DEBUG
-                    var goodToGrav = matchGroup.goodToGrav;
-                    console.log("matchGroup", matchGroup.index, "goodToGrav =", goodToGrav);
-                    return goodToGrav;
+                    // var goodToGrav = matchGroup.goodToGrav;
+                    // console.log("matchGroup", matchGroup.index, "goodToGrav =", goodToGrav);
+                    // return goodToGrav;
                 });
                 
-                console.log("groupsGoodToGrav.length =", groupsGoodToGrav.length);
+                // console.log("groupsGoodToGrav.length =", groupsGoodToGrav.length);
                 
                 var gravSquares = [];
                 for (var i = 0; i < groupsGoodToGrav.length; i++)
                 {   var matchGroup = groupsGoodToGrav[i];
-                    console.log("matchGroup", matchGroup.index, "processGravity");
+                    // console.log("matchGroup", matchGroup.index, "processGravity");
                     
                     if (matchGroup.resolved) // already resolved (as a dependency of a previous matchGroup)
                         continue;
-                    console.log("matchGroup", matchGroup.index, "not resolved yet.");
+                    // console.log("matchGroup", matchGroup.index, "not resolved yet.");
                     
                     // initial values
                     var expandedGroup = [matchGroup],
@@ -729,13 +693,11 @@ var Game =
                     if (!greatToGrav)
                         continue;
     
-                    console.log("matchGroup", matchGroup.index, "was greatToGrav.");
+                    // console.log("matchGroup", matchGroup.index, "was greatToGrav.");
                     
                     // loop through again, this time setting real values
                     for (var x = 0; x < allDependentSquares.length; x++)
                     {   var square = allDependentSquares[x];
-                        
-                        //console.log('Gravity', square.gravDir.string, 'starting from', square.x, square.y);
                         
                         var behind = square.gravDir,
                             ahead  = square.gravDir.opposite;
@@ -749,16 +711,8 @@ var Game =
                             if (typeof squareBefore == 'undefined')
                                 squareBefore = null; // if undefined, go back to null
                         }
-                        /// DEBUG
-                        /*if (squareBefore)
-                        {
-                            console.log('Clone square before (', squareBefore.x, squareBefore.y, ') gravDir', squareBefore.gravDir ? squareBefore.gravDir.string : 'null');
-                        }
-                        else
-                            console.log('No clone square "before" with gridKey', square.neighborInDir(behind) ? square.neighborInDir(behind).gridKey.toString(16) : null);*/
-                        /// END DEBUG
                         if (squareBefore && squareBefore.gravDir == square.gravDir)
-                        {   //console.log('Before has same gravity, not start, skipping.');
+                        {
                             continue;  // skip it, want the actual start
                         }
                         
@@ -869,7 +823,7 @@ var Game =
                         }
     
                         if (gravSquare.gridKey in Debug.traceQuarksSquares)
-                            throw new Error("DEBUGEX0R: Quark value changed for square (" + gravSquare.x + ", " + gravSquare.y + ")\n" + Error().stack);
+                            throw new Error("DEBUGEX0R: Quark value changed for square (" + gravSquare.x + ", " + gravSquare.y + ")"/*\n" + Error().stack*/);
                         
                         gravSquare.gravDir = null;
                         gravSquare.gravStrength = null;
@@ -884,28 +838,14 @@ var Game =
                     
                     var eventData = [oldSquares];
                     
-                    // TODO: Replace timer loop with an event listener for some sort of "gravity animation done" event from the view
-                    if (Game.animating)
-                    {   // wait until finished
-                        var timer = window.setInterval(function()
-                        {
-                            if (!Game.animating)
-                            {
-                                window.clearInterval(timer);
-                
-                                Game.eventTarget.trigger(Game.EventType.BoardGravity, eventData);
-                                Game.processGravity();
-                            }
-                        }, 10);
-                    }
-                    else
+                    Game.View.ready.then(function ()
                     {
-                        Game.eventTarget.trigger(Game.EventType.BoardGravity, eventData);
+                        Game.View.trigger(Game.EventType.BoardGravity, eventData);
                         Game.processGravity();
-                    }
+                    });
                 }
                 else
-                    console.log("Couldn't gravitize any match groups! D:");
+                    console.error("Couldn't gravitize any match groups! D:");
             }
             //// Gravity Bombs
             else
@@ -956,41 +896,19 @@ var Game =
                 // TODO: Quarks destroyed by gravity bomb add to score
                 
                 Game.gravBombs = [];
-    
-                if (Game.animating)
-                {   // wait until finished
-                    // TODO: Replace timer loop with an event listener for some sort of "gravity animation done" event from the view
-                    timer = window.setInterval(function()
-                    {
-                        if (!Game.animating)
-                        {
-                            window.clearInterval(timer);
                 
-                            Game.eventTarget.trigger(Game.EventType.BoardGravityBomb, eventData);
-                            Game.processGravity();
-                        }
-                    }, 10);
-                }
-                else
+                Game.View.ready.then(function ()
                 {
-                    Game.eventTarget.trigger(Game.EventType.BoardGravityBomb, eventData);
+                    Game.View.trigger(Game.EventType.BoardGravityBomb, eventData);
                     Game.processGravity();
-                }
+                });
             }
-            
-            //// TEMPORARY
-            // for now new quarks will just appear where the old ones were
-            //Game.gravBombs = [];
-            //Game.matchGroups = [];
-            //Game.resolvedMatchGroups = {};
-            //
-            //Game.processGravity();
         }
     },
     
     // spawnNewQuarks: function(matchData)
     spawnNewQuarks: function()
-    {   //console.log("spawnNewQuarks");
+    {
         var fillSquares = [];
         for (var gridKey in Game.Grid.squares)
         {   var square = Game.Grid.squares[gridKey];
@@ -1003,28 +921,11 @@ var Game =
             }
         }
         
-        // TODO: Replace timer loop with an event listener for some sort of "gravity animation done" event from the view
-        if (Game.animating)
-        {   // wait until finished
-            //console.log("Game animating, waiting until finished.");
-            var timer = window.setInterval(function()
-            {
-                if (!Game.animating)
-                {   //console.log("Animation finished, sending BoardNewQuarks event.");
-                    window.clearInterval(timer);
-                    
-                    Game.eventTarget.trigger(Game.EventType.BoardNewQuarks, [Square.Array.clone(fillSquares)]);
-                    //Game.processChangedSquares(fillSquares);
-                    Game.processChangedSquares();
-                }
-            }, 10);
-        }
-        else
-        {   //console.log("Sending BoardNewQuarks event.");
-            Game.eventTarget.trigger(Game.EventType.BoardNewQuarks, [Square.Array.clone(fillSquares)]);
-            //Game.processChangedSquares(fillSquares);
+        Game.View.ready.then(function ()
+        {
+            Game.View.trigger(Game.EventType.BoardNewQuarks, [Square.Array.clone(fillSquares)]);
             Game.processChangedSquares();
-        }
+        });
     },
     
     // end game
@@ -1032,18 +933,18 @@ var Game =
     {
         // if (Game.player1Score == Game.player2Score)
         // {
-        //     Game.eventTarget.trigger(Game.EventType.GameOver, [0]);
+        //     Game.View.trigger(Game.EventType.GameOver, [0]);
         // }
         // else if (Game.player1Score > Game.player2Score)
         // {
-        //     Game.eventTarget.trigger(Game.EventType.GameOver, [1]);
+        //     Game.View.trigger(Game.EventType.GameOver, [1]);
         // }
         // else
         // {
-        //     Game.eventTarget.trigger(Game.EventType.GameOver, [2]);
+        //     Game.View.trigger(Game.EventType.GameOver, [2]);
         // }
         
-        Game.eventTarget.trigger(Game.EventType.GameOver, [1]);
+        Game.View.trigger(Game.EventType.GameOver, [1]);
     }
 };
 Game.MatchGroup = function()
@@ -1118,9 +1019,9 @@ Game.MatchGroup.prototype._checkConflicts = function()
     
     var thisGroup = this; // store this context for use inside iterators
     
-    console.log(this.index, "_checkConflicts");
+    // console.log(this.index, "_checkConflicts");
     this._goodToGrav = this.squares.every(function(square)
-    {   console.log('square', square.x, square.y, 'gravDir', square.gravDir.string);
+    {   // console.log('square', square.x, square.y, 'gravDir', square.gravDir.string);
         var pullSquare = square.neighborInDir(square.gravDir.opposite);
         if (pullSquare && !pullSquare.inSameGroupAs(square)) // this square directly pulls on a square outside the match group
         {
