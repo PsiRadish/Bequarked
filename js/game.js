@@ -252,21 +252,9 @@ var Game =
                 return [];  // return empty array
             
             var nextSquare = fromSquare.neighborInDir(direction);
-            //var arrOfSquares;
             number--;
     
             return [fromSquare].concat(Game.Grid.getNumSquaresFrom_InDir(number, nextSquare, direction));
-            
-            /*if (number)
-            {
-                arrOfSquares = this.getNumSquaresFrom_InDir(number, nextSquare, direction);
-            }
-            else
-                arrOfSquares = [];
-            
-            arrOfSquares.push(fromSquare);
-            
-            return arrOfSquares;*/
         },
         // returns array of squares from `fromSquare` to end of grid going in `direction`
         getAllSquaresFrom_InDir: function(fromSquare, direction)
@@ -331,14 +319,11 @@ var Game =
             return;
         }
         
-        //var squaresAandB = [squareA, squareB];
         squareA.dirty = true;
         squareB.dirty = true;
-        //Game.dirtySquares.push(squareA, squareB);
         
         Game.eventTarget.trigger(Game.EventType.BoardSwapSuccess, [squareA, squareB]);
         
-        //Game.processChangedSquares(squaresAandB);
         Game.processChangedSquares();
     },
     
@@ -899,9 +884,9 @@ var Game =
                     
                     var eventData = [oldSquares];
                     
+                    // TODO: Replace timer loop with an event listener for some sort of "gravity animation done" event from the view
                     if (Game.animating)
                     {   // wait until finished
-                        // TODO: Replace timer loop with an event listener for some sort of "gravity animation done" event from the view
                         var timer = window.setInterval(function()
                         {
                             if (!Game.animating)
@@ -1253,8 +1238,7 @@ Object.defineProperty(Square.prototype, 'dirty',
         return this._dirty;
     },
     set: function(newValue)
-    {
-        //console.log('dirty property set on', this);
+    {   //console.log('dirty property set on', this);
         
         // current and new value both true
         if (this._dirty && newValue)
