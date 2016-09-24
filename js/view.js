@@ -480,76 +480,77 @@ function main()
         pauseInput();
         var wait = gameView.newWait();
         
-        // Use async to trigger next step only after everything is done falling (since falling time may vary)
-        async.map(gravSquares, function(gravSquare, callback)
+        // Use deferreds to trigger next step only after everything is done falling (since falling time may vary)
+        $.when.apply($, gravSquares.map(function(gravSquare)
         {
+            var deferred = $.Deferred();
+            
             // find the DOM element for this square
             var target = Helper.findGridElementAtCoords('quark', gravSquare.x, gravSquare.y);
             
             if (!gravSquare.quark) // no quark is landing in this space
             {   // no transition to set up, just move on
-                return callback(null, [gravSquare, target, null]);
+                deferred.resolve([gravSquare, target, null]);
             }
-            
-            var fallerX,
-                fallerY;
-            switch (gravSquare.gravDir)
+            else
             {
-                case Direction.Right:
-                    fallerX = gravSquare.x - gravSquare.gravApplied;
-                    fallerY = gravSquare.y;
-                    break;
-                case Direction.Left:
-                    fallerX = gravSquare.x + gravSquare.gravApplied;
-                    fallerY = gravSquare.y;
-                    break;
-                case Direction.Down:
-                    fallerX = gravSquare.x;
-                    fallerY = gravSquare.y - gravSquare.gravApplied;
-                    break;
-                case Direction.Up:
-                    fallerX = gravSquare.x;
-                    fallerY = gravSquare.y + gravSquare.gravApplied;
-                    break;
-            }
-    
-            // find the DOM element that will be falling into this space
-            var faller = Helper.findGridElementAtCoords('quark', fallerX, fallerY);
-            faller.addClass("move-" + gravSquare.gravApplied);
-            faller.addClass("move-" + gravSquare.gravDir.string);
-            
-            // Once falling transition animation is completed.
-            faller.one('transitionend webkitTransitionEnd oTransitionEnd', function()
-            {
-                callback(null, [gravSquare, target, faller]);
-            });
-        },
-        function(err, results) // all transitions have completed
-        {   
-            if (!err)
-            {   // move all quark containers back where they were but change their quarks to match the new contents
-                results.forEach(function(result)
+                var fallerX,
+                    fallerY;
+                switch (gravSquare.gravDir)
                 {
-                    var gravSquare = result[0];
-                    var target = result[1];
-                    var faller = result[2];
-                    
-                    // remove any previous quark class
-                    target.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
-                    // add the new correct quark class
-                    if (gravSquare.quark)
-                        target.addClass(gravSquare.quark.css);
-                    
-                    if (faller)
-                    {   // revert to original position
-                        faller.removeClass("move-" + gravSquare.gravApplied + " move-" + gravSquare.gravDir.string);
-                    }
+                    case Direction.Right:
+                        fallerX = gravSquare.x - gravSquare.gravApplied;
+                        fallerY = gravSquare.y;
+                        break;
+                    case Direction.Left:
+                        fallerX = gravSquare.x + gravSquare.gravApplied;
+                        fallerY = gravSquare.y;
+                        break;
+                    case Direction.Down:
+                        fallerX = gravSquare.x;
+                        fallerY = gravSquare.y - gravSquare.gravApplied;
+                        break;
+                    case Direction.Up:
+                        fallerX = gravSquare.x;
+                        fallerY = gravSquare.y + gravSquare.gravApplied;
+                        break;
+                }
+                
+                // find the DOM element that will be falling into this space
+                var faller = Helper.findGridElementAtCoords('quark', fallerX, fallerY);
+                faller.addClass("move-" + gravSquare.gravApplied);
+                faller.addClass("move-" + gravSquare.gravDir.string);
+                
+                // Once falling transition animation is completed.
+                faller.one('transitionend webkitTransitionEnd oTransitionEnd', function()
+                {
+                    deferred.resolve([gravSquare, target, faller]);
                 });
-                wait.resolve();
-                unpauseInput();
             }
-            else // omg wtf
-                throw err; // throwing shit always makes me feel better when things go wrong
+            
+            return deferred.promise();
+        })).done(function() // all transitions have completed
+        {
+            // move all quark containers back where they were but change their quarks to match the new contents
+            [].slice.call(arguments).forEach(function (result)
+            {
+                var gravSquare = result[0];
+                var target = result[1];
+                var faller = result[2];
+                
+                // remove any previous quark class
+                target.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
+                // add the new correct quark class
+                if (gravSquare.quark)
+                    target.addClass(gravSquare.quark.css);
+                
+                if (faller)
+                {   // revert to original position
+                    faller.removeClass("move-" + gravSquare.gravApplied + " move-" + gravSquare.gravDir.string);
+                }
+            });
+            wait.resolve();
+            unpauseInput();
         });
         
         /*gravSquares.forEach(function(squareFall)
