@@ -435,9 +435,6 @@ var Game =
                         matchGravStrength = 1;
                     }
                     
-                    // Probably won't use this...
-                    // Game.gravCumulation[matchGravDir] += matchGravStrength; // increase priority for this grav direction
-                    
                     // Create MatchGroup object that will be used later for gravity resolution
                     var matchGroup = new Game.MatchGroup();
                     var matchGroupIndex = -1;
@@ -449,18 +446,12 @@ var Game =
                         
                         // set a dirty flag on the square
                         lineSquare.dirty = true;
-                        /*if (!lineSquare.dirty)
-                        {
-                            lineSquare.dirty = true;
-                            Game.dirtySquares.push(lineSquare);
-                        }*/
                         
                         lineSquare.gravDir = matchGravDir;
                         // if square already has a gravStrength, only change if new one is larger
                         lineSquare.gravStrength = Math.max(lineSquare.gravStrength, matchGravStrength);
                         
                         // store this square in the MatchGroup
-                        //matchGroup.squares[lineSquare.gridKey] = lineSquare;
                         matchGroup.squares.push(lineSquare);
                                                 
                         if (lineSquare.matchGroupIndex != -1) // if this square is already in a match group
@@ -481,12 +472,8 @@ var Game =
                     {
                         matchGroup.assignIndex(matchGroupIndex);
                         
-                        // merge objects (using jQuery)
-                        //$.extend(Game.matchGroups[matchGroupIndex].squares, matchGroup.squares);
-                        
                         // merge arrays
-                        //Game.matchGroups[matchGroupIndex].squares = Game.matchGroups[matchGroupIndex].squares.union(matchGroup.squares); // using array extension in array.js
-                        console.log("matchGroupIndex", matchGroupIndex);
+                        // console.log("matchGroupIndex", matchGroupIndex);
                         Game.matchGroups[matchGroupIndex].squares = Square.Array.union(Game.matchGroups[matchGroupIndex].squares, matchGroup.squares);
                     }
                     
