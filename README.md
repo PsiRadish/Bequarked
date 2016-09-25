@@ -43,8 +43,6 @@ No amount of taking turns can make this work. So I decided it would explode, tak
 ## Technology Used
 
 + *[jQuery](http://jquery.com/ "write less, do more.")*  
-  For DOM manipulation, naturally, but also custom events. Animation is all CSS, though.
+  For DOM manipulation, naturally, but also custom events and deferreds/promises. Animation is all CSS, though.
 + *[FitText.js](http://fittextjs.com/ "A jQuery plugin for inflating web type")*  
   For exactly what it says on the tin. Would be nice if they didn't obfuscate the functionality with this "compressor" nonsense and just let me pass in a percentage, though.
-+ *[Async.js](https://github.com/caolan/async "Higher-order functions and common patterns for asynchronous code")*  
-  Used on the front-end for knowing when *all* the current gravity animations (which may not all be the same length of time) have finished before doing something else. Could probably find some other places to use it, too. Async is badass.  
