@@ -11,11 +11,8 @@ function closeEnough(a, b)
 
 function main()
 {
-    //var gameView = $(STYLE.sel.gameView);
-    var gameView = $('#game');
-    
-    //var board = $(STYLE.sel.board);
-    var board = $('#board');
+    var gameView = $('#game'),
+        board = $('#board');
     
     //var sideBars = $('.sidebar');
     
@@ -27,8 +24,7 @@ function main()
     {
         //var playerPaneWithTurn = playerPanes.filter('.my-turn');
         
-        // remove inline styles previously added by jQuery,
-        // reverting to slightly-broken CSS-only sizing
+        // remove inline styles previously added by jQuery, reverting to slightly-broken CSS-only sizing
         gameView.removeAttr('style');
         board.removeAttr('style');
         //playerPaneWithTurn.removeAttr('style');
@@ -47,12 +43,9 @@ function main()
             }
         }
         
-        //var shadowPower = Math.round(playerPaneWithTurn.height() * 0.055);            // box-shadow: inset 0 0 22px 22px black
-        //var shadowString = 'inset 0 0 ' + shadowPower + 'px ' + shadowPower + 'px black';
         //playerPaneWithTurn.css('box-shadow', shadowString);
     }
     sizeGame();
-    
     // do it again on resize
     $(window).resize(sizeGame);
     
@@ -63,12 +56,34 @@ function main()
     $('#title-container').find('h1').fitText(0.77857142857142857142857142857143);  // 140px font size at max game size
     $('#winner-display').fitText(0.90825688073394495412844036697248); // 99px font size at max game size
     
-    
-    // callback of doom
-    /*function removeElement(e)
+    // stuff for keeping view logic and game logic synced
+    gameView.waits = []; // don't actually foresee there ever being more than one, but just in case...
+    gameView.newWait = function()
     {
-        $(this).remove();
-    }*/
+        var deferred = $.Deferred();
+        gameView.waits.push(deferred.promise());
+        return deferred;
+    }
+    Object.defineProperty(gameView, 'ready',
+    {
+        get: function()
+        {
+            var currWaits = gameView.waits.slice(gameView.waits); // shallow copy
+            
+            // wait for all of them to finish
+            var waiting = $.when.apply($, currWaits);
+            waiting.done(function ()
+            {
+                // remove these old waits from list
+                currWaits.forEach(function (wait)
+                {
+                    gameView.waits.remove(wait);
+                });
+            });
+            
+            return waiting;
+        }
+    });
     
     // Helper methods
     var Helper =
@@ -104,17 +119,6 @@ function main()
         findGridElementAtCoords: function(elemType, x, y)
         {
             elemType = '.' + elemType + "-container";
-            /*switch(gameSquare.state)
-            {
-                case Square.State.Quark:
-                    elemType = ".quark" + elemType;
-                    break;
-                case Square.State.GravityBomb:
-                    elemType += ".bomb";
-                case Square.State.Gravity:
-                    elemType = ".grav" + elemType;
-                    break;
-            }*/
             
             return $(elemType + '.x' + x + '.y' + y);
         }
@@ -131,7 +135,7 @@ function main()
     
     board.on('click', function(e)
     {
-        if (board.is('.taking-input') && !Game.animating)
+        if (board.is('.taking-input'))
         {
             var clickedQuark = $(e.target).closest('.quark-container');
             
@@ -184,13 +188,10 @@ function main()
     // Instructions Toggle Button
     $('.sidebar.instructions .toggle').on('click', function(e)
     {
-        if (!Game.animating)
-        {
-            $('.sidebar.instructions').toggleClass('expanded');
-            board.toggleClass('taking-input');
-            
-            $(this).trigger('visible'); // custom event to be heard by modified FitText.js
-        }
+        $('.sidebar.instructions').toggleClass('expanded');
+        board.toggleClass('taking-input');
+        
+        $(this).trigger('visible'); // custom event to be heard by modified FitText.js
     });
     
     //// CUSTOM EVENT LISTENERS
@@ -199,8 +200,6 @@ function main()
     /// GameStart – Game start, fill in the board without any animation
     function onGameStart(e, gameSquares)
     {
-        //board.html(''); // clear the board
-        
         for (var gridKey in gameSquares)
         {   var gameSquare = gameSquares[gridKey];
             
@@ -211,7 +210,8 @@ function main()
     
             quarkBox.appendTo(board);
         }
-    } gameView.on(Game.EventType.GameStart, onGameStart);
+    }
+    gameView.on(Game.EventType.GameStart, onGameStart);
     
     /// BoardSwapSuccess – Player move was valid, show the quarks switching places
     function onSwapSuccess(e, squareA, squareB)
@@ -220,7 +220,7 @@ function main()
         var quarkB = Helper.findGridElementAtCoords('quark', squareB.x, squareB.y);
         
         pauseInput();
-        Game.animating = true;
+        var wait = gameView.newWait();
         
         var swapDirectionA;
         var swapDirectionB;
@@ -253,10 +253,9 @@ function main()
         }
         
         // .swapping.left-swap
-        //var animClassesA = 'distorting swapping ' + swapDirectionA + '-swap';
-        //var animClassesB = 'distorting swapping ' + swapDirectionB + '-swap';
         var animClassesA = 'swapping ' + swapDirectionA + '-swap';
         var animClassesB = 'swapping ' + swapDirectionB + '-swap';
+        
         // adding these classes will initiate CSS animations
         quarkA.addClass(animClassesA);
         quarkB.addClass(animClassesB);
@@ -278,9 +277,10 @@ function main()
             quarkB.addClass(aQuarkClass);
             
             unpauseInput();
-            Game.animating = false;
+            wait.resolve();
         }, 300);
-    } gameView.on(Game.EventType.BoardSwapSuccess, onSwapSuccess);
+    }
+    gameView.on(Game.EventType.BoardSwapSuccess, onSwapSuccess);
     
     /// BoardSwapFail – Player move was invalid, show the quarks failing to switch places
     function onSwapFail(e, squareA, squareB)
@@ -289,7 +289,7 @@ function main()
         var quarkB = Helper.findGridElementAtCoords('quark', squareB.x, squareB.y);
         
         pauseInput();
-        Game.animating = true;
+        var wait = gameView.newWait();
         
         var swapDirectionA;
         var swapDirectionB;
@@ -338,10 +338,11 @@ function main()
             quarkB.removeClass(animClassesB);
             
             unpauseInput();
-            Game.animating = false;
+            wait.resolve();
         
         }, 210);
-    } gameView.on(Game.EventType.BoardSwapFail, onSwapFail);
+    }
+    gameView.on(Game.EventType.BoardSwapFail, onSwapFail);
     
     /// BoardRemoveMatches – Animate removal of quarks.
     function onRemoveMatches(e, matchSquares, bombCoords, scoreChain, scoreMult)
@@ -355,7 +356,7 @@ function main()
         $('.player-score .score-chain').html(chainString);
         
         pauseInput();
-        Game.animating = true;
+        var wait = gameView.newWait();
         
         var animDur = 400;
         
@@ -366,12 +367,10 @@ function main()
         {   //var currDatum = matchData[gridKey];
             //var currSquare = currDatum.square;
             
-            //var doomedQuark = $('.quark-container.x' + currSquare.x + '.y' + currSquare.y);
             var doomedQuark = Helper.findGridElementAtCoords('quark', currSquare.x, currSquare.y);
             doomedQuarks.push(doomedQuark);
             
             //// • CSS animation
-            // var animClass = 'distorting matching';
             var animClass = 'matching';
             switch (currSquare.matchAlignment)
             {
@@ -432,20 +431,20 @@ function main()
             {   // empty it out hard
                 doomedQuark.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
                 doomedQuark.removeClass("distorting matching h-match v-match hv-match");
-                // doomedQuark.removeAttr('style');
             });
             
             unpauseInput();
-            Game.animating = false;
+            wait.resolve();
         
         }, animDur);
-    } gameView.on(Game.EventType.BoardRemoveMatches, onRemoveMatches);
+    }
+    gameView.on(Game.EventType.BoardRemoveMatches, onRemoveMatches);
     
     /// BoardNewQuarks – Empty new quarks.
     function onNewQuarks(e, newSquares)
     {
         pauseInput();
-        Game.animating = true;
+        var wait = gameView.newWait();
         
         var animDur = 600;
         
@@ -469,102 +468,103 @@ function main()
             });
             
             unpauseInput();
-            Game.animating = false;
+            wait.resolve();
         
         }, animDur);
-    } gameView.on(Game.EventType.BoardNewQuarks, onNewQuarks);
+    }
+    gameView.on(Game.EventType.BoardNewQuarks, onNewQuarks);
     
     /// BoardGravity
     function onGravity(e, gravSquares)
     {
         pauseInput();
-        Game.animating = true;
+        var wait = gameView.newWait();
         
-        // Use async to trigger next step only after everything is done falling (since falling time may vary)
-        async.map(gravSquares,
-        function(gravSquare, callback)
+        // Use deferreds to trigger next step only after everything is done falling (since falling time may vary)
+        $.when.apply($, gravSquares.map(function(gravSquare)
         {
+            var deferred = $.Deferred();
+            
             // find the DOM element for this square
             var target = Helper.findGridElementAtCoords('quark', gravSquare.x, gravSquare.y);
             
             if (!gravSquare.quark) // no quark is landing in this space
             {   // no transition to set up, just move on
-                return callback(null, [gravSquare, target, null]);
+                deferred.resolve([gravSquare, target, null]);
             }
-            
-            var fallerX,
-                fallerY;
-            switch (gravSquare.gravDir)
+            else
             {
-                case Direction.Right:
-                    fallerX = gravSquare.x - gravSquare.gravApplied;
-                    fallerY = gravSquare.y;
-                    break;
-                case Direction.Left:
-                    fallerX = gravSquare.x + gravSquare.gravApplied;
-                    fallerY = gravSquare.y;
-                    break;
-                case Direction.Down:
-                    fallerX = gravSquare.x;
-                    fallerY = gravSquare.y - gravSquare.gravApplied;
-                    break;
-                case Direction.Up:
-                    fallerX = gravSquare.x;
-                    fallerY = gravSquare.y + gravSquare.gravApplied;
-                    break;
-            }
-    
-            // find the DOM element that will be falling into this space
-            var faller = Helper.findGridElementAtCoords('quark', fallerX, fallerY);
-            faller.addClass("move-" + gravSquare.gravApplied);
-            faller.addClass("move-" + gravSquare.gravDir.string);
-            
-            // Once falling transition animation is completed.
-            faller.one('transitionend webkitTransitionEnd oTransitionEnd', function()
-            {   //console.log("Transition ended WAAAAAA");
-                callback(null, [gravSquare, target, faller]);
-            });
-        },
-        function(err, results) // all transitions have completed
-        {   
-            if (!err)
-            {   // move all quark containers back where they were but change their quarks to match the new contents
-                results.forEach(function(result)
+                var fallerX,
+                    fallerY;
+                switch (gravSquare.gravDir)
                 {
-                    var gravSquare = result[0];
-                    var target = result[1];
-                    var faller = result[2];
-                    
-                    // remove any previous quark class
-                    target.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
-                    // add the new correct quark class
-                    if (gravSquare.quark)
-                        target.addClass(gravSquare.quark.css);
-                    
-                    if (faller)
-                    {   // revert to original position
-                        faller.removeClass("move-" + gravSquare.gravApplied + " move-" + gravSquare.gravDir.string);
-                    }
-                });
+                    case Direction.Right:
+                        fallerX = gravSquare.x - gravSquare.gravApplied;
+                        fallerY = gravSquare.y;
+                        break;
+                    case Direction.Left:
+                        fallerX = gravSquare.x + gravSquare.gravApplied;
+                        fallerY = gravSquare.y;
+                        break;
+                    case Direction.Down:
+                        fallerX = gravSquare.x;
+                        fallerY = gravSquare.y - gravSquare.gravApplied;
+                        break;
+                    case Direction.Up:
+                        fallerX = gravSquare.x;
+                        fallerY = gravSquare.y + gravSquare.gravApplied;
+                        break;
+                }
                 
-                Game.animating = false;
-                unpauseInput();
+                // find the DOM element that will be falling into this space
+                var faller = Helper.findGridElementAtCoords('quark', fallerX, fallerY);
+                faller.addClass("move-" + gravSquare.gravApplied);
+                faller.addClass("move-" + gravSquare.gravDir.string);
+                
+                // Once falling transition animation is completed.
+                faller.one('transitionend webkitTransitionEnd oTransitionEnd', function()
+                {
+                    deferred.resolve([gravSquare, target, faller]);
+                });
             }
-            else // omg wtf
-                throw err; // throwing shit always makes me feel better when things go wrong
+            
+            return deferred.promise();
+        })).done(function() // all transitions have completed
+        {
+            // move all quark containers back where they were but change their quarks to match the new contents
+            [].slice.call(arguments).forEach(function (result)
+            {
+                var gravSquare = result[0];
+                var target = result[1];
+                var faller = result[2];
+                
+                // remove any previous quark class
+                target.removeClass("ring-red ring-blue arrow-up arrow-down arrow-left arrow-right");
+                // add the new correct quark class
+                if (gravSquare.quark)
+                    target.addClass(gravSquare.quark.css);
+                
+                if (faller)
+                {   // revert to original position
+                    faller.removeClass("move-" + gravSquare.gravApplied + " move-" + gravSquare.gravDir.string);
+                }
+            });
+            wait.resolve();
+            unpauseInput();
         });
         
         /*gravSquares.forEach(function(squareFall)
         {
         
         });*/
-    } gameView.on(Game.EventType.BoardGravity, onGravity);
+    }
+    gameView.on(Game.EventType.BoardGravity, onGravity);
     
     /// BoardGravityBomb
     function onGravityBomb(e, bombedSquares, bombCoords)
     {
         pauseInput();
-        Game.animating = true;
+        var wait = gameView.newWait();
         
         var animDur = 400;
         
@@ -597,16 +597,17 @@ function main()
             });
             
             unpauseInput();
-            Game.animating = false;
+            wait.resolve();
         
         }, animDur);
-    } gameView.on(Game.EventType.BoardGravityBomb, onGravityBomb);
+    }
+    gameView.on(Game.EventType.BoardGravityBomb, onGravityBomb);
     
     /// BoardStable – Board ready for player input once again.
     function onStable(e, newScore)   //gameView.on(Game.EventType.BoardStable, function(e, oldTurn, newTurn, newScore)
     {
         pauseInput();
-        Game.animating = true;
+        var wait = gameView.newWait();
         
         // TODO: animate score chain moving up into total score before changing these values
         $('.player-score .score').html(newScore);
@@ -619,8 +620,9 @@ function main()
         //board.addClass("player-" + newTurn + "-turn");
         
         unpauseInput();
-        Game.animating = false;
-    } gameView.on(Game.EventType.BoardStable, onStable);
+        wait.resolve();
+    }
+    gameView.on(Game.EventType.BoardStable, onStable);
     
     // GameOver – self-explanatory
     function onGameOver(e, winner)
@@ -635,7 +637,10 @@ function main()
         
         gameView.addClass("player-" + winner + "-win");
         $('#player-' + winner + ' .score-chain').html("WINNER");
-    } gameView.on(Game.EventType.GameOver, onGameOver);
+    }
+    gameView.on(Game.EventType.GameOver, onGameOver);
     
-    Game.init(gameView); // let's get this STARTED
+    
+    // let's get this STARTED
+    Game.init(gameView);
 }

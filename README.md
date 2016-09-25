@@ -1,34 +1,19 @@
-﻿__*This readme is now out of date.  So there.*__  
-
-# Bequarked
-A vaguely physics-themed puzzle game entirely in frontend Javascript and HTML.
+﻿# Bequarked
+A vaguely physics-themed puzzle game created entirely in frontend Javascript and HTML.
 
 Alternatively, a quirkly-looking Bejeweled clone that's clearly not as good (...yet?).
 
 ## How to Play
 
-1. Go to [http://psiradish.github.io/Bequarked/](http://psiradish.github.io/Bequarked/).
-2. Pretend you're playing [Bejeweled](https://en.wikipedia.org/wiki/Bejeweled "I am not here to tell you how to play Bejeweled").
-3. Albeit with 2 players taking turns making moves on the same board (project requirement).
-4. New quarks appear right where matched quarks disappear, because gravity is hard to implement in five days.
-5. The winner is whoever has the highest score after both players make 3 moves (if it isn't fun yet, it can at least be short).
++ Click on 2 adjacent quarks to try swapping their positions.
++ The swap will be successful if it results in a *match* of 3 or more quarks vertically or horizontally.
++ A failed swap has no consequences.
++ Matched quarks will disappear from the board (if you've played Bejewelled, this should sound pretty familiar so far).
++ The arrow direction on matched quarks indicates the direction surrounding quarks will fall to fill the space left behind.
++ Quarks only match if they have the *same arrow direction and ring color*.
++ The game ends after 5 successful swaps, at which point it will say you've won. Don't get too excited.
 
-## Design
-
-![Quark reference](readme/quark_ref.jpg)
-### Quarks (a.k.a. Gems)
-+ Blue Left
-+ Blue Right
-+ Blue Up
-+ Blue Down
-+ Red Left
-+ Red Right
-+ Red Up
-+ Red Down  
-
-Each "quark" has an arrow that indicates the direction surrounding pieces will fall to fill the space when there is a match. Well, some day the arrows might indicate that, anyway. For now, they're just there, and the game doesn't even have standard downward gravity.
-
-## Major Challenge(s) Ahead
+## Major Challenges
 
 It's not just gravity.  It's...
 
@@ -37,21 +22,27 @@ It's not just gravity.  It's...
 Take a look at this scenario:  
 ![Quite a pickle.](readme/annoying.jpg)  
 
-It's not unresolvable if I have the holes "take turns" being filled, but I'll have to get the order right, and figure out code that can get the order right in all the little variations of this scenario that exist, most of which I'm sure I haven't thought of.  Diagrams will probably be needed.  Lots of diagrams.
+Gravity just had to "take turns" here. And figuring out how it should do that, and then making it happen*, was not easy.  
+<small>*Actually, it usually wasn't "and then" so much as "at the same time as".</small>  
 
 And then you have this:  
 ![Oh fuck.](readme/impossible.jpg)  
 
-Which I think will just have to cause an explosion or something. But hey, explosions! Explosions are cool.
+No amount of taking turns can make this work. So I decided it would explode, taking out one or more entire lines of the board. Well, someday, anyway. For now it just breaks the game. ¬.¬  
+
+### Still To Do
+
++ Iron out some bugs.
++ Fix up how the instructions are presented (so they're not squeezed into a rather small space).
++ Figure out how a game of Bejeweled ends and shamelessly copy it.
++ Animate the scoring so it's actually noticeable.
++ Show lingering "ghost arrows" in squares after quarks are matched so its easier to figure out what's going on when holes are "waiting their turn" to be filled.
++ Implement the previously-mentioned "gravity bomb" scenario.
++ Fancy up the animations further. With, like, flashes and stuff.
 
 ## Technology Used
 
 + *[jQuery](http://jquery.com/ "write less, do more.")*  
-  For DOM manipulation, naturally, but also custom events. Animation is all CSS, though.
+  For DOM manipulation, naturally, but also custom events and deferreds/promises. Animation is all CSS, though.
 + *[FitText.js](http://fittextjs.com/ "A jQuery plugin for inflating web type")*  
   For exactly what it says on the tin. Would be nice if they didn't obfuscate the functionality with this "compressor" nonsense and just let me pass in a percentage, though.
-+ *[Bootstrap](http://getbootstrap.com/ "Designed for everyone, everywhere.")*  
-  Not really, though? Just whatever `font-` properties they set on header elements that I'm too lazy to copy into my own stylesheet.
-
-Hey, I said "though" in every one of *thoughs*.
-
